@@ -127,6 +127,14 @@ address span{
   padding: 5px 41px 5px 30px;
   display: inline-block;
 }
+.projects {
+  margin:2em 0;
+}
+.projects h3{
+  color: #FFF;
+  padding: 5px 41px 5px 30px;
+  display: inline-block;
+}
 .skills h3{
   color: #FFF;
   padding: 5px 98px 5px 30px;
@@ -169,22 +177,23 @@ address span{
 	padding:1.5em 0 0 2em;
 }
 .skill_list{
-	padding:1.5em 0 0 2em;
+	padding:1em 0 0 1em;
 }
-.skill1,.skill2{
+.skill1,.skill2,.skill3,.skill4,.skill5,.skill6{
 	 float:left;
-	 width:30%;
+	 width:15%;
 }
-.skill1 h4,.skill2 h4{
+.skill1 h4,.skill2 h4,.skill3 h4,.skill4 h4,.skill5 h4,.skill6 h4{
 	color:#333;
 	font-weight:600;
 	margin-bottom:1em;
 	display:inline-block;
 }
-.skill1 ul,.skill2 ul{
+.skill1 ul,.skill2 ul, .skill3 ul, .skill4 ul, .skill5 ul, .skill6 ul{
 	padding-left:4em;
+  list-style-type: none;
 }
-.skill1 ul li,.skill2 ul li{
+.skill1 ul li,.skill2 ul li,.skill3 ul li,.skill4 ul li,.skill5 ul li,.skill6 ul li{
 	color:#333;
 }
 .education  h3{
