@@ -2,8 +2,9 @@
 layout: post
 title:  "PostgreSQL: update timestamp when row(s) is updated"
 subtitle: ""
-date:   2015-09-06 23:34:01
+date:   2015-11-25 18:34:01
 categories: [DevOps, Hacker, Programming]
+this.page.url
 ---
 
 In PostgreSQL, if you want to set current timestamp as default value, you can simply keep a column's default expression as `now()`. However, by default there is no function defined to update the timestamp when a particular row (or multiple rows) need to be updated.
