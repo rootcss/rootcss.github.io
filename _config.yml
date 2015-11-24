@@ -1,0 +1,21 @@
+# Site settings
+title: rootcss
+description: >
+  I will write the description here...
+
+baseurl: "" # the subpath of your site, e.g. /blog/
+url: "http://rootcssblog.github.io" # the base hostname & protocol for your site
+
+author:
+  fullname: Shekhar Singh
+  googleplus: https://www.google.com/+ShekharSingh3
+  github: rootcss
+  twitter: rootcss
+  disqus: rootcss
+
+# google_analytics: 'UA-XXXXXXXX-X'
+
+# Build settings
+markdown: kramdown
+
+#excerpt_separator: ""

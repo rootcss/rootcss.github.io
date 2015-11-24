@@ -1,0 +1,5 @@
+---
+layout: category
+category: Programming
+permalink: /categories/programming/
+---
