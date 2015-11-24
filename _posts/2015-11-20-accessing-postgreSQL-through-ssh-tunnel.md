@@ -4,6 +4,7 @@ title:  "Accessing PostgreSQL server through a SSH Tunnel"
 subtitle: "(Port Forwarding)"
 date:   2015-11-24 18:34:01
 categories: [DevOps, Hacker, Programming]
+comments: true
 ---
 
 <b>Step 1:</b> Check the SSH connectivity with the server, verify username and password.

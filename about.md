@@ -9,4 +9,4 @@ permalink: /about/
 
 In my leisure time, I spend most of my time doing <b>side-projects</b>, implementing my <b>ideas</b> and <b>R&D</b>. Eventually, I end up writing some {code} or ^visualization^.
 
-I love to work on Big Data, Cloud/Distributed Computing, Data Engineering, Web Development, Open Source tools/technologies, Networks, Hacking, Security, Android, Linux. You can contact me @ <b>shekhar.singh[at]msn.com</b>
+I love to work on Big Data/Data Engineering, Data Science, Web Development, Cloud/Distributed Computing, Open Source tools/technologies, Networks, Hacking, Security, Android, Linux. You can contact me @ <b>shekhar.singh[at]msn.com</b>
