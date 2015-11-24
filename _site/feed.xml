@@ -6,8 +6,8 @@
 </description>
     <link>http://rootcssblog.github.io/</link>
     <atom:link href="http://rootcssblog.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 25 Nov 2015 00:28:25 +0530</pubDate>
-    <lastBuildDate>Wed, 25 Nov 2015 00:28:25 +0530</lastBuildDate>
+    <pubDate>Wed, 25 Nov 2015 00:37:28 +0530</pubDate>
+    <lastBuildDate>Wed, 25 Nov 2015 00:37:28 +0530</lastBuildDate>
     <generator>Jekyll v3.0.1</generator>
     
       <item>
@@ -40,9 +40,9 @@
 
 &lt;p&gt;&lt;b&gt;Note:&lt;/b&gt; Please update the &lt;table_name&gt; and &lt;column_name&gt; accordingly and execute the code for your particular database. Also, note that, some web frameworks (like Rails) manage such columns(created_at, updated_at) automatically.&lt;/column_name&gt;&lt;/table_name&gt;&lt;/p&gt;
 </description>
-        <pubDate>Mon, 07 Sep 2015 05:04:01 +0530</pubDate>
-        <link>http://rootcssblog.github.io/devops/hacker/programming/2015/09/07/postgres-update-timestamp-when-row-is-updated.html</link>
-        <guid isPermaLink="true">http://rootcssblog.github.io/devops/hacker/programming/2015/09/07/postgres-update-timestamp-when-row-is-updated.html</guid>
+        <pubDate>Wed, 25 Nov 2015 00:04:01 +0530</pubDate>
+        <link>http://rootcssblog.github.io/devops/hacker/programming/2015/11/25/postgres-update-timestamp-when-row-is-updated.html</link>
+        <guid isPermaLink="true">http://rootcssblog.github.io/devops/hacker/programming/2015/11/25/postgres-update-timestamp-when-row-is-updated.html</guid>
         
         
         <category>DevOps</category>
