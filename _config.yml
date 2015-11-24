@@ -1,7 +1,6 @@
 # Site settings
 title: rootcss
-description: >
-  I will write the description here...
+description: Big Data/Data Engineer | Full Stack Developer | Researcher | Data Science | DevOps | Security | Shekhar Singh
 
 baseurl: "" # the subpath of your site, e.g. /blog/
 url: "http://rootcss.github.io" # the base hostname & protocol for your site
