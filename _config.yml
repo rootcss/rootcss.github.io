@@ -13,7 +13,7 @@ author:
   twitter: rootcss
   disqus: rootcss
 
-# google_analytics: 'UA-XXXXXXXX-X'
+google_analytics: 'UA-70603998-1'
 
 # Build settings
 markdown: kramdown

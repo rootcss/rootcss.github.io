@@ -4,11 +4,11 @@
         <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title> Welcome! — Feel home! &raquo;  rootcss</title>
+<title> PostgreSQL: update timestamp when row(s) is updated —  &raquo;  rootcss</title>
 <meta name="description" content="I will write the description here...
 ">
 <meta name="keywords" content="">
-<link rel="canonical" href="http://rootcssblog.github.io/design/tool/2015/09/07/new.html">
+<link rel="canonical" href="http://rootcssblog.github.io/devops/hacker/programming/2015/09/07/postgres-update-timestamp-when-row-is-updated.html">
         
 
 
@@ -16,7 +16,7 @@
 
 <!-- Twitter Cards -->
 <meta name="twitter:card" content="summary" />
-<meta name="twitter:title" content="Welcome!" />
+<meta name="twitter:title" content="PostgreSQL: update timestamp when row(s) is updated" />
 <meta name="twitter:description" content="I will write the description here...
 " />
 <meta name="twitter:image" content="http://rootcssblog.github.io" />
@@ -28,10 +28,10 @@
 <!-- Open Graph -->
 <meta property="og:locale" content="">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Welcome!">
+<meta property="og:title" content="PostgreSQL: update timestamp when row(s) is updated">
 <meta property="og:description" content="I will write the description here...
 ">
-<meta property="og:url" content="http://rootcssblog.github.io/design/tool/2015/09/07/new.html">
+<meta property="og:url" content="http://rootcssblog.github.io/devops/hacker/programming/2015/09/07/postgres-update-timestamp-when-row-is-updated.html">
 <meta property="og:site_name" content="rootcss">
 
         <link href='http://fonts.googleapis.com/css?family=Inconsolata:400,700' rel='stylesheet' type='text/css'>
@@ -94,25 +94,38 @@
 </header>
 
             <h1 class="page-title post-title">
-    <div class="page-title__text post-title__text">Welcome!</div>
-    <div class="page-title__subtitle post-title__subtitle">Feel home!</div>
+    <div class="page-title__text post-title__text">PostgreSQL: update timestamp when row(s) is updated</div>
+    <div class="page-title__subtitle post-title__subtitle"></div>
 </h1>
 
 <div class="content">
-    <p>You’ll find this post in your <code class="highlighter-rouge">_posts</code> directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run <code class="highlighter-rouge">jekyll serve</code>, which launches a web server and auto-regenerates your site when a file is updated.</p>
+    <p>In PostgreSQL, if you want to set current timestamp as default value, you can simply keep a column’s default expression as <code class="highlighter-rouge">now()</code>. However, by default there is no function defined to update the timestamp when a particular row (or multiple rows) need to be updated.</p>
 
-<p>To add new posts, simply add a file in the <code class="highlighter-rouge">_posts</code> directory that follows the convention <code class="highlighter-rouge">YYYY-MM-DD-name-of-post.ext</code> and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.</p>
+<p>In such scenario, you may create your custom method and trigger it using <b>PostgreSQL’s Triggers</b>. Following snippet will make it more clear:</p>
 
-<p>Jekyll also offers powerful support for code snippets:</p>
+<p>Here, we are creating a new method, <code class="highlighter-rouge">method_get_updated_at()</code></p>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">print_hi</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
-  <span class="nb">puts</span> <span class="s2">"Hi, </span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2">"</span>
-<span class="k">end</span>
-<span class="n">print_hi</span><span class="p">(</span><span class="s1">'Tom'</span><span class="p">)</span>
-<span class="c1">#=&gt; prints 'Hi, Tom' to STDOUT.</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">OR</span> <span class="k">REPLACE</span> <span class="k">FUNCTION</span> <span class="n">method_get_updated_at</span><span class="p">()</span> <span class="k">RETURNS</span> <span class="k">TRIGGER</span>
+<span class="k">LANGUAGE</span> <span class="n">plpgsql</span>
+<span class="k">AS</span> <span class="err">$$</span>
+	<span class="k">BEGIN</span>
+	  <span class="k">NEW</span><span class="p">.</span><span class="o">&lt;</span><span class="k">column_name</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">now</span><span class="p">();</span>
+	  <span class="k">RETURN</span> <span class="k">NEW</span><span class="p">;</span>
+	<span class="k">END</span><span class="p">;</span>
+<span class="err">$$</span><span class="p">;</span></code></pre></figure>
 
-<p>Check out the <a href="http://jekyllrb.com">Jekyll docs</a> for more info on how to get the most out of Jekyll. File all bugs/feature requests at <a href="https://github.com/jekyll/jekyll">Jekyll’s GitHub repo</a>. If you have questions, you can ask them on <a href="https://github.com/jekyll/jekyll-help">Jekyll’s dedicated Help repository</a>.</p>
+<p>Once it is created, use the following snippet to trigger it:</p>
 
+<figure class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TRIGGER</span> <span class="n">trigger_</span><span class="o">&lt;</span><span class="k">column_name</span><span class="o">&gt;</span>
+<span class="k">BEFORE</span> <span class="k">UPDATE</span> <span class="k">ON</span> <span class="o">&lt;</span><span class="k">table_name</span><span class="o">&gt;</span>
+<span class="k">FOR</span> <span class="k">EACH</span> <span class="k">ROW</span>
+<span class="k">EXECUTE</span> <span class="k">PROCEDURE</span> <span class="n">method_get_updated_at</span><span class="p">();</span></code></pre></figure>
+
+<p>If you want to delete a Trigger, you can use this simple query:</p>
+
+<figure class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">DROP</span> <span class="k">TRIGGER</span> <span class="n">IF</span> <span class="k">EXISTS</span> <span class="n">trigger_</span><span class="o">&lt;</span><span class="k">column_name</span><span class="o">&gt;</span> <span class="k">ON</span> <span class="o">&lt;</span><span class="k">table_name</span><span class="o">&gt;</span></code></pre></figure>
+
+<p><b>Note:</b> Please update the <table_name> and <column_name> accordingly and execute the code for your particular database. Also, note that, some web frameworks (like Rails) manage such columns(created_at, updated_at) automatically.</column_name></table_name></p>
 
 </div>
 
