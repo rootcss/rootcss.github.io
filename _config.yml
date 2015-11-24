@@ -1,6 +1,6 @@
 # Site settings
 title: rootcss
-description: Big Data/Data Engineer | Full Stack Developer | Researcher | Data Science | DevOps | Security | Shekhar Singh
+description: Blog of Shekhar Singh a.k.a rootcss | Big Data/Data Engineer | Full Stack Developer | Researcher | Data Science | DevOps | Security | Shekhar Singh
 
 baseurl: "" # the subpath of your site, e.g. /blog/
 url: "http://rootcss.github.io" # the base hostname & protocol for your site
@@ -19,5 +19,3 @@ google_analytics: 'UA-70603998-1'
 
 # Build settings
 markdown: kramdown
-
-#excerpt_separator: ""
