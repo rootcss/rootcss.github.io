@@ -4,14 +4,17 @@ description: >
   I will write the description here...
 
 baseurl: "" # the subpath of your site, e.g. /blog/
-url: "http://rootcssblog.github.io" # the base hostname & protocol for your site
+url: "http://rootcss.github.io" # the base hostname & protocol for your site
 
 author:
   fullname: Shekhar Singh
-  googleplus: https://www.google.com/+ShekharSingh3
+  googleplus: ShekharSingh3
   github: rootcss
   twitter: rootcss
   disqus: rootcss
+  facebook: rootcss
+  linkedin: cshekharsingh
+  stackoverflow: users/4908717/rootcss
 
 google_analytics: 'UA-70603998-1'
 

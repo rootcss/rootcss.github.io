@@ -4,10 +4,10 @@
     <title>rootcss</title>
     <description>I will write the description here...
 </description>
-    <link>http://rootcssblog.github.io/</link>
-    <atom:link href="http://rootcssblog.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 25 Nov 2015 01:05:44 +0530</pubDate>
-    <lastBuildDate>Wed, 25 Nov 2015 01:05:44 +0530</lastBuildDate>
+    <link>http://rootcss.github.io/</link>
+    <atom:link href="http://rootcss.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Wed, 25 Nov 2015 01:11:22 +0530</pubDate>
+    <lastBuildDate>Wed, 25 Nov 2015 01:11:22 +0530</lastBuildDate>
     <generator>Jekyll v3.0.1</generator>
     
       <item>
@@ -41,8 +41,8 @@
 &lt;p&gt;&lt;b&gt;Note:&lt;/b&gt; Please update the &lt;table_name&gt; and &lt;column_name&gt; accordingly and execute the code for your particular database. Also, note that, some web frameworks (like Rails) manage such columns(created_at, updated_at) automatically.&lt;/column_name&gt;&lt;/table_name&gt;&lt;/p&gt;
 </description>
         <pubDate>Wed, 25 Nov 2015 00:04:01 +0530</pubDate>
-        <link>http://rootcssblog.github.io/devops/hacker/programming/2015/11/25/postgres-update-timestamp-when-row-is-updated.html</link>
-        <guid isPermaLink="true">http://rootcssblog.github.io/devops/hacker/programming/2015/11/25/postgres-update-timestamp-when-row-is-updated.html</guid>
+        <link>http://rootcss.github.io/devops/hacker/programming/2015/11/25/postgres-update-timestamp-when-row-is-updated.html</link>
+        <guid isPermaLink="true">http://rootcss.github.io/devops/hacker/programming/2015/11/25/postgres-update-timestamp-when-row-is-updated.html</guid>
         
         
         <category>DevOps</category>
@@ -68,8 +68,8 @@
 &lt;p&gt;&lt;b&gt;Note:&lt;/b&gt; Yes, you’ll have to use &lt;code class=&quot;highlighter-rouge&quot;&gt;&#39;localhost&#39;&lt;/code&gt;.&lt;/p&gt;
 </description>
         <pubDate>Wed, 25 Nov 2015 00:04:01 +0530</pubDate>
-        <link>http://rootcssblog.github.io/devops/hacker/programming/2015/11/25/accessing-postgreSQL-through-ssh-tunnel.html</link>
-        <guid isPermaLink="true">http://rootcssblog.github.io/devops/hacker/programming/2015/11/25/accessing-postgreSQL-through-ssh-tunnel.html</guid>
+        <link>http://rootcss.github.io/devops/hacker/programming/2015/11/25/accessing-postgreSQL-through-ssh-tunnel.html</link>
+        <guid isPermaLink="true">http://rootcss.github.io/devops/hacker/programming/2015/11/25/accessing-postgreSQL-through-ssh-tunnel.html</guid>
         
         
         <category>DevOps</category>
@@ -85,8 +85,8 @@
         <description>&lt;p&gt;Hey there! Welcome :)&lt;/p&gt;
 </description>
         <pubDate>Mon, 07 Sep 2015 05:04:01 +0530</pubDate>
-        <link>http://rootcssblog.github.io/2015/09/07/new.html</link>
-        <guid isPermaLink="true">http://rootcssblog.github.io/2015/09/07/new.html</guid>
+        <link>http://rootcss.github.io/2015/09/07/new.html</link>
+        <guid isPermaLink="true">http://rootcss.github.io/2015/09/07/new.html</guid>
         
         
       </item>
