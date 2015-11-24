@@ -4,11 +4,11 @@
         <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title> rootcss</title>
+<title> Accessing PostgreSQL server through a SSH Tunnel — (Port Forwarding) &raquo;  rootcss</title>
 <meta name="description" content="I will write the description here...
 ">
-
-<link rel="canonical" href="http://rootcssblog.github.io/categories/programming/">
+<meta name="keywords" content="">
+<link rel="canonical" href="http://rootcssblog.github.io/devops/hacker/programming/2015/11/25/accessing-postgreSQL-through-ssh-tunnel.html">
         
 
 
@@ -16,7 +16,7 @@
 
 <!-- Twitter Cards -->
 <meta name="twitter:card" content="summary" />
-<meta name="twitter:title" content="rootcss" />
+<meta name="twitter:title" content="Accessing PostgreSQL server through a SSH Tunnel" />
 <meta name="twitter:description" content="I will write the description here...
 " />
 <meta name="twitter:image" content="http://rootcssblog.github.io" />
@@ -28,10 +28,10 @@
 <!-- Open Graph -->
 <meta property="og:locale" content="">
 <meta property="og:type" content="article">
-<meta property="og:title" content="rootcss">
+<meta property="og:title" content="Accessing PostgreSQL server through a SSH Tunnel">
 <meta property="og:description" content="I will write the description here...
 ">
-<meta property="og:url" content="http://rootcssblog.github.io/categories/programming/">
+<meta property="og:url" content="http://rootcssblog.github.io/devops/hacker/programming/2015/11/25/accessing-postgreSQL-through-ssh-tunnel.html">
 <meta property="og:site_name" content="rootcss">
 
         <link href='http://fonts.googleapis.com/css?family=Inconsolata:400,700' rel='stylesheet' type='text/css'>
@@ -93,58 +93,49 @@
     </ul>
 </header>
 
-            
-
-<h1 class="page-title">
-    <div class="page-title__text"></div>
-    <div class="page-title__subtitle">Articles on the category <strong>‘’</strong></div>
+            <h1 class="page-title post-title">
+    <div class="page-title__text post-title__text">Accessing PostgreSQL server through a SSH Tunnel</div>
+    <div class="page-title__subtitle post-title__subtitle">(Port Forwarding)</div>
 </h1>
 
-<ul class="list-posts">
-    
-    
-        
-            <li class="post-teaser">
-                <a href="/devops/hacker/programming/2015/11/25/postgres-update-timestamp-when-row-is-updated.html">
-                    <span class="post-teaser__title">PostgreSQL: update timestamp when row(s) is updated</span>
-                    <span class="post-teaser__date">25 November 2015</span>
-                </a>
-            </li>
-            
-        
-    
-        
-            <li class="post-teaser">
-                <a href="/devops/hacker/programming/2015/11/25/accessing-postgreSQL-through-ssh-tunnel.html">
-                    <span class="post-teaser__title">Accessing PostgreSQL server through a SSH Tunnel</span>
-                    <span class="post-teaser__date">25 November 2015</span>
-                </a>
-            </li>
-            
-        
-    
-        
-    
+<div class="content">
+    <p><b>Step 1:</b> Check the SSH connectivity with the server, verify username and password.</p>
 
-    
-</ul>
+<p><b>Step 2:</b> Create the tunnel in your local system by executing the following command (It will prompt for password):</p>
 
-<div class="explore">
-    <div class="explore__devider">*****</div>
-    <div class="explore__label">Explore the different categories</div>
-    <ul class="categories">
-        
-            <li class="categories__item"><a href="/categories/bigdata">Big Data</a></li>
-        
-            <li class="categories__item"><a href="/categories/devops">DevOps</a></li>
-        
-            <li class="categories__item"><a href="/categories/programming">Programming</a></li>
-        
-            <li class="categories__item"><a href="/categories/hacker">Hacker</a></li>
-        
-		<li class="categories__item"><a href="/">All</a></li>
-    </ul>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">ssh -fNg -L 5555:localhost:5432 &lt;user&gt;@&lt;server&gt;</code></pre></figure>
+
+<p><b>Step 3:</b> Now, open your PostgreSQL client (eg, <code class="highlighter-rouge">pgAdmin 3</code> or <code class="highlighter-rouge">DBeaver</code> or <code class="highlighter-rouge">Postico</code> for OS X or <code class="highlighter-rouge">Terminal</code>) and fill in the connection details as usual. Check the image below.</p>
+
+<p><img src="/assets/images/postico-port-forwarding.png" alt="Postico DB connection " class="center-image image-size-medium" /></p>
+
+<p><b>Note:</b> Yes, you’ll have to use <code class="highlighter-rouge">'localhost'</code>.</p>
+
 </div>
+
+<div class="about">
+    <div class="about__devider">*****</div>
+    <div class="about__text">
+        Written by <strong>  Shekhar Singh </strong>
+        on <strong>25 November 2015</strong>
+    </div>
+</div>
+
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = 'rootcss';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
 
         </div>
 

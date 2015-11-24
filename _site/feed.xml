@@ -6,8 +6,8 @@
 </description>
     <link>http://rootcssblog.github.io/</link>
     <atom:link href="http://rootcssblog.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 25 Nov 2015 00:37:28 +0530</pubDate>
-    <lastBuildDate>Wed, 25 Nov 2015 00:37:28 +0530</lastBuildDate>
+    <pubDate>Wed, 25 Nov 2015 01:03:44 +0530</pubDate>
+    <lastBuildDate>Wed, 25 Nov 2015 01:03:44 +0530</lastBuildDate>
     <generator>Jekyll v3.0.1</generator>
     
       <item>
@@ -43,6 +43,33 @@
         <pubDate>Wed, 25 Nov 2015 00:04:01 +0530</pubDate>
         <link>http://rootcssblog.github.io/devops/hacker/programming/2015/11/25/postgres-update-timestamp-when-row-is-updated.html</link>
         <guid isPermaLink="true">http://rootcssblog.github.io/devops/hacker/programming/2015/11/25/postgres-update-timestamp-when-row-is-updated.html</guid>
+        
+        
+        <category>DevOps</category>
+        
+        <category>Hacker</category>
+        
+        <category>Programming</category>
+        
+      </item>
+    
+      <item>
+        <title>Accessing PostgreSQL server through a SSH Tunnel</title>
+        <description>&lt;p&gt;&lt;b&gt;Step 1:&lt;/b&gt; Check the SSH connectivity with the server, verify username and password.&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;Step 2:&lt;/b&gt; Create the tunnel in your local system by executing the following command (It will prompt for password):&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;ssh -fNg -L 5555:localhost:5432 &amp;lt;user&amp;gt;@&amp;lt;server&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;&lt;b&gt;Step 3:&lt;/b&gt; Now, open your PostgreSQL client (eg, &lt;code class=&quot;highlighter-rouge&quot;&gt;pgAdmin 3&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;DBeaver&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;Postico&lt;/code&gt; for OS X or &lt;code class=&quot;highlighter-rouge&quot;&gt;Terminal&lt;/code&gt;) and fill in the connection details as usual. Check the image below.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/postico-port-forwarding.png&quot; alt=&quot;Postico DB connection &quot; class=&quot;center-image image-size-medium&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;Note:&lt;/b&gt; Yes, you’ll have to use &lt;code class=&quot;highlighter-rouge&quot;&gt;&#39;localhost&#39;&lt;/code&gt;.&lt;/p&gt;
+</description>
+        <pubDate>Wed, 25 Nov 2015 00:04:01 +0530</pubDate>
+        <link>http://rootcssblog.github.io/devops/hacker/programming/2015/11/25/accessing-postgreSQL-through-ssh-tunnel.html</link>
+        <guid isPermaLink="true">http://rootcssblog.github.io/devops/hacker/programming/2015/11/25/accessing-postgreSQL-through-ssh-tunnel.html</guid>
         
         
         <category>DevOps</category>
