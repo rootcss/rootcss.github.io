@@ -9,7 +9,7 @@
 Shekhar Singh - Big Data/Data Engineer | Full Stack Developer | Researcher | Data Science | DevOps | Security
 </title>
 
-<meta name="description" content="Shekhar Singh | Big Data/Data Engineer | Full Stack Developer | Researcher | Data Science | DevOps | Security | Shekhar Singh">
+<meta name="description" content="Blog of Shekhar Singh a.k.a rootcss | Big Data/Data Engineer | Full Stack Developer | Researcher | Data Science | DevOps | Security | Shekhar Singh">
 
 <meta name="keywords" content="">
 
@@ -22,7 +22,7 @@ Shekhar Singh - Big Data/Data Engineer | Full Stack Developer | Researcher | Dat
 <!-- Twitter Cards -->
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="PostgreSQL: update timestamp when row(s) is updated" />
-<meta name="twitter:description" content="Shekhar Singh | Big Data/Data Engineer | Full Stack Developer | Researcher | Data Science | DevOps | Security | Shekhar Singh" />
+<meta name="twitter:description" content="Blog of Shekhar Singh a.k.a rootcss | Big Data/Data Engineer | Full Stack Developer | Researcher | Data Science | DevOps | Security | Shekhar Singh" />
 <meta name="twitter:image" content="http://rootcss.github.io" />
 
 <!-- Google plus -->
@@ -33,7 +33,7 @@ Shekhar Singh - Big Data/Data Engineer | Full Stack Developer | Researcher | Dat
 <meta property="og:locale" content="">
 <meta property="og:type" content="article">
 <meta property="og:title" content="PostgreSQL: update timestamp when row(s) is updated">
-<meta property="og:description" content="Shekhar Singh | Big Data/Data Engineer | Full Stack Developer | Researcher | Data Science | DevOps | Security | Shekhar Singh">
+<meta property="og:description" content="Blog of Shekhar Singh a.k.a rootcss | Big Data/Data Engineer | Full Stack Developer | Researcher | Data Science | DevOps | Security | Shekhar Singh">
 <meta property="og:url" content="http://rootcss.github.io/devops/hacker/programming/2015/11/25/postgres-update-timestamp-when-row-is-updated.html">
 <meta property="og:site_name" content="rootcss">
 
@@ -134,6 +134,20 @@ Shekhar Singh - Big Data/Data Engineer | Full Stack Developer | Researcher | Dat
 <figure class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">DROP</span> <span class="k">TRIGGER</span> <span class="n">IF</span> <span class="k">EXISTS</span> <span class="n">trigger_</span><span class="o">&lt;</span><span class="k">column_name</span><span class="o">&gt;</span> <span class="k">ON</span> <span class="o">&lt;</span><span class="k">table_name</span><span class="o">&gt;</span></code></pre></figure>
 
 <p><b>Note:</b> Please update the <table_name> and <column_name> accordingly and execute the code for your particular database. Also, note that, some web frameworks (like Rails) manage such columns(created_at, updated_at) automatically.</column_name></table_name></p>
+
+<p>ALso, if you want to view all existing methods, run this query:</p>
+
+<figure class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">SELECT</span>  <span class="n">p</span><span class="p">.</span><span class="n">proname</span>
+<span class="k">FROM</span>    <span class="n">pg_catalog</span><span class="p">.</span><span class="n">pg_namespace</span> <span class="n">n</span>
+<span class="k">JOIN</span>    <span class="n">pg_catalog</span><span class="p">.</span><span class="n">pg_proc</span> <span class="n">p</span>
+<span class="k">ON</span>      <span class="n">p</span><span class="p">.</span><span class="n">pronamespace</span> <span class="o">=</span> <span class="n">n</span><span class="p">.</span><span class="n">oid</span>
+<span class="k">WHERE</span>   <span class="n">n</span><span class="p">.</span><span class="n">nspname</span> <span class="o">=</span> <span class="s1">'public'</span></code></pre></figure>
+
+<p>And, run this query to view all Triggers:</p>
+
+<figure class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">pg_trigger</span><span class="p">;</span></code></pre></figure>
+
+<p>Thanks!</p>
 
 </div>
 

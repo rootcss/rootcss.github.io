@@ -40,3 +40,19 @@ DROP TRIGGER IF EXISTS trigger_<column_name> ON <table_name>
 {% endhighlight %}
 
 <b>Note:</b> Please update the <table_name> and <column_name> accordingly and execute the code for your particular database. Also, note that, some web frameworks (like Rails) manage such columns(created_at, updated_at) automatically.
+
+ALso, if you want to view all existing methods, run this query:
+{% highlight sql %}
+SELECT  p.proname
+FROM    pg_catalog.pg_namespace n
+JOIN    pg_catalog.pg_proc p
+ON      p.pronamespace = n.oid
+WHERE   n.nspname = 'public'
+{% endhighlight %}
+
+And, run this query to view all Triggers:
+{% highlight sql %}
+SELECT * FROM pg_trigger;
+{% endhighlight %}
+
+Thanks!

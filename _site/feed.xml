@@ -2,11 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>rootcss</title>
-    <description>Shekhar Singh | Big Data/Data Engineer | Full Stack Developer | Researcher | Data Science | DevOps | Security | Shekhar Singh</description>
+    <description>Blog of Shekhar Singh a.k.a rootcss | Big Data/Data Engineer | Full Stack Developer | Researcher | Data Science | DevOps | Security | Shekhar Singh</description>
     <link>http://rootcss.github.io/</link>
     <atom:link href="http://rootcss.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 25 Nov 2015 02:27:58 +0530</pubDate>
-    <lastBuildDate>Wed, 25 Nov 2015 02:27:58 +0530</lastBuildDate>
+    <pubDate>Wed, 25 Nov 2015 22:00:04 +0530</pubDate>
+    <lastBuildDate>Wed, 25 Nov 2015 22:00:04 +0530</lastBuildDate>
     <generator>Jekyll v3.0.1</generator>
     
       <item>
