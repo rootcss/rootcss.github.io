@@ -5,14 +5,15 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>
- rootcss
+ Linux I/O redirection examples —  &raquo;  rootcss
 Shekhar Singh - Big Data/Data Engineer | Full Stack Developer | Researcher | Data Science | DevOps | Security
 </title>
 
 <meta name="description" content="Blog of Shekhar Singh a.k.a rootcss | Big Data/Data Engineer | Full Stack Developer | Researcher | Data Science | DevOps | Security | Shekhar Singh">
 
+<meta name="keywords" content="">
 
-<link rel="canonical" href="http://rootcss.github.io/">
+<link rel="canonical" href="http://rootcss.github.io/hacker/programming/linux/2016/02/15/linux-io-redirections.html">
         
 
 
@@ -20,7 +21,7 @@ Shekhar Singh - Big Data/Data Engineer | Full Stack Developer | Researcher | Dat
 
 <!-- Twitter Cards -->
 <meta name="twitter:card" content="summary" />
-<meta name="twitter:title" content="rootcss" />
+<meta name="twitter:title" content="Linux I/O redirection examples" />
 <meta name="twitter:description" content="Blog of Shekhar Singh a.k.a rootcss | Big Data/Data Engineer | Full Stack Developer | Researcher | Data Science | DevOps | Security | Shekhar Singh" />
 <meta name="twitter:image" content="http://rootcss.github.io" />
 
@@ -31,9 +32,9 @@ Shekhar Singh - Big Data/Data Engineer | Full Stack Developer | Researcher | Dat
 <!-- Open Graph -->
 <meta property="og:locale" content="">
 <meta property="og:type" content="article">
-<meta property="og:title" content="rootcss">
+<meta property="og:title" content="Linux I/O redirection examples">
 <meta property="og:description" content="Blog of Shekhar Singh a.k.a rootcss | Big Data/Data Engineer | Full Stack Developer | Researcher | Data Science | DevOps | Security | Shekhar Singh">
-<meta property="og:url" content="http://rootcss.github.io/">
+<meta property="og:url" content="http://rootcss.github.io/hacker/programming/linux/2016/02/15/linux-io-redirections.html">
 <meta property="og:site_name" content="rootcss">
 
         <link href='http://fonts.googleapis.com/css?family=Inconsolata:400,700' rel='stylesheet' type='text/css'>
@@ -100,73 +101,83 @@ Shekhar Singh - Big Data/Data Engineer | Full Stack Developer | Researcher | Dat
     </ul>
 </header>
 
-            <h1 class="page-title">
-    <div class="page-title__text"></div>
-    <div class="page-title__subtitle"></div>
+            <h1 class="page-title post-title">
+    <div class="page-title__text post-title__text">Linux I/O redirection examples</div>
+    <div class="page-title__subtitle post-title__subtitle"></div>
 </h1>
 
-<br><br>
-<ul class="list-posts">
-    
-        <li class="post-teaser">
-            <a href="/devops/hacker/programming/2016/03/25/rabbitmq-queues-overflow-automated-deletion.html">
-                <span class="post-teaser__title">RabbitMQ: Automated deletion of 1000s of queues</span>
-                <span class="post-teaser__date">25 March 2016</span>
-            </a>
-        </li>
-    
-        <li class="post-teaser">
-            <a href="/hacker/programming/linux/2016/02/15/linux-io-redirections.html">
-                <span class="post-teaser__title">Linux I/O redirection examples</span>
-                <span class="post-teaser__date">15 February 2016</span>
-            </a>
-        </li>
-    
-        <li class="post-teaser">
-            <a href="/devops/hacker/programming/2015/11/25/postgres-update-timestamp-when-row-is-updated.html">
-                <span class="post-teaser__title">PostgreSQL: update timestamp when row(s) is updated</span>
-                <span class="post-teaser__date">25 November 2015</span>
-            </a>
-        </li>
-    
-        <li class="post-teaser">
-            <a href="/devops/hacker/programming/2015/11/25/accessing-postgreSQL-through-ssh-tunnel.html">
-                <span class="post-teaser__title">Accessing PostgreSQL server through a SSH Tunnel</span>
-                <span class="post-teaser__date">25 November 2015</span>
-            </a>
-        </li>
-    
-        <li class="post-teaser">
-            <a href="/2015/09/07/new.html">
-                <span class="post-teaser__title">Welcome!</span>
-                <span class="post-teaser__date">07 September 2015</span>
-            </a>
-        </li>
-    
-</ul>
+<div class="content">
+    <p>I/O redirections are one of the prettiest things we have in linux (IMO!) Following are commands and their usage.
+<br /><br />
+<code class="highlighter-rouge">command_output &gt;&gt; file </code>
+  Redirects stdout to a file. Creates the file if not present, otherwise appends.</p>
+
+<p><code class="highlighter-rouge"> &gt; filename </code>
+  Truncates the file to zero length. If file is not present, creates zero-length file (same effect as <code class="highlighter-rouge">touch</code>).</p>
+
+<p><code class="highlighter-rouge"> 1&gt;filename </code>
+  Redirects stdout to the file “filename”.</p>
+
+<p><code class="highlighter-rouge"> 1&gt;&gt;filename </code>
+  Redirects and appends stdout to file “filename”.</p>
+
+<p><code class="highlighter-rouge"> 2&gt;filename </code>
+  Redirects stderr to file “filename”.</p>
+
+<p><code class="highlighter-rouge"> 2&gt;&gt;filename </code>
+  Redirects and appends stderr to file “filename”.</p>
+
+<p><code class="highlighter-rouge"> &amp;&gt;filename </code>
+  Redirects both stdout and stderr to file “filename”.</p>
+
+<p><code class="highlighter-rouge"> 2&gt;&amp;1 </code>
+  Redirects stderr to stdout. Error messages get sent to same place as standard output.</p>
+<hr />
+
+<p>Some quality explanation now ;) Take the example of this command: 
+<br /><code class="highlighter-rouge"> cmd &gt;&gt; file.log 2&gt;&amp;1 </code>
+<br />
+This command will redirect all the output of command(cmd) into <code class="highlighter-rouge">file.log</code>.<br />
+<code class="highlighter-rouge">2</code> refers to Second file descriptor of the process i.e., stderr<br />
+<code class="highlighter-rouge">&gt;</code> refers to redirection<br />
+<code class="highlighter-rouge">&amp;1</code> means that the target of redirection would be same as <code class="highlighter-rouge">1</code> i.e, first descriptor i.e, stdout.<br /></p>
+
+<p>Thanks!</p>
+
+<style type="text/css">
+code {
+    font-weight: bold;
+    font-size: 18px;
+    background: #ddd;
+    padding: 3px;
+}   
+</style>
 
 
-<div class="explore">
-    <div class="explore__devider">*****</div>
-    <div class="explore__label">
-	    <a title="Check my 404 error page. It's Cool ;)" href="/404.html">404</a>
-	    | <a href="/sitemap.xml">Sitemap</a>
-	</div>    
-    
-    <!-- <div class="explore__label">Explore the different categories</div> -->
-    <ul class="categories">
-        
-            <li class="categories__item"><a href="/categories/bigdata">Big Data</a></li>
-        
-            <li class="categories__item"><a href="/categories/devops">DevOps</a></li>
-        
-            <li class="categories__item"><a href="/categories/programming">Programming</a></li>
-        
-            <li class="categories__item"><a href="/categories/hacker">Hacker</a></li>
-        
-		<li class="categories__item"><a href="/">All</a></li>
-    </ul>
 </div>
+
+<div class="about">
+    <div class="about__devider">*****</div>
+    <div class="about__text">
+        Written by <strong>  Shekhar Singh </strong>
+        on <strong>15 February 2016</strong>
+    </div>
+</div>
+
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = 'rootcss';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
 
 
         </div>

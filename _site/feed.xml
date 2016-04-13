@@ -5,9 +5,119 @@
     <description>Blog of Shekhar Singh a.k.a rootcss | Big Data/Data Engineer | Full Stack Developer | Researcher | Data Science | DevOps | Security | Shekhar Singh</description>
     <link>http://rootcss.github.io/</link>
     <atom:link href="http://rootcss.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 28 Mar 2016 13:57:29 +0530</pubDate>
-    <lastBuildDate>Mon, 28 Mar 2016 13:57:29 +0530</lastBuildDate>
+    <pubDate>Thu, 14 Apr 2016 01:36:52 +0530</pubDate>
+    <lastBuildDate>Thu, 14 Apr 2016 01:36:52 +0530</lastBuildDate>
     <generator>Jekyll v3.0.1</generator>
+    
+      <item>
+        <title>RabbitMQ: Automated deletion of 1000s of queues</title>
+        <description>&lt;p&gt;Recently, I was using &lt;a href=&quot;https://github.com/jondot/sneakers&quot; target=&quot;_blank&quot;&gt;sneakers&lt;/a&gt; for rails, which is a small framework for Ruby and RabbitMQ. One issue with sneakers is that, if you have faulty configuration for a queue or you do not provide a queue name, it leaves it upto rabbitmq to define it. So, for some reason (which I don’t want to focus on), we had more than 1600 queues created on that particular exchange, and unfortunately they were not Auto-delete and we didn’t want other exchanges and queues to get hurt because of this ;)&lt;/p&gt;
+
+&lt;p&gt;Anyway, Now the challenge was to delete them, because for that you have to manually click on each queue, select ‘Delete’ on the new page and finally, confirm it on pop-up.&lt;/p&gt;
+
+&lt;p&gt;I was like, :O&lt;/p&gt;
+
+&lt;p&gt;Anyways, Thanks to handy APIs of rabbitmq, these are the following few commands I used in order to delete them quickly. (rabbitmq generally creates default queues with names like &lt;code class=&quot;highlighter-rouge&quot;&gt;amq.gen--*&lt;/code&gt;)&lt;/p&gt;
+
+&lt;p&gt;First let’s list all the queues in the form of bash arrays:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;rabbitmqadmin --host&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;lt;mqserver.hostname.com&amp;gt; --port&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;443 --ssl --vhost&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;lt;your_vhost&amp;gt; --username&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;lt;your_username&amp;gt; --password&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;lt;your_password&amp;gt; list queues | awk &lt;span class=&quot;s1&quot;&gt;&#39;{print $2}&#39;&lt;/span&gt; | grep amq.gen  | xargs | sed -e &lt;span class=&quot;s1&quot;&gt;&#39;s/ /&quot; &quot;/g&#39;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Now copy the output of it, declare as an array and run a loop to delete them all.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nb&quot;&gt;declare&lt;/span&gt; -a &lt;span class=&quot;nv&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;amq.gen--PxKpFBHkIxxebJEwbmV6g&quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;amq.gen--Q6BeLdfGHsXY6RgVmu8Ig&quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;amq.gen--WI0hRAHCOkPIrEULYc1vQ&quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;amq.gen--XufS0RrnfZUXyf0Rt1tAg&quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;amq.gen--_NXdwlSHYDJwGDiuX8_XA&quot;&lt;/span&gt; ......&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;i &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[@]&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;do
+   &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$i&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+   rabbitmqadmin --host&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;lt;mqserver.hostname.com&amp;gt; --port&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;443 --ssl --vhost&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;lt;your_vhost&amp;gt; --username&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;lt;your_username&amp;gt; --password&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;lt;your_password&amp;gt; delete queue &lt;span class=&quot;nv&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$i&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;done&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;That’s it. These small hacks makes me fall in love with programming everyday &amp;lt;3&lt;/p&gt;
+
+&lt;p&gt;Thanks!&lt;/p&gt;
+
+&lt;style type=&quot;text/css&quot;&gt;
+pre {
+    white-space: pre-wrap;
+}
+&lt;/style&gt;
+
+</description>
+        <pubDate>Fri, 25 Mar 2016 00:04:01 +0530</pubDate>
+        <link>http://rootcss.github.io/devops/hacker/programming/2016/03/25/rabbitmq-queues-overflow-automated-deletion.html</link>
+        <guid isPermaLink="true">http://rootcss.github.io/devops/hacker/programming/2016/03/25/rabbitmq-queues-overflow-automated-deletion.html</guid>
+        
+        
+        <category>DevOps</category>
+        
+        <category>Hacker</category>
+        
+        <category>Programming</category>
+        
+      </item>
+    
+      <item>
+        <title>Linux I/O redirection examples</title>
+        <description>&lt;p&gt;I/O redirections are one of the prettiest things we have in linux (IMO!) Following are commands and their usage.
+&lt;br /&gt;&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;command_output &amp;gt;&amp;gt; file &lt;/code&gt;
+  Redirects stdout to a file. Creates the file if not present, otherwise appends.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt; &amp;gt; filename &lt;/code&gt;
+  Truncates the file to zero length. If file is not present, creates zero-length file (same effect as &lt;code class=&quot;highlighter-rouge&quot;&gt;touch&lt;/code&gt;).&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt; 1&amp;gt;filename &lt;/code&gt;
+  Redirects stdout to the file “filename”.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt; 1&amp;gt;&amp;gt;filename &lt;/code&gt;
+  Redirects and appends stdout to file “filename”.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt; 2&amp;gt;filename &lt;/code&gt;
+  Redirects stderr to file “filename”.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt; 2&amp;gt;&amp;gt;filename &lt;/code&gt;
+  Redirects and appends stderr to file “filename”.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt; &amp;amp;&amp;gt;filename &lt;/code&gt;
+  Redirects both stdout and stderr to file “filename”.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt; 2&amp;gt;&amp;amp;1 &lt;/code&gt;
+  Redirects stderr to stdout. Error messages get sent to same place as standard output.&lt;/p&gt;
+&lt;hr /&gt;
+
+&lt;p&gt;Some quality explanation now ;) Take the example of this command: 
+&lt;br /&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt; cmd &amp;gt;&amp;gt; file.log 2&amp;gt;&amp;amp;1 &lt;/code&gt;
+&lt;br /&gt;
+This command will redirect all the output of command(cmd) into &lt;code class=&quot;highlighter-rouge&quot;&gt;file.log&lt;/code&gt;.&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;2&lt;/code&gt; refers to Second file descriptor of the process i.e., stderr&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;gt;&lt;/code&gt; refers to redirection&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;amp;1&lt;/code&gt; means that the target of redirection would be same as &lt;code class=&quot;highlighter-rouge&quot;&gt;1&lt;/code&gt; i.e, first descriptor i.e, stdout.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;Thanks!&lt;/p&gt;
+
+&lt;style type=&quot;text/css&quot;&gt;
+code {
+    font-weight: bold;
+    font-size: 18px;
+    background: #ddd;
+    padding: 3px;
+}   
+&lt;/style&gt;
+
+</description>
+        <pubDate>Mon, 15 Feb 2016 15:22:18 +0530</pubDate>
+        <link>http://rootcss.github.io/hacker/programming/linux/2016/02/15/linux-io-redirections.html</link>
+        <guid isPermaLink="true">http://rootcss.github.io/hacker/programming/linux/2016/02/15/linux-io-redirections.html</guid>
+        
+        
+        <category>Hacker</category>
+        
+        <category>Programming</category>
+        
+        <category>Linux</category>
+        
+      </item>
     
       <item>
         <title>PostgreSQL: update timestamp when row(s) is updated</title>
