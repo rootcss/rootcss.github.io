@@ -2,7 +2,7 @@
 layout: post
 title: RabbitMQ - Automated deletion of 1000s of queues
 tags:
-- DevOps
+- RabbitMQ
 - Hacker
 - Programming
 ---

@@ -3,10 +3,9 @@ layout: post
 title: Accessing PostgreSQL server through a SSH Tunnel
 subtitle: (Port Forwarding)
 tags:
-- DevOps
+- PostgreSQL
+- SSH Tunnel
 - Hacker
-- Programming
-- Post
 ---
 <br>
 

@@ -2,9 +2,9 @@
 layout: post
 title: PostgreSQL - update timestamp when row(s) is updated
 tags:
-- DevOps
+- PostgreSQL
 - Hacker
-- Programming
+- Data
 ---
 
 <br>

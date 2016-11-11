@@ -7,9 +7,13 @@
 	  <meta name="author" content="{{ site.author }}" />
     <meta name="description" content="{{ site.description }}">
     <link rel="favicon" href="{{ site.baseurl }}static/img/favicon.ico">
+    {% if page.tags %}
+      <meta name="keywords" content="{{ page.tags | join: ', ' }}">
+    {% endif %}
+    <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.url }}">
 
     {% if page.title %}
-      <title>{{ page.title }}</title>
+      <title>{{ page.title }} | {{ site.author }} | www.shekharsingh.com</title>
     {% else %}
       <title>{{ site.title }}</title>
     {% endif %}
