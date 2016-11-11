@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>http://localhost:3000/</loc>
+    <lastmod>2016-11-12T04:17:56+05:30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+    <url>
+      <loc>http://localhost:3000/rabbitmq-queues-overflow-automated-deletion.html</loc>
+      
+        <lastmod>2016-03-24T00:00:00+05:30</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+  
+    <url>
+      <loc>http://localhost:3000/linux-io-redirections.html</loc>
+      
+        <lastmod>2016-02-15T00:00:00+05:30</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+  
+    <url>
+      <loc>http://localhost:3000/postgres-update-timestamp-when-row-is-updated.html</loc>
+      
+        <lastmod>2015-11-24T00:00:00+05:30</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+  
+    <url>
+      <loc>http://localhost:3000/accessing-postgreSQL-through-ssh-tunnel.html</loc>
+      
+        <lastmod>2015-11-20T00:00:00+05:30</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+  
+    <url>
+      <loc>http://localhost:3000/new.html</loc>
+      
+        <lastmod>2011-12-31T00:00:00+05:30</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+  
+  
+  <url>
+    <loc>http://localhost:3000/help/2013-02-10-post5</loc>
+    
+      <lastmod>2016-11-12T04:17:56+05:30</lastmod>
+    
+    
+      <changefreq>monthly</changefreq>
+    
+    
+      <priority>0.3</priority>
+    
+  </url>
+  
+  <url>
+    <loc>http://localhost:3000/help/2013-03-15-post4</loc>
+    
+      <lastmod>2016-11-12T04:17:56+05:30</lastmod>
+    
+    
+      <changefreq>monthly</changefreq>
+    
+    
+      <priority>0.3</priority>
+    
+  </url>
+  
+  <url>
+    <loc>http://localhost:3000/help/2013-04-02-post3</loc>
+    
+      <lastmod>2016-11-12T04:17:56+05:30</lastmod>
+    
+    
+      <changefreq>monthly</changefreq>
+    
+    
+      <priority>0.3</priority>
+    
+  </url>
+  
+  <url>
+    <loc>http://localhost:3000/help/2013-05-27-post2</loc>
+    
+      <lastmod>2016-11-12T04:17:56+05:30</lastmod>
+    
+    
+      <changefreq>monthly</changefreq>
+    
+    
+      <priority>0.3</priority>
+    
+  </url>
+  
+  <url>
+    <loc>http://localhost:3000/help/2013-06-05-post1</loc>
+    
+      <lastmod>2016-11-12T04:17:56+05:30</lastmod>
+    
+    
+      <changefreq>monthly</changefreq>
+    
+    
+      <priority>0.3</priority>
+    
+  </url>
+  
+  <url>
+    <loc>http://localhost:3000/static/404</loc>
+    
+      <lastmod>2016-11-12T04:17:56+05:30</lastmod>
+    
+    
+      <changefreq>monthly</changefreq>
+    
+    
+      <priority>0.3</priority>
+    
+  </url>
+  
+  <url>
+    <loc>http://localhost:3000/404</loc>
+    
+      <lastmod>2016-11-12T04:17:56+05:30</lastmod>
+    
+    
+      <changefreq>monthly</changefreq>
+    
+    
+      <priority>0.3</priority>
+    
+  </url>
+  
+  <url>
+    <loc>http://localhost:3000/about</loc>
+    
+      <lastmod>2016-11-12T04:17:56+05:30</lastmod>
+    
+    
+      <changefreq>monthly</changefreq>
+    
+    
+      <priority>0.3</priority>
+    
+  </url>
+  
+  <url>
+    <loc>http://localhost:3000/static/atom.xml</loc>
+    
+      <lastmod>2016-11-12T04:17:56+05:30</lastmod>
+    
+    
+      <changefreq>monthly</changefreq>
+    
+    
+      <priority>0.3</priority>
+    
+  </url>
+  
+  <url>
+    <loc>http://localhost:3000/atom.xml</loc>
+    
+      <lastmod>2016-11-12T04:17:56+05:30</lastmod>
+    
+    
+      <changefreq>monthly</changefreq>
+    
+    
+      <priority>0.3</priority>
+    
+  </url>
+  
+  <url>
+    <loc>http://localhost:3000/static/blog</loc>
+    
+      <lastmod>2016-11-12T04:17:56+05:30</lastmod>
+    
+    
+      <changefreq>monthly</changefreq>
+    
+    
+      <priority>0.3</priority>
+    
+  </url>
+  
+  <url>
+    <loc>http://localhost:3000/</loc>
+    
+      <lastmod>2016-11-12T04:17:56+05:30</lastmod>
+    
+    
+      <changefreq>monthly</changefreq>
+    
+    
+      <priority>0.3</priority>
+    
+  </url>
+  
+  <url>
+    <loc>http://localhost:3000/static/</loc>
+    
+      <lastmod>2016-11-12T04:17:56+05:30</lastmod>
+    
+    
+      <changefreq>monthly</changefreq>
+    
+    
+      <priority>0.3</priority>
+    
+  </url>
+  
+  <url>
+    <loc>http://localhost:3000/projects</loc>
+    
+      <lastmod>2016-11-12T04:17:56+05:30</lastmod>
+    
+    
+      <changefreq>monthly</changefreq>
+    
+    
+      <priority>0.3</priority>
+    
+  </url>
+  
+  <url>
+    <loc>http://localhost:3000/static/projects</loc>
+    
+      <lastmod>2016-11-12T04:17:56+05:30</lastmod>
+    
+    
+      <changefreq>monthly</changefreq>
+    
+    
+      <priority>0.3</priority>
+    
+  </url>
+  
+  <url>
+    <loc>http://localhost:3000/static/sitemap.xml</loc>
+    
+      <lastmod>2016-11-12T04:17:56+05:30</lastmod>
+    
+    
+      <changefreq>monthly</changefreq>
+    
+    
+      <priority>0.3</priority>
+    
+  </url>
+  
+  <url>
+    <loc>http://localhost:3000/sitemap.xml</loc>
+    
+      <lastmod>2016-11-12T04:17:56+05:30</lastmod>
+    
+    
+      <changefreq>monthly</changefreq>
+    
+    
+      <priority>0.3</priority>
+    
+  </url>
+  
+</urlset>
