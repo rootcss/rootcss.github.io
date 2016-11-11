@@ -6,7 +6,7 @@
   
   <link href="http://localhost:3000/"/>
   <id>http://localhost:3000/</id>
-  <updated>2016-11-12T04:25:27Z</updated>
+  <updated>2016-11-12T04:27:26Z</updated>
   <author>
     <name>Shekhar Singh</name>
     <email>shekhar.singh@msn.com</email>
@@ -19,34 +19,39 @@
   <id>http://localhost:3000/rabbitmq-queues-overflow-automated-deletion</id>
   <published>2016-03-24T00:00:00Z</published>
   <updated>2016-03-24T00:00:00Z</updated>
-  <content type="html"><![CDATA[ <p><br></p>
+  <content type="html"><![CDATA[ <p><br /></p>
 
-<p>Recently, I was using <a href="https://github.com/jondot/sneakers">sneakers</a> for rails, which is a small framework for Ruby and RabbitMQ. One issue with sneakers is that, if you have faulty configuration for a queue or you do not provide a queue name, it leaves it upto rabbitmq to define it. So, for some reason (which I don&rsquo;t want to focus on), we had more than 1600 queues created on that particular exchange, and unfortunately they were not Auto-delete and we didn&rsquo;t want other exchanges and queues to get hurt because of this ;)</p>
+<p>Recently, I was using <a href="https://github.com/jondot/sneakers">sneakers</a> for rails, which is a small framework for Ruby and RabbitMQ. One issue with sneakers is that, if you have faulty configuration for a queue or you do not provide a queue name, it leaves it upto rabbitmq to define it. So, for some reason (which I don’t want to focus on), we had more than 1600 queues created on that particular exchange, and unfortunately they were not Auto-delete and we didn’t want other exchanges and queues to get hurt because of this ;)</p>
 
-<p>Anyway, Now the challenge was to delete them, because for that you have to manually click on each queue, select &lsquo;Delete&rsquo; on the new page and finally, confirm it on pop-up.</p>
+<p>Anyway, Now the challenge was to delete them, because for that you have to manually click on each queue, select ‘Delete’ on the new page and finally, confirm it on pop-up.</p>
 
 <p>I was like, :O</p>
 
 <p>Anyways, Thanks to handy APIs of rabbitmq, these are the following few commands I used in order to delete them quickly. (rabbitmq generally creates default queues with names like <code>amq.gen--*</code>)</p>
 
-<p>First let&rsquo;s list all the queues in the form of bash arrays:</p>
+<p>First let’s list all the queues in the form of bash arrays:</p>
 
-<p><figure class="highlight"><pre><code class="language-bash" data-lang="bash">rabbitmqadmin &ndash;host<span class="o">=</span>&lt;mqserver.hostname.com&gt; &ndash;port<span class="o">=</span><span class="m">443</span> &ndash;ssl &ndash;vhost<span class="o">=</span>&lt;your_vhost&gt; &ndash;username<span class="o">=</span>&lt;your_username&gt; &ndash;password<span class="o">=</span>&lt;your_password&gt; list queues <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span> <span class="p">|</span> grep amq.gen  <span class="p">|</span> xargs <span class="p">|</span> sed -e <span class="s1">&#39;s/ /&quot; &quot;/g&#39;</span></code></pre></figure></p>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">rabbitmqadmin --host<span class="o">=</span>&lt;mqserver.hostname.com&gt; --port<span class="o">=</span><span class="m">443</span> --ssl --vhost<span class="o">=</span>&lt;your_vhost&gt; --username<span class="o">=</span>&lt;your_username&gt; --password<span class="o">=</span>&lt;your_password&gt; list queues <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span> <span class="p">|</span> grep amq.gen  <span class="p">|</span> xargs <span class="p">|</span> sed -e <span class="s1">&#39;s/ /&quot; &quot;/g&#39;</span></code></pre></figure>
 
 <p>Now copy the output of it, declare as an array and run a loop to delete them all.</p>
 
-<p><figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">declare</span> -a <span class="nv">arr</span><span class="o">=(</span><span class="s2">&quot;amq.gen&ndash;PxKpFBHkIxxebJEwbmV6g&quot;</span> <span class="s2">&quot;amq.gen&ndash;Q6BeLdfGHsXY6RgVmu8Ig&quot;</span> <span class="s2">&quot;amq.gen&ndash;WI0hRAHCOkPIrEULYc1vQ&quot;</span> <span class="s2">&quot;amq.gen&ndash;XufS0RrnfZUXyf0Rt1tAg&quot;</span> <span class="s2">&quot;amq.gen&ndash;_NXdwlSHYDJwGDiuX8_XA&quot;</span> &hellip;&hellip;<span class="o">)</span></p>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">declare</span> -a <span class="nv">arr</span><span class="o">=(</span><span class="s2">&quot;amq.gen--PxKpFBHkIxxebJEwbmV6g&quot;</span> <span class="s2">&quot;amq.gen--Q6BeLdfGHsXY6RgVmu8Ig&quot;</span> <span class="s2">&quot;amq.gen--WI0hRAHCOkPIrEULYc1vQ&quot;</span> <span class="s2">&quot;amq.gen--XufS0RrnfZUXyf0Rt1tAg&quot;</span> <span class="s2">&quot;amq.gen--_NXdwlSHYDJwGDiuX8_XA&quot;</span> ......<span class="o">)</span>
 
-<p><span class="k">for</span> i in <span class="s2">&quot;${arr[@]}&quot;</span>
+<span class="k">for</span> i in <span class="s2">&quot;${arr[@]}&quot;</span>
 <span class="k">do</span>
    <span class="nb">echo</span> <span class="s2">&quot;$i&quot;</span>
-   rabbitmqadmin &ndash;host<span class="o">=</span>&lt;mqserver.hostname.com&gt; &ndash;port<span class="o">=</span><span class="m">443</span> &ndash;ssl &ndash;vhost<span class="o">=</span>&lt;your_vhost&gt; &ndash;username<span class="o">=</span>&lt;your_username&gt; &ndash;password<span class="o">=</span>&lt;your_password&gt; delete queue <span class="nv">name</span><span class="o">=</span><span class="s2">&quot;$i&quot;</span>
-<span class="k">done</span></code></pre></figure></p>
+   rabbitmqadmin --host<span class="o">=</span>&lt;mqserver.hostname.com&gt; --port<span class="o">=</span><span class="m">443</span> --ssl --vhost<span class="o">=</span>&lt;your_vhost&gt; --username<span class="o">=</span>&lt;your_username&gt; --password<span class="o">=</span>&lt;your_password&gt; delete queue <span class="nv">name</span><span class="o">=</span><span class="s2">&quot;$i&quot;</span>
+<span class="k">done</span></code></pre></figure>
 
-<p>That&rsquo;s it. These small hacks makes me fall in love with programming everyday &lt;3</p>
+<p>That’s it. These small hacks makes me fall in love with programming everyday &lt;3</p>
 
 <p>Thanks!</p>
 
+<style type="text/css">
+pre {
+    white-space: pre-wrap;
+}
+</style>
 
  ]]></content>
 </entry>
@@ -58,47 +63,53 @@
   <id>http://localhost:3000/linux-io-redirections</id>
   <published>2016-02-15T00:00:00Z</published>
   <updated>2016-02-15T00:00:00Z</updated>
-  <content type="html"><![CDATA[ <p><br></p>
+  <content type="html"><![CDATA[ <p><br /></p>
 
 <p>I/O redirections are one of the prettiest things we have in linux (IMO!) Following are commands and their usage.
-<br><br>
-<code>command_output &gt;&gt; file</code>
-&nbsp; Redirects stdout to a file. Creates the file if not present, otherwise appends.</p>
+<br /><br />
+<code>command_output &gt;&gt; file </code>
+  Redirects stdout to a file. Creates the file if not present, otherwise appends.</p>
 
-<p><code>&gt; filename</code>
-&nbsp; Truncates the file to zero length. If file is not present, creates zero-length file (same effect as <code>touch</code>).</p>
+<p><code> &gt; filename </code>
+  Truncates the file to zero length. If file is not present, creates zero-length file (same effect as <code>touch</code>).</p>
 
-<p><code>1&gt;filename</code>
-&nbsp; Redirects stdout to the file &ldquo;filename&rdquo;.</p>
+<p><code> 1&gt;filename </code>
+  Redirects stdout to the file “filename”.</p>
 
-<p><code>1&gt;&gt;filename</code>
-&nbsp; Redirects and appends stdout to file &ldquo;filename&rdquo;.</p>
+<p><code> 1&gt;&gt;filename </code>
+  Redirects and appends stdout to file “filename”.</p>
 
-<p><code>2&gt;filename</code>
-&nbsp; Redirects stderr to file &ldquo;filename&rdquo;.</p>
+<p><code> 2&gt;filename </code>
+  Redirects stderr to file “filename”.</p>
 
-<p><code>2&gt;&gt;filename</code>
-&nbsp; Redirects and appends stderr to file &ldquo;filename&rdquo;.</p>
+<p><code> 2&gt;&gt;filename </code>
+  Redirects and appends stderr to file “filename”.</p>
 
-<p><code>&amp;&gt;filename</code>
-&nbsp; Redirects both stdout and stderr to file &ldquo;filename&rdquo;.</p>
+<p><code> &amp;&gt;filename </code>
+  Redirects both stdout and stderr to file “filename”.</p>
 
-<p><code>2&gt;&amp;1</code>
-&nbsp; Redirects stderr to stdout. Error messages get sent to same place as standard output.</p>
+<p><code> 2&gt;&amp;1 </code>
+  Redirects stderr to stdout. Error messages get sent to same place as standard output.</p>
+<hr />
 
-<hr>
-
-
-<p>Some quality explanation now ;) Take the example of this command:
-<br><code>cmd &gt;&gt; file.log 2&gt;&amp;1</code>
-<br>
-This command will redirect all the output of command(cmd) into <code>file.log</code>.<br>
-<code>2</code> refers to Second file descriptor of the process i.e., stderr<br>
-<code>&gt;</code> refers to redirection<br>
-<code>&amp;1</code> means that the target of redirection would be same as <code>1</code> i.e, first descriptor i.e, stdout.<br></p>
+<p>Some quality explanation now ;) Take the example of this command: 
+<br /><code> cmd &gt;&gt; file.log 2&gt;&amp;1 </code>
+<br />
+This command will redirect all the output of command(cmd) into <code>file.log</code>.<br />
+<code>2</code> refers to Second file descriptor of the process i.e., stderr<br />
+<code>&gt;</code> refers to redirection<br />
+<code>&amp;1</code> means that the target of redirection would be same as <code>1</code> i.e, first descriptor i.e, stdout.<br /></p>
 
 <p>Thanks!</p>
 
+<style type="text/css">
+code {
+    font-weight: bold;
+    font-size: 18px;
+    background: #ddd;
+    padding: 3px;
+}   
+</style>
 
  ]]></content>
 </entry>
@@ -110,47 +121,47 @@ This command will redirect all the output of command(cmd) into <code>file.log</c
   <id>http://localhost:3000/postgres-update-timestamp-when-row-is-updated</id>
   <published>2015-11-24T00:00:00Z</published>
   <updated>2015-11-24T00:00:00Z</updated>
-  <content type="html"><![CDATA[ <p><br></p>
+  <content type="html"><![CDATA[ <p><br /></p>
 
-<p>In PostgreSQL, if you want to set current timestamp as default value, you can simply keep a column&rsquo;s default expression as <code>now()</code>. However, by default there is no function defined to update the timestamp when a particular row (or multiple rows) need to be updated.</p>
+<p>In PostgreSQL, if you want to set current timestamp as default value, you can simply keep a column’s default expression as <code>now()</code>. However, by default there is no function defined to update the timestamp when a particular row (or multiple rows) need to be updated.</p>
 
-<p>In such scenario, you may create your custom method and trigger it using <b>PostgreSQL&rsquo;s Triggers</b>. Following snippet will make it more clear:</p>
+<p>In such scenario, you may create your custom method and trigger it using <b>PostgreSQL’s Triggers</b>. Following snippet will make it more clear:</p>
 
 <p>Here, we are creating a new method, <code>method_get_updated_at()</code></p>
 
-<p><figure class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">OR</span> <span class="k">REPLACE</span> <span class="k">FUNCTION</span> <span class="n">method_get_updated_at</span><span class="p">()</span> <span class="k">RETURNS</span> <span class="k">TRIGGER</span>
+<figure class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">OR</span> <span class="k">REPLACE</span> <span class="k">FUNCTION</span> <span class="n">method_get_updated_at</span><span class="p">()</span> <span class="k">RETURNS</span> <span class="k">TRIGGER</span>
 <span class="k">LANGUAGE</span> <span class="n">plpgsql</span>
 <span class="k">AS</span> <span class="err">$$</span>
     <span class="k">BEGIN</span>
       <span class="k">NEW</span><span class="p">.</span><span class="o">&lt;</span><span class="k">column_name</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">now</span><span class="p">();</span>
       <span class="k">RETURN</span> <span class="k">NEW</span><span class="p">;</span>
     <span class="k">END</span><span class="p">;</span>
-<span class="err">$$</span><span class="p">;</span></code></pre></figure></p>
+<span class="err">$$</span><span class="p">;</span></code></pre></figure>
 
 <p>Once it is created, use the following snippet to trigger it:</p>
 
-<p><figure class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TRIGGER</span> <span class="n">trigger_</span><span class="o">&lt;</span><span class="k">column_name</span><span class="o">&gt;</span>
+<figure class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TRIGGER</span> <span class="n">trigger_</span><span class="o">&lt;</span><span class="k">column_name</span><span class="o">&gt;</span>
 <span class="k">BEFORE</span> <span class="k">UPDATE</span> <span class="k">ON</span> <span class="o">&lt;</span><span class="k">table_name</span><span class="o">&gt;</span>
 <span class="k">FOR</span> <span class="k">EACH</span> <span class="k">ROW</span>
-<span class="k">EXECUTE</span> <span class="k">PROCEDURE</span> <span class="n">method_get_updated_at</span><span class="p">();</span></code></pre></figure></p>
+<span class="k">EXECUTE</span> <span class="k">PROCEDURE</span> <span class="n">method_get_updated_at</span><span class="p">();</span></code></pre></figure>
 
 <p>If you want to delete a Trigger, you can use this simple query:</p>
 
-<p><figure class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">DROP</span> <span class="k">TRIGGER</span> <span class="n">IF</span> <span class="k">EXISTS</span> <span class="n">trigger_</span><span class="o">&lt;</span><span class="k">column_name</span><span class="o">&gt;</span> <span class="k">ON</span> <span class="o">&lt;</span><span class="k">table_name</span><span class="o">&gt;</span></code></pre></figure></p>
+<figure class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">DROP</span> <span class="k">TRIGGER</span> <span class="n">IF</span> <span class="k">EXISTS</span> <span class="n">trigger_</span><span class="o">&lt;</span><span class="k">column_name</span><span class="o">&gt;</span> <span class="k">ON</span> <span class="o">&lt;</span><span class="k">table_name</span><span class="o">&gt;</span></code></pre></figure>
 
-<p><b>Note:</b> Please update the <table_name> and <column_name> accordingly and execute the code for your particular database. Also, note that, some web frameworks (like Rails) manage such columns(created_at, updated_at) automatically.</p>
+<p><b>Note:</b> Please update the <table_name> and <column_name> accordingly and execute the code for your particular database. Also, note that, some web frameworks (like Rails) manage such columns(created_at, updated_at) automatically.</column_name></table_name></p>
 
 <p>ALso, if you want to view all existing methods, run this query:</p>
 
-<p><figure class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">SELECT</span>  <span class="n">p</span><span class="p">.</span><span class="n">proname</span>
+<figure class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">SELECT</span>  <span class="n">p</span><span class="p">.</span><span class="n">proname</span>
 <span class="k">FROM</span>    <span class="n">pg_catalog</span><span class="p">.</span><span class="n">pg_namespace</span> <span class="n">n</span>
 <span class="k">JOIN</span>    <span class="n">pg_catalog</span><span class="p">.</span><span class="n">pg_proc</span> <span class="n">p</span>
 <span class="k">ON</span>      <span class="n">p</span><span class="p">.</span><span class="n">pronamespace</span> <span class="o">=</span> <span class="n">n</span><span class="p">.</span><span class="n">oid</span>
-<span class="k">WHERE</span>   <span class="n">n</span><span class="p">.</span><span class="n">nspname</span> <span class="o">=</span> <span class="s1">&#39;public&#39;</span></code></pre></figure></p>
+<span class="k">WHERE</span>   <span class="n">n</span><span class="p">.</span><span class="n">nspname</span> <span class="o">=</span> <span class="s1">&#39;public&#39;</span></code></pre></figure>
 
 <p>And, run this query to view all Triggers:</p>
 
-<p><figure class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">pg_trigger</span><span class="p">;</span></code></pre></figure></p>
+<figure class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">pg_trigger</span><span class="p">;</span></code></pre></figure>
 
 <p>Thanks!</p>
  ]]></content>
@@ -163,22 +174,20 @@ This command will redirect all the output of command(cmd) into <code>file.log</c
   <id>http://localhost:3000/accessing-postgreSQL-through-ssh-tunnel</id>
   <published>2015-11-20T00:00:00Z</published>
   <updated>2015-11-20T00:00:00Z</updated>
-  <content type="html"><![CDATA[ <p><br></p>
+  <content type="html"><![CDATA[ <p><br /></p>
 
 <p><b>Step 1:</b> Check the SSH connectivity with the server, verify username and password.</p>
 
 <p><b>Step 2:</b> Create the tunnel in your local system by executing the following command (It will prompt for password):</p>
 
-<p><figure class="highlight"><pre><code class="language-bash" data-lang="bash">ssh -fNg -L 5555:localhost:5432 &lt;user&gt;@&lt;server&gt;</code></pre></figure></p>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">ssh -fNg -L 5555:localhost:5432 &lt;user&gt;@&lt;server&gt;</code></pre></figure>
 
 <p><b>Step 3:</b> Now, open your PostgreSQL client (eg, <code>pgAdmin 3</code> or <code>DBeaver</code> or <code>Postico</code> for OS X or <code>Terminal</code>) and fill in the connection details as usual. Check the image below.</p>
 
-<p><img src="/assets/images/postico-port-forwarding.png" alt="Postico DB connection " /></p>
+<p><img src="/assets/images/postico-port-forwarding.png" alt="Postico DB connection " />
+<!-- {: .center-image .image-size-medium} --></p>
 
-<!-- {: .center-image .image-size-medium} -->
-
-
-<p><b>Note:</b> Yes, you&rsquo;ll have to use <code>'localhost'</code>.</p>
+<p><b>Note:</b> Yes, you’ll have to use <code>'localhost'</code>.</p>
  ]]></content>
 </entry>
 
