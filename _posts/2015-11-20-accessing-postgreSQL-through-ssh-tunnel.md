@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Accessing PostgreSQL server through a SSH Tunnel
+title: Accessing <b>PostgreSQL</b> server through a SSH Tunnel
 subtitle: (Port Forwarding)
 tags:
 - PostgreSQL

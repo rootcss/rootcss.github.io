@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Writing <b>Apache Spark</b> workers with "Simpl Spark Lib"
+title: Writing <b>Apache Spark</b> workers with "Simple Spark Lib"
 tags:
 - Spark
 - Cassandra

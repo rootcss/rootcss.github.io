@@ -6,7 +6,7 @@
   
   <link href="http://localhost:3000/"/>
   <id>http://localhost:3000/</id>
-  <updated>2016-11-12T05:08:07Z</updated>
+  <updated>2016-11-12T05:10:45Z</updated>
   <author>
     <name>Shekhar Singh</name>
     <email>shekhar.singh@msn.com</email>
@@ -56,7 +56,7 @@ pre {
 
 
   <entry>
-  <title type="text">RabbitMQ - Automated deletion of 1000s of queues</title>
+  <title type="text">&lt;b&gt;RabbitMQ&lt;/b&gt; - Automated deletion of 1000s of queues</title>
   <link rel="alternate" type="text/html" href="http://localhost:3000/rabbitmq-queues-overflow-automated-deletion.html" />
   <id>http://localhost:3000/rabbitmq-queues-overflow-automated-deletion</id>
   <published>2016-03-24T00:00:00Z</published>
@@ -98,7 +98,7 @@ pre {
 
 
   <entry>
-  <title type="text">Linux I/O redirection examples</title>
+  <title type="text">&lt;b&gt;Linux&lt;/b&gt; I/O redirection examples</title>
   <link rel="alternate" type="text/html" href="http://localhost:3000/linux-io-redirections.html" />
   <id>http://localhost:3000/linux-io-redirections</id>
   <published>2016-02-15T00:00:00Z</published>
@@ -205,7 +205,7 @@ code {
 
 
   <entry>
-  <title type="text">Accessing PostgreSQL server through a SSH Tunnel</title>
+  <title type="text">Accessing &lt;b&gt;PostgreSQL&lt;/b&gt; server through a SSH Tunnel</title>
   <link rel="alternate" type="text/html" href="http://localhost:3000/accessing-postgreSQL-through-ssh-tunnel.html" />
   <id>http://localhost:3000/accessing-postgreSQL-through-ssh-tunnel</id>
   <published>2015-11-20T00:00:00Z</published>

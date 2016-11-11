@@ -1,6 +1,6 @@
 ---
 layout: post
-title: RabbitMQ - Automated deletion of 1000s of queues
+title: <b>RabbitMQ</b> - Automated deletion of 1000s of queues
 tags:
 - RabbitMQ
 - Hacker
