@@ -7,8 +7,6 @@ tags:
 - Data
 ---
 
-<br>
-
 In PostgreSQL, if you want to set current timestamp as default value, you can simply keep a column's default expression as `now()`. However, by default there is no function defined to update the timestamp when a particular row (or multiple rows) need to be updated.
 
 In such scenario, you may create your custom method and trigger it using <b>PostgreSQL's Triggers</b>. Following snippet will make it more clear:

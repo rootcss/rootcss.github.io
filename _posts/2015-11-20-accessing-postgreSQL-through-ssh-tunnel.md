@@ -7,7 +7,6 @@ tags:
 - SSH Tunnel
 - Hacker
 ---
-<br>
 
 <b>Step 1:</b> Check the SSH connectivity with the server, verify username and password.
 

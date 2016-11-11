@@ -6,7 +6,7 @@
   
   <link href="http://localhost:3000/"/>
   <id>http://localhost:3000/</id>
-  <updated>2016-11-12T04:55:29Z</updated>
+  <updated>2016-11-12T05:08:07Z</updated>
   <author>
     <name>Shekhar Singh</name>
     <email>shekhar.singh@msn.com</email>
@@ -14,14 +14,54 @@
   <rights type="text">Copyright © 2016 Shekhar Singh. All rights reserved.</rights>
   
   <entry>
+  <title type="text">Writing &lt;b&gt;Apache Spark&lt;/b&gt; workers with &quot;Simpl Spark Lib&quot;</title>
+  <link rel="alternate" type="text/html" href="http://localhost:3000/apache-spark-worker-with-simple-spark-lib.html" />
+  <id>http://localhost:3000/apache-spark-worker-with-simple-spark-lib</id>
+  <published>2016-11-11T00:00:00Z</published>
+  <updated>2016-11-11T00:00:00Z</updated>
+  <content type="html"><![CDATA[ <p>Recently, I was using <a href="https://github.com/jondot/sneakers">sneakers</a> for rails, which is a small framework for Ruby and RabbitMQ. One issue with sneakers is that, if you have faulty configuration for a queue or you do not provide a queue name, it leaves it upto rabbitmq to define it. So, for some reason (which I don’t want to focus on), we had more than 1600 queues created on that particular exchange, and unfortunately they were not Auto-delete and we didn’t want other exchanges and queues to get hurt because of this ;)</p>
+
+<p>Anyway, Now the challenge was to delete them, because for that you have to manually click on each queue, select ‘Delete’ on the new page and finally, confirm it on pop-up.</p>
+
+<p>I was like, :O</p>
+
+<p>Anyways, Thanks to handy APIs of rabbitmq, these are the following few commands I used in order to delete them quickly. (rabbitmq generally creates default queues with names like <code class="highlighter-rouge">amq.gen--*</code>)</p>
+
+<p>First let’s list all the queues in the form of bash arrays:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">rabbitmqadmin --host<span class="o">=</span>&lt;mqserver.hostname.com&gt; --port<span class="o">=</span>443 --ssl --vhost<span class="o">=</span>&lt;your_vhost&gt; --username<span class="o">=</span>&lt;your_username&gt; --password<span class="o">=</span>&lt;your_password&gt; list queues | awk <span class="s1">'{print $2}'</span> | grep amq.gen  | xargs | sed -e <span class="s1">'s/ /" "/g'</span></code></pre></figure>
+
+<p>Now copy the output of it, declare as an array and run a loop to delete them all.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">declare</span> -a <span class="nv">arr</span><span class="o">=(</span><span class="s2">"amq.gen--PxKpFBHkIxxebJEwbmV6g"</span> <span class="s2">"amq.gen--Q6BeLdfGHsXY6RgVmu8Ig"</span> <span class="s2">"amq.gen--WI0hRAHCOkPIrEULYc1vQ"</span> <span class="s2">"amq.gen--XufS0RrnfZUXyf0Rt1tAg"</span> <span class="s2">"amq.gen--_NXdwlSHYDJwGDiuX8_XA"</span> ......<span class="o">)</span>
+
+<span class="k">for </span>i <span class="k">in</span> <span class="s2">"</span><span class="k">${</span><span class="nv">arr</span><span class="p">[@]</span><span class="k">}</span><span class="s2">"</span>
+<span class="k">do
+   </span><span class="nb">echo</span> <span class="s2">"</span><span class="nv">$i</span><span class="s2">"</span>
+   rabbitmqadmin --host<span class="o">=</span>&lt;mqserver.hostname.com&gt; --port<span class="o">=</span>443 --ssl --vhost<span class="o">=</span>&lt;your_vhost&gt; --username<span class="o">=</span>&lt;your_username&gt; --password<span class="o">=</span>&lt;your_password&gt; delete queue <span class="nv">name</span><span class="o">=</span><span class="s2">"</span><span class="nv">$i</span><span class="s2">"</span>
+<span class="k">done</span></code></pre></figure>
+
+<p>That’s it. These small hacks makes me fall in love with programming everyday &lt;3</p>
+
+<p>Thanks!</p>
+
+<style type="text/css">
+pre {
+    white-space: pre-wrap;
+}
+</style>
+
+ ]]></content>
+</entry>
+
+
+  <entry>
   <title type="text">RabbitMQ - Automated deletion of 1000s of queues</title>
   <link rel="alternate" type="text/html" href="http://localhost:3000/rabbitmq-queues-overflow-automated-deletion.html" />
   <id>http://localhost:3000/rabbitmq-queues-overflow-automated-deletion</id>
   <published>2016-03-24T00:00:00Z</published>
   <updated>2016-03-24T00:00:00Z</updated>
-  <content type="html"><![CDATA[ <p><br /></p>
-
-<p>Recently, I was using <a href="https://github.com/jondot/sneakers">sneakers</a> for rails, which is a small framework for Ruby and RabbitMQ. One issue with sneakers is that, if you have faulty configuration for a queue or you do not provide a queue name, it leaves it upto rabbitmq to define it. So, for some reason (which I don’t want to focus on), we had more than 1600 queues created on that particular exchange, and unfortunately they were not Auto-delete and we didn’t want other exchanges and queues to get hurt because of this ;)</p>
+  <content type="html"><![CDATA[ <p>Recently, I was using <a href="https://github.com/jondot/sneakers">sneakers</a> for rails, which is a small framework for Ruby and RabbitMQ. One issue with sneakers is that, if you have faulty configuration for a queue or you do not provide a queue name, it leaves it upto rabbitmq to define it. So, for some reason (which I don’t want to focus on), we had more than 1600 queues created on that particular exchange, and unfortunately they were not Auto-delete and we didn’t want other exchanges and queues to get hurt because of this ;)</p>
 
 <p>Anyway, Now the challenge was to delete them, because for that you have to manually click on each queue, select ‘Delete’ on the new page and finally, confirm it on pop-up.</p>
 
@@ -63,9 +103,7 @@ pre {
   <id>http://localhost:3000/linux-io-redirections</id>
   <published>2016-02-15T00:00:00Z</published>
   <updated>2016-02-15T00:00:00Z</updated>
-  <content type="html"><![CDATA[ <p><br /></p>
-
-<p>I/O redirections are one of the prettiest things we have in linux (IMO!) Following are commands and their usage.
+  <content type="html"><![CDATA[ <p>I/O redirections are one of the prettiest things we have in linux (IMO!) Following are commands and their usage.
 <br /><br />
 <code class="highlighter-rouge">command_output &gt;&gt; file </code>
   Redirects stdout to a file. Creates the file if not present, otherwise appends.</p>
@@ -92,7 +130,7 @@ pre {
   Redirects stderr to stdout. Error messages get sent to same place as standard output.</p>
 <hr />
 
-<p>Some quality explanation now ;) Take the example of this command: 
+<p>Some quality explanation now ;) Take the example of this command:
 <br /><code class="highlighter-rouge"> cmd &gt;&gt; file.log 2&gt;&amp;1 </code>
 <br />
 This command will redirect all the output of command(cmd) into <code class="highlighter-rouge">file.log</code>.<br />
@@ -121,9 +159,7 @@ code {
   <id>http://localhost:3000/postgres-update-timestamp-when-row-is-updated</id>
   <published>2015-11-24T00:00:00Z</published>
   <updated>2015-11-24T00:00:00Z</updated>
-  <content type="html"><![CDATA[ <p><br /></p>
-
-<p>In PostgreSQL, if you want to set current timestamp as default value, you can simply keep a column’s default expression as <code class="highlighter-rouge">now()</code>. However, by default there is no function defined to update the timestamp when a particular row (or multiple rows) need to be updated.</p>
+  <content type="html"><![CDATA[ <p>In PostgreSQL, if you want to set current timestamp as default value, you can simply keep a column’s default expression as <code class="highlighter-rouge">now()</code>. However, by default there is no function defined to update the timestamp when a particular row (or multiple rows) need to be updated.</p>
 
 <p>In such scenario, you may create your custom method and trigger it using <b>PostgreSQL’s Triggers</b>. Following snippet will make it more clear:</p>
 
@@ -174,9 +210,7 @@ code {
   <id>http://localhost:3000/accessing-postgreSQL-through-ssh-tunnel</id>
   <published>2015-11-20T00:00:00Z</published>
   <updated>2015-11-20T00:00:00Z</updated>
-  <content type="html"><![CDATA[ <p><br /></p>
-
-<p><b>Step 1:</b> Check the SSH connectivity with the server, verify username and password.</p>
+  <content type="html"><![CDATA[ <p><b>Step 1:</b> Check the SSH connectivity with the server, verify username and password.</p>
 
 <p><b>Step 2:</b> Create the tunnel in your local system by executing the following command (It will prompt for password):</p>
 

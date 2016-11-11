@@ -7,8 +7,6 @@ tags:
 - Linux
 ---
 
-<br>
-
 I/O redirections are one of the prettiest things we have in linux (IMO!) Following are commands and their usage.
 <br><br>
 `command_output >> file `
@@ -35,7 +33,7 @@ I/O redirections are one of the prettiest things we have in linux (IMO!) Followi
 ` 2>&1 `
 &nbsp; Redirects stderr to stdout. Error messages get sent to same place as standard output.
 <hr>
-Some quality explanation now ;) Take the example of this command: 
+Some quality explanation now ;) Take the example of this command:
 <br>` cmd >> file.log 2>&1 `
 <br>
 This command will redirect all the output of command(cmd) into `file.log`.<br>

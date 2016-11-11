@@ -1,10 +1,10 @@
 ---
 layout: post
-title: RabbitMQ - Automated deletion of 1000s of queues
+title: Writing <b>Apache Spark</b> workers with "Simpl Spark Lib"
 tags:
-- RabbitMQ
-- Hacker
-- Programming
+- Spark
+- Cassandra
+- Data Engineering
 ---
 
 Recently, I was using <a href="https://github.com/jondot/sneakers">sneakers</a> for rails, which is a small framework for Ruby and RabbitMQ. One issue with sneakers is that, if you have faulty configuration for a queue or you do not provide a queue name, it leaves it upto rabbitmq to define it. So, for some reason (which I don't want to focus on), we had more than 1600 queues created on that particular exchange, and unfortunately they were not Auto-delete and we didn't want other exchanges and queues to get hurt because of this ;)

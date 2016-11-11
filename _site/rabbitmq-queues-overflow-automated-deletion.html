@@ -78,22 +78,13 @@
 	<div class="blog-title">
 		<h4>
 		March 24, 2016
-			&nbsp;&nbsp;
-			
-			 <span class="label label-success">RabbitMQ</span>
-			
-			 <span class="label label-success">Hacker</span>
-			
-			 <span class="label label-success">Programming</span>
-			
 		</h4>
 	</div>
+	<br>
 	<div class="panel panel-default">
 		<div class="panel-body">
 			<div class="blogpost">
-			  <p><br /></p>
-
-<p>Recently, I was using <a href="https://github.com/jondot/sneakers">sneakers</a> for rails, which is a small framework for Ruby and RabbitMQ. One issue with sneakers is that, if you have faulty configuration for a queue or you do not provide a queue name, it leaves it upto rabbitmq to define it. So, for some reason (which I don’t want to focus on), we had more than 1600 queues created on that particular exchange, and unfortunately they were not Auto-delete and we didn’t want other exchanges and queues to get hurt because of this ;)</p>
+			  <p>Recently, I was using <a href="https://github.com/jondot/sneakers">sneakers</a> for rails, which is a small framework for Ruby and RabbitMQ. One issue with sneakers is that, if you have faulty configuration for a queue or you do not provide a queue name, it leaves it upto rabbitmq to define it. So, for some reason (which I don’t want to focus on), we had more than 1600 queues created on that particular exchange, and unfortunately they were not Auto-delete and we didn’t want other exchanges and queues to get hurt because of this ;)</p>
 
 <p>Anyway, Now the challenge was to delete them, because for that you have to manually click on each queue, select ‘Delete’ on the new page and finally, confirm it on pop-up.</p>
 
@@ -126,10 +117,32 @@ pre {
 </style>
 
 
+				<br>
+				Tags: 
+				
+				 <span class="label label-success">RabbitMQ</span>
+				
+				 <span class="label label-success">Hacker</span>
+				
+				 <span class="label label-success">Programming</span>
+				
 			   <hr>
 			   <div class="related-posts">
 				   <h5>Related Posts</h5>
 				   
+						<div class="row">
+							 <div class="col-sm-4 col-md-4 col-lg-4">
+								 <h6 style="text-align: right">
+								 	November 11, 2016
+								 </h6>
+							 </div>
+							 <div class="col-sm-8 col-md-8 col-lg-8">
+								 <h6 style="text-align: left">
+								 	<strong><a href="/apache-spark-worker-with-simple-spark-lib.html">Writing <b>Apache Spark</b> workers with "Simpl Spark Lib"</a></strong>
+								 </h6>
+							 </div>
+						</div>
+					
 						<div class="row">
 							 <div class="col-sm-4 col-md-4 col-lg-4">
 								 <h6 style="text-align: right">
@@ -152,19 +165,6 @@ pre {
 							 <div class="col-sm-8 col-md-8 col-lg-8">
 								 <h6 style="text-align: left">
 								 	<strong><a href="/postgres-update-timestamp-when-row-is-updated.html">PostgreSQL - update timestamp when row(s) is updated</a></strong>
-								 </h6>
-							 </div>
-						</div>
-					
-						<div class="row">
-							 <div class="col-sm-4 col-md-4 col-lg-4">
-								 <h6 style="text-align: right">
-								 	November 20, 2015
-								 </h6>
-							 </div>
-							 <div class="col-sm-8 col-md-8 col-lg-8">
-								 <h6 style="text-align: left">
-								 	<strong><a href="/accessing-postgreSQL-through-ssh-tunnel.html">Accessing PostgreSQL server through a SSH Tunnel</a></strong>
 								 </h6>
 							 </div>
 						</div>
