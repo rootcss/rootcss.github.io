@@ -95,20 +95,20 @@
 
 <p>I was like, :O</p>
 
-<p>Anyways, Thanks to handy APIs of rabbitmq, these are the following few commands I used in order to delete them quickly. (rabbitmq generally creates default queues with names like <code>amq.gen--*</code>)</p>
+<p>Anyways, Thanks to handy APIs of rabbitmq, these are the following few commands I used in order to delete them quickly. (rabbitmq generally creates default queues with names like <code class="highlighter-rouge">amq.gen--*</code>)</p>
 
 <p>First let’s list all the queues in the form of bash arrays:</p>
 
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash">rabbitmqadmin --host<span class="o">=</span>&lt;mqserver.hostname.com&gt; --port<span class="o">=</span><span class="m">443</span> --ssl --vhost<span class="o">=</span>&lt;your_vhost&gt; --username<span class="o">=</span>&lt;your_username&gt; --password<span class="o">=</span>&lt;your_password&gt; list queues <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span> <span class="p">|</span> grep amq.gen  <span class="p">|</span> xargs <span class="p">|</span> sed -e <span class="s1">&#39;s/ /&quot; &quot;/g&#39;</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">rabbitmqadmin --host<span class="o">=</span>&lt;mqserver.hostname.com&gt; --port<span class="o">=</span>443 --ssl --vhost<span class="o">=</span>&lt;your_vhost&gt; --username<span class="o">=</span>&lt;your_username&gt; --password<span class="o">=</span>&lt;your_password&gt; list queues | awk <span class="s1">'{print $2}'</span> | grep amq.gen  | xargs | sed -e <span class="s1">'s/ /" "/g'</span></code></pre></figure>
 
 <p>Now copy the output of it, declare as an array and run a loop to delete them all.</p>
 
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">declare</span> -a <span class="nv">arr</span><span class="o">=(</span><span class="s2">&quot;amq.gen--PxKpFBHkIxxebJEwbmV6g&quot;</span> <span class="s2">&quot;amq.gen--Q6BeLdfGHsXY6RgVmu8Ig&quot;</span> <span class="s2">&quot;amq.gen--WI0hRAHCOkPIrEULYc1vQ&quot;</span> <span class="s2">&quot;amq.gen--XufS0RrnfZUXyf0Rt1tAg&quot;</span> <span class="s2">&quot;amq.gen--_NXdwlSHYDJwGDiuX8_XA&quot;</span> ......<span class="o">)</span>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">declare</span> -a <span class="nv">arr</span><span class="o">=(</span><span class="s2">"amq.gen--PxKpFBHkIxxebJEwbmV6g"</span> <span class="s2">"amq.gen--Q6BeLdfGHsXY6RgVmu8Ig"</span> <span class="s2">"amq.gen--WI0hRAHCOkPIrEULYc1vQ"</span> <span class="s2">"amq.gen--XufS0RrnfZUXyf0Rt1tAg"</span> <span class="s2">"amq.gen--_NXdwlSHYDJwGDiuX8_XA"</span> ......<span class="o">)</span>
 
-<span class="k">for</span> i in <span class="s2">&quot;${arr[@]}&quot;</span>
-<span class="k">do</span>
-   <span class="nb">echo</span> <span class="s2">&quot;$i&quot;</span>
-   rabbitmqadmin --host<span class="o">=</span>&lt;mqserver.hostname.com&gt; --port<span class="o">=</span><span class="m">443</span> --ssl --vhost<span class="o">=</span>&lt;your_vhost&gt; --username<span class="o">=</span>&lt;your_username&gt; --password<span class="o">=</span>&lt;your_password&gt; delete queue <span class="nv">name</span><span class="o">=</span><span class="s2">&quot;$i&quot;</span>
+<span class="k">for </span>i <span class="k">in</span> <span class="s2">"</span><span class="k">${</span><span class="nv">arr</span><span class="p">[@]</span><span class="k">}</span><span class="s2">"</span>
+<span class="k">do
+   </span><span class="nb">echo</span> <span class="s2">"</span><span class="nv">$i</span><span class="s2">"</span>
+   rabbitmqadmin --host<span class="o">=</span>&lt;mqserver.hostname.com&gt; --port<span class="o">=</span>443 --ssl --vhost<span class="o">=</span>&lt;your_vhost&gt; --username<span class="o">=</span>&lt;your_username&gt; --password<span class="o">=</span>&lt;your_password&gt; delete queue <span class="nv">name</span><span class="o">=</span><span class="s2">"</span><span class="nv">$i</span><span class="s2">"</span>
 <span class="k">done</span></code></pre></figure>
 
 <p>That’s it. These small hacks makes me fall in love with programming everyday &lt;3</p>

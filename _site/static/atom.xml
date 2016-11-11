@@ -6,7 +6,7 @@
   
   <link href="http://localhost:3000/"/>
   <id>http://localhost:3000/</id>
-  <updated>2016-11-12T04:27:26Z</updated>
+  <updated>2016-11-12T04:29:30Z</updated>
   <author>
     <name>Shekhar Singh</name>
     <email>shekhar.singh@msn.com</email>
@@ -27,20 +27,20 @@
 
 <p>I was like, :O</p>
 
-<p>Anyways, Thanks to handy APIs of rabbitmq, these are the following few commands I used in order to delete them quickly. (rabbitmq generally creates default queues with names like <code>amq.gen--*</code>)</p>
+<p>Anyways, Thanks to handy APIs of rabbitmq, these are the following few commands I used in order to delete them quickly. (rabbitmq generally creates default queues with names like <code class="highlighter-rouge">amq.gen--*</code>)</p>
 
 <p>First let’s list all the queues in the form of bash arrays:</p>
 
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash">rabbitmqadmin --host<span class="o">=</span>&lt;mqserver.hostname.com&gt; --port<span class="o">=</span><span class="m">443</span> --ssl --vhost<span class="o">=</span>&lt;your_vhost&gt; --username<span class="o">=</span>&lt;your_username&gt; --password<span class="o">=</span>&lt;your_password&gt; list queues <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span> <span class="p">|</span> grep amq.gen  <span class="p">|</span> xargs <span class="p">|</span> sed -e <span class="s1">&#39;s/ /&quot; &quot;/g&#39;</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">rabbitmqadmin --host<span class="o">=</span>&lt;mqserver.hostname.com&gt; --port<span class="o">=</span>443 --ssl --vhost<span class="o">=</span>&lt;your_vhost&gt; --username<span class="o">=</span>&lt;your_username&gt; --password<span class="o">=</span>&lt;your_password&gt; list queues | awk <span class="s1">'{print $2}'</span> | grep amq.gen  | xargs | sed -e <span class="s1">'s/ /" "/g'</span></code></pre></figure>
 
 <p>Now copy the output of it, declare as an array and run a loop to delete them all.</p>
 
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">declare</span> -a <span class="nv">arr</span><span class="o">=(</span><span class="s2">&quot;amq.gen--PxKpFBHkIxxebJEwbmV6g&quot;</span> <span class="s2">&quot;amq.gen--Q6BeLdfGHsXY6RgVmu8Ig&quot;</span> <span class="s2">&quot;amq.gen--WI0hRAHCOkPIrEULYc1vQ&quot;</span> <span class="s2">&quot;amq.gen--XufS0RrnfZUXyf0Rt1tAg&quot;</span> <span class="s2">&quot;amq.gen--_NXdwlSHYDJwGDiuX8_XA&quot;</span> ......<span class="o">)</span>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">declare</span> -a <span class="nv">arr</span><span class="o">=(</span><span class="s2">"amq.gen--PxKpFBHkIxxebJEwbmV6g"</span> <span class="s2">"amq.gen--Q6BeLdfGHsXY6RgVmu8Ig"</span> <span class="s2">"amq.gen--WI0hRAHCOkPIrEULYc1vQ"</span> <span class="s2">"amq.gen--XufS0RrnfZUXyf0Rt1tAg"</span> <span class="s2">"amq.gen--_NXdwlSHYDJwGDiuX8_XA"</span> ......<span class="o">)</span>
 
-<span class="k">for</span> i in <span class="s2">&quot;${arr[@]}&quot;</span>
-<span class="k">do</span>
-   <span class="nb">echo</span> <span class="s2">&quot;$i&quot;</span>
-   rabbitmqadmin --host<span class="o">=</span>&lt;mqserver.hostname.com&gt; --port<span class="o">=</span><span class="m">443</span> --ssl --vhost<span class="o">=</span>&lt;your_vhost&gt; --username<span class="o">=</span>&lt;your_username&gt; --password<span class="o">=</span>&lt;your_password&gt; delete queue <span class="nv">name</span><span class="o">=</span><span class="s2">&quot;$i&quot;</span>
+<span class="k">for </span>i <span class="k">in</span> <span class="s2">"</span><span class="k">${</span><span class="nv">arr</span><span class="p">[@]</span><span class="k">}</span><span class="s2">"</span>
+<span class="k">do
+   </span><span class="nb">echo</span> <span class="s2">"</span><span class="nv">$i</span><span class="s2">"</span>
+   rabbitmqadmin --host<span class="o">=</span>&lt;mqserver.hostname.com&gt; --port<span class="o">=</span>443 --ssl --vhost<span class="o">=</span>&lt;your_vhost&gt; --username<span class="o">=</span>&lt;your_username&gt; --password<span class="o">=</span>&lt;your_password&gt; delete queue <span class="nv">name</span><span class="o">=</span><span class="s2">"</span><span class="nv">$i</span><span class="s2">"</span>
 <span class="k">done</span></code></pre></figure>
 
 <p>That’s it. These small hacks makes me fall in love with programming everyday &lt;3</p>
@@ -67,38 +67,38 @@ pre {
 
 <p>I/O redirections are one of the prettiest things we have in linux (IMO!) Following are commands and their usage.
 <br /><br />
-<code>command_output &gt;&gt; file </code>
+<code class="highlighter-rouge">command_output &gt;&gt; file </code>
   Redirects stdout to a file. Creates the file if not present, otherwise appends.</p>
 
-<p><code> &gt; filename </code>
-  Truncates the file to zero length. If file is not present, creates zero-length file (same effect as <code>touch</code>).</p>
+<p><code class="highlighter-rouge"> &gt; filename </code>
+  Truncates the file to zero length. If file is not present, creates zero-length file (same effect as <code class="highlighter-rouge">touch</code>).</p>
 
-<p><code> 1&gt;filename </code>
+<p><code class="highlighter-rouge"> 1&gt;filename </code>
   Redirects stdout to the file “filename”.</p>
 
-<p><code> 1&gt;&gt;filename </code>
+<p><code class="highlighter-rouge"> 1&gt;&gt;filename </code>
   Redirects and appends stdout to file “filename”.</p>
 
-<p><code> 2&gt;filename </code>
+<p><code class="highlighter-rouge"> 2&gt;filename </code>
   Redirects stderr to file “filename”.</p>
 
-<p><code> 2&gt;&gt;filename </code>
+<p><code class="highlighter-rouge"> 2&gt;&gt;filename </code>
   Redirects and appends stderr to file “filename”.</p>
 
-<p><code> &amp;&gt;filename </code>
+<p><code class="highlighter-rouge"> &amp;&gt;filename </code>
   Redirects both stdout and stderr to file “filename”.</p>
 
-<p><code> 2&gt;&amp;1 </code>
+<p><code class="highlighter-rouge"> 2&gt;&amp;1 </code>
   Redirects stderr to stdout. Error messages get sent to same place as standard output.</p>
 <hr />
 
 <p>Some quality explanation now ;) Take the example of this command: 
-<br /><code> cmd &gt;&gt; file.log 2&gt;&amp;1 </code>
+<br /><code class="highlighter-rouge"> cmd &gt;&gt; file.log 2&gt;&amp;1 </code>
 <br />
-This command will redirect all the output of command(cmd) into <code>file.log</code>.<br />
-<code>2</code> refers to Second file descriptor of the process i.e., stderr<br />
-<code>&gt;</code> refers to redirection<br />
-<code>&amp;1</code> means that the target of redirection would be same as <code>1</code> i.e, first descriptor i.e, stdout.<br /></p>
+This command will redirect all the output of command(cmd) into <code class="highlighter-rouge">file.log</code>.<br />
+<code class="highlighter-rouge">2</code> refers to Second file descriptor of the process i.e., stderr<br />
+<code class="highlighter-rouge">&gt;</code> refers to redirection<br />
+<code class="highlighter-rouge">&amp;1</code> means that the target of redirection would be same as <code class="highlighter-rouge">1</code> i.e, first descriptor i.e, stdout.<br /></p>
 
 <p>Thanks!</p>
 
@@ -123,11 +123,11 @@ code {
   <updated>2015-11-24T00:00:00Z</updated>
   <content type="html"><![CDATA[ <p><br /></p>
 
-<p>In PostgreSQL, if you want to set current timestamp as default value, you can simply keep a column’s default expression as <code>now()</code>. However, by default there is no function defined to update the timestamp when a particular row (or multiple rows) need to be updated.</p>
+<p>In PostgreSQL, if you want to set current timestamp as default value, you can simply keep a column’s default expression as <code class="highlighter-rouge">now()</code>. However, by default there is no function defined to update the timestamp when a particular row (or multiple rows) need to be updated.</p>
 
 <p>In such scenario, you may create your custom method and trigger it using <b>PostgreSQL’s Triggers</b>. Following snippet will make it more clear:</p>
 
-<p>Here, we are creating a new method, <code>method_get_updated_at()</code></p>
+<p>Here, we are creating a new method, <code class="highlighter-rouge">method_get_updated_at()</code></p>
 
 <figure class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">OR</span> <span class="k">REPLACE</span> <span class="k">FUNCTION</span> <span class="n">method_get_updated_at</span><span class="p">()</span> <span class="k">RETURNS</span> <span class="k">TRIGGER</span>
 <span class="k">LANGUAGE</span> <span class="n">plpgsql</span>
@@ -157,7 +157,7 @@ code {
 <span class="k">FROM</span>    <span class="n">pg_catalog</span><span class="p">.</span><span class="n">pg_namespace</span> <span class="n">n</span>
 <span class="k">JOIN</span>    <span class="n">pg_catalog</span><span class="p">.</span><span class="n">pg_proc</span> <span class="n">p</span>
 <span class="k">ON</span>      <span class="n">p</span><span class="p">.</span><span class="n">pronamespace</span> <span class="o">=</span> <span class="n">n</span><span class="p">.</span><span class="n">oid</span>
-<span class="k">WHERE</span>   <span class="n">n</span><span class="p">.</span><span class="n">nspname</span> <span class="o">=</span> <span class="s1">&#39;public&#39;</span></code></pre></figure>
+<span class="k">WHERE</span>   <span class="n">n</span><span class="p">.</span><span class="n">nspname</span> <span class="o">=</span> <span class="s1">'public'</span></code></pre></figure>
 
 <p>And, run this query to view all Triggers:</p>
 
@@ -182,12 +182,12 @@ code {
 
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash">ssh -fNg -L 5555:localhost:5432 &lt;user&gt;@&lt;server&gt;</code></pre></figure>
 
-<p><b>Step 3:</b> Now, open your PostgreSQL client (eg, <code>pgAdmin 3</code> or <code>DBeaver</code> or <code>Postico</code> for OS X or <code>Terminal</code>) and fill in the connection details as usual. Check the image below.</p>
+<p><b>Step 3:</b> Now, open your PostgreSQL client (eg, <code class="highlighter-rouge">pgAdmin 3</code> or <code class="highlighter-rouge">DBeaver</code> or <code class="highlighter-rouge">Postico</code> for OS X or <code class="highlighter-rouge">Terminal</code>) and fill in the connection details as usual. Check the image below.</p>
 
 <p><img src="/assets/images/postico-port-forwarding.png" alt="Postico DB connection " />
 <!-- {: .center-image .image-size-medium} --></p>
 
-<p><b>Note:</b> Yes, you’ll have to use <code>'localhost'</code>.</p>
+<p><b>Note:</b> Yes, you’ll have to use <code class="highlighter-rouge">'localhost'</code>.</p>
  ]]></content>
 </entry>
 

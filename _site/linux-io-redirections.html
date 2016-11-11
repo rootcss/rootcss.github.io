@@ -91,38 +91,38 @@
 
 <p>I/O redirections are one of the prettiest things we have in linux (IMO!) Following are commands and their usage.
 <br /><br />
-<code>command_output &gt;&gt; file </code>
+<code class="highlighter-rouge">command_output &gt;&gt; file </code>
   Redirects stdout to a file. Creates the file if not present, otherwise appends.</p>
 
-<p><code> &gt; filename </code>
-  Truncates the file to zero length. If file is not present, creates zero-length file (same effect as <code>touch</code>).</p>
+<p><code class="highlighter-rouge"> &gt; filename </code>
+  Truncates the file to zero length. If file is not present, creates zero-length file (same effect as <code class="highlighter-rouge">touch</code>).</p>
 
-<p><code> 1&gt;filename </code>
+<p><code class="highlighter-rouge"> 1&gt;filename </code>
   Redirects stdout to the file “filename”.</p>
 
-<p><code> 1&gt;&gt;filename </code>
+<p><code class="highlighter-rouge"> 1&gt;&gt;filename </code>
   Redirects and appends stdout to file “filename”.</p>
 
-<p><code> 2&gt;filename </code>
+<p><code class="highlighter-rouge"> 2&gt;filename </code>
   Redirects stderr to file “filename”.</p>
 
-<p><code> 2&gt;&gt;filename </code>
+<p><code class="highlighter-rouge"> 2&gt;&gt;filename </code>
   Redirects and appends stderr to file “filename”.</p>
 
-<p><code> &amp;&gt;filename </code>
+<p><code class="highlighter-rouge"> &amp;&gt;filename </code>
   Redirects both stdout and stderr to file “filename”.</p>
 
-<p><code> 2&gt;&amp;1 </code>
+<p><code class="highlighter-rouge"> 2&gt;&amp;1 </code>
   Redirects stderr to stdout. Error messages get sent to same place as standard output.</p>
 <hr />
 
 <p>Some quality explanation now ;) Take the example of this command: 
-<br /><code> cmd &gt;&gt; file.log 2&gt;&amp;1 </code>
+<br /><code class="highlighter-rouge"> cmd &gt;&gt; file.log 2&gt;&amp;1 </code>
 <br />
-This command will redirect all the output of command(cmd) into <code>file.log</code>.<br />
-<code>2</code> refers to Second file descriptor of the process i.e., stderr<br />
-<code>&gt;</code> refers to redirection<br />
-<code>&amp;1</code> means that the target of redirection would be same as <code>1</code> i.e, first descriptor i.e, stdout.<br /></p>
+This command will redirect all the output of command(cmd) into <code class="highlighter-rouge">file.log</code>.<br />
+<code class="highlighter-rouge">2</code> refers to Second file descriptor of the process i.e., stderr<br />
+<code class="highlighter-rouge">&gt;</code> refers to redirection<br />
+<code class="highlighter-rouge">&amp;1</code> means that the target of redirection would be same as <code class="highlighter-rouge">1</code> i.e, first descriptor i.e, stdout.<br /></p>
 
 <p>Thanks!</p>
 

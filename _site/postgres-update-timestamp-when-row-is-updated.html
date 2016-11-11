@@ -89,11 +89,11 @@
 			<div class="blogpost">
 			  <p><br /></p>
 
-<p>In PostgreSQL, if you want to set current timestamp as default value, you can simply keep a column’s default expression as <code>now()</code>. However, by default there is no function defined to update the timestamp when a particular row (or multiple rows) need to be updated.</p>
+<p>In PostgreSQL, if you want to set current timestamp as default value, you can simply keep a column’s default expression as <code class="highlighter-rouge">now()</code>. However, by default there is no function defined to update the timestamp when a particular row (or multiple rows) need to be updated.</p>
 
 <p>In such scenario, you may create your custom method and trigger it using <b>PostgreSQL’s Triggers</b>. Following snippet will make it more clear:</p>
 
-<p>Here, we are creating a new method, <code>method_get_updated_at()</code></p>
+<p>Here, we are creating a new method, <code class="highlighter-rouge">method_get_updated_at()</code></p>
 
 <figure class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">OR</span> <span class="k">REPLACE</span> <span class="k">FUNCTION</span> <span class="n">method_get_updated_at</span><span class="p">()</span> <span class="k">RETURNS</span> <span class="k">TRIGGER</span>
 <span class="k">LANGUAGE</span> <span class="n">plpgsql</span>
@@ -123,7 +123,7 @@
 <span class="k">FROM</span>    <span class="n">pg_catalog</span><span class="p">.</span><span class="n">pg_namespace</span> <span class="n">n</span>
 <span class="k">JOIN</span>    <span class="n">pg_catalog</span><span class="p">.</span><span class="n">pg_proc</span> <span class="n">p</span>
 <span class="k">ON</span>      <span class="n">p</span><span class="p">.</span><span class="n">pronamespace</span> <span class="o">=</span> <span class="n">n</span><span class="p">.</span><span class="n">oid</span>
-<span class="k">WHERE</span>   <span class="n">n</span><span class="p">.</span><span class="n">nspname</span> <span class="o">=</span> <span class="s1">&#39;public&#39;</span></code></pre></figure>
+<span class="k">WHERE</span>   <span class="n">n</span><span class="p">.</span><span class="n">nspname</span> <span class="o">=</span> <span class="s1">'public'</span></code></pre></figure>
 
 <p>And, run this query to view all Triggers:</p>
 
