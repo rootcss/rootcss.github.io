@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  <b>Linux</b> I/O redirection examples
+title:  Linux I/O redirection examples
 tags:
 - Hacker
 - Programming

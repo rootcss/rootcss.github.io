@@ -6,7 +6,7 @@
   
   <link href="http://localhost:3000/"/>
   <id>http://localhost:3000/</id>
-  <updated>2016-11-12T05:10:45Z</updated>
+  <updated>2016-11-12T05:57:41Z</updated>
   <author>
     <name>Shekhar Singh</name>
     <email>shekhar.singh@msn.com</email>
@@ -14,49 +14,74 @@
   <rights type="text">Copyright © 2016 Shekhar Singh. All rights reserved.</rights>
   
   <entry>
-  <title type="text">Writing &lt;b&gt;Apache Spark&lt;/b&gt; workers with &quot;Simpl Spark Lib&quot;</title>
+  <title type="text">Writing Apache Spark workers with &quot;Simple Spark Lib&quot;</title>
   <link rel="alternate" type="text/html" href="http://localhost:3000/apache-spark-worker-with-simple-spark-lib.html" />
   <id>http://localhost:3000/apache-spark-worker-with-simple-spark-lib</id>
   <published>2016-11-11T00:00:00Z</published>
   <updated>2016-11-11T00:00:00Z</updated>
-  <content type="html"><![CDATA[ <p>Recently, I was using <a href="https://github.com/jondot/sneakers">sneakers</a> for rails, which is a small framework for Ruby and RabbitMQ. One issue with sneakers is that, if you have faulty configuration for a queue or you do not provide a queue name, it leaves it upto rabbitmq to define it. So, for some reason (which I don’t want to focus on), we had more than 1600 queues created on that particular exchange, and unfortunately they were not Auto-delete and we didn’t want other exchanges and queues to get hurt because of this ;)</p>
+  <content type="html"><![CDATA[ <p><a target="_blank" href="http://spark.apache.org/">Apache Spark</a> is a great project, could be plugged with most of the data sources/databases eg, HDFS, Cassandra, MongoDB, Kafka, Postgres, Redshift etc. I have been using Spark for ad-hoc querying, bunch of Aggregations &amp; Segregations over Cassandra from a long time and noticed that, every time I use to write (or paste) same code for configuration &amp; connection. Also, I knew when someone else wants to do the similar work from my team, he/she will have to do the same thing, including learning what that means and understanding it. Think of someone doing that, if he is using Spark for the first time?</p>
 
-<p>Anyway, Now the challenge was to delete them, because for that you have to manually click on each queue, select ‘Delete’ on the new page and finally, confirm it on pop-up.</p>
+<p><br />TLDR;</p>
 
-<p>I was like, :O</p>
+<p>I decided to write a wrapper over <code class="highlighter-rouge">PySpark</code> which obviously supports Cassandra, Redshift etc. It primarily provided following two advantages:</p>
+<ol>
+  <li>I never repeated myself while writing the workers again</li>
+  <li>My Team members do not need to figure out those Spark specific code in order to do some simple ad-hoc tasks</li>
+</ol>
 
-<p>Anyways, Thanks to handy APIs of rabbitmq, these are the following few commands I used in order to delete them quickly. (rabbitmq generally creates default queues with names like <code class="highlighter-rouge">amq.gen--*</code>)</p>
+<p>I named it “<code class="highlighter-rouge">Simple Spark Lib</code>” and, here’s how to use it:</p>
 
-<p>First let’s list all the queues in the form of bash arrays:</p>
+<p>Step 1: Clone the repo from <a href="https://github.com/rootcss/simple_spark_lib">here</a>:</p>
 
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash">rabbitmqadmin --host<span class="o">=</span>&lt;mqserver.hostname.com&gt; --port<span class="o">=</span>443 --ssl --vhost<span class="o">=</span>&lt;your_vhost&gt; --username<span class="o">=</span>&lt;your_username&gt; --password<span class="o">=</span>&lt;your_password&gt; list queues | awk <span class="s1">'{print $2}'</span> | grep amq.gen  | xargs | sed -e <span class="s1">'s/ /" "/g'</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">git clone https://github.com/rootcss/simple_spark_lib.git</code></pre></figure>
 
-<p>Now copy the output of it, declare as an array and run a loop to delete them all.</p>
+<p>Step 2: Install the library:</p>
 
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">declare</span> -a <span class="nv">arr</span><span class="o">=(</span><span class="s2">"amq.gen--PxKpFBHkIxxebJEwbmV6g"</span> <span class="s2">"amq.gen--Q6BeLdfGHsXY6RgVmu8Ig"</span> <span class="s2">"amq.gen--WI0hRAHCOkPIrEULYc1vQ"</span> <span class="s2">"amq.gen--XufS0RrnfZUXyf0Rt1tAg"</span> <span class="s2">"amq.gen--_NXdwlSHYDJwGDiuX8_XA"</span> ......<span class="o">)</span>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">python setup.py install</code></pre></figure>
 
-<span class="k">for </span>i <span class="k">in</span> <span class="s2">"</span><span class="k">${</span><span class="nv">arr</span><span class="p">[@]</span><span class="k">}</span><span class="s2">"</span>
-<span class="k">do
-   </span><span class="nb">echo</span> <span class="s2">"</span><span class="nv">$i</span><span class="s2">"</span>
-   rabbitmqadmin --host<span class="o">=</span>&lt;mqserver.hostname.com&gt; --port<span class="o">=</span>443 --ssl --vhost<span class="o">=</span>&lt;your_vhost&gt; --username<span class="o">=</span>&lt;your_username&gt; --password<span class="o">=</span>&lt;your_password&gt; delete queue <span class="nv">name</span><span class="o">=</span><span class="s2">"</span><span class="nv">$i</span><span class="s2">"</span>
-<span class="k">done</span></code></pre></figure>
+<p>Step 3: Write the worker:</p>
 
-<p>That’s it. These small hacks makes me fall in love with programming everyday &lt;3</p>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># First, import the library</span>
+<span class="kn">from</span> <span class="nn">simple_spark_lib</span> <span class="kn">import</span> <span class="n">SimpleSparkCassandraWorkflow</span>
 
-<p>Thanks!</p>
+<span class="c"># Define connection configuration for cassandra</span>
+<span class="n">cassandra_connection_config</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'host'</span><span class="p">:</span>     <span class="s">'192.168.56.101'</span><span class="p">,</span>
+  <span class="s">'username'</span><span class="p">:</span> <span class="s">'cassandra'</span><span class="p">,</span>
+  <span class="s">'password'</span><span class="p">:</span> <span class="s">'cassandra'</span>
+<span class="p">}</span>
 
-<style type="text/css">
-pre {
-    white-space: pre-wrap;
-}
-</style>
+<span class="c"># Define Cassandra Schema information</span>
+<span class="n">cassandra_config</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'cluster'</span><span class="p">:</span> <span class="s">'rootCSSCluster'</span><span class="p">,</span>
+  <span class="s">'tables'</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s">'api_events'</span><span class="p">:</span> <span class="s">'events_production.api_events'</span><span class="p">,</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="c"># Initiate your workflow</span>
+<span class="n">workflow</span> <span class="o">=</span> <span class="n">SimpleSparkCassandraWorkflow</span><span class="p">(</span><span class="n">appName</span><span class="o">=</span><span class="s">"Simple Example Worker"</span><span class="p">)</span>
 
+<span class="c"># Setup the workflow with configurations</span>
+<span class="n">workflow</span><span class="o">.</span><span class="n">setup</span><span class="p">(</span><span class="n">cassandra_connection_config</span><span class="p">,</span> <span class="n">cassandra_config</span><span class="p">)</span>
+
+<span class="c"># Run your favourite query</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">workflow</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="s">"SELECT * FROM api_events LIMIT 10"</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="n">df</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></code></pre></figure>
+
+<p>Step 4: Save it &amp; Execute the worker:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">simple-runner my_spark_woker.py -d cassandra</code></pre></figure>
+
+<p><code class="highlighter-rouge">simple_spark_lib</code> enables you to use the capability of spark without writing the actual Spark codes. I made it public, hoping it might be useful to someone else too.</p>
+
+<p>If you are interested, go through other examples in the repo and feel free to contribute. :-)</p>
  ]]></content>
 </entry>
 
 
   <entry>
-  <title type="text">&lt;b&gt;RabbitMQ&lt;/b&gt; - Automated deletion of 1000s of queues</title>
+  <title type="text">RabbitMQ - Automated deletion of 1000s of queues</title>
   <link rel="alternate" type="text/html" href="http://localhost:3000/rabbitmq-queues-overflow-automated-deletion.html" />
   <id>http://localhost:3000/rabbitmq-queues-overflow-automated-deletion</id>
   <published>2016-03-24T00:00:00Z</published>
@@ -98,7 +123,7 @@ pre {
 
 
   <entry>
-  <title type="text">&lt;b&gt;Linux&lt;/b&gt; I/O redirection examples</title>
+  <title type="text">Linux I/O redirection examples</title>
   <link rel="alternate" type="text/html" href="http://localhost:3000/linux-io-redirections.html" />
   <id>http://localhost:3000/linux-io-redirections</id>
   <published>2016-02-15T00:00:00Z</published>
@@ -205,7 +230,7 @@ code {
 
 
   <entry>
-  <title type="text">Accessing &lt;b&gt;PostgreSQL&lt;/b&gt; server through a SSH Tunnel</title>
+  <title type="text">Accessing PostgreSQL server through a SSH Tunnel</title>
   <link rel="alternate" type="text/html" href="http://localhost:3000/accessing-postgreSQL-through-ssh-tunnel.html" />
   <id>http://localhost:3000/accessing-postgreSQL-through-ssh-tunnel</id>
   <published>2015-11-20T00:00:00Z</published>

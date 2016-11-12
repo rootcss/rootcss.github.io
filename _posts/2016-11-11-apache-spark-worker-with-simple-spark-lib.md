@@ -1,43 +1,65 @@
 ---
 layout: post
-title: Writing <b>Apache Spark</b> workers with "Simple Spark Lib"
+title: Writing Apache Spark workers with "Simple Spark Lib"
 tags:
 - Spark
 - Cassandra
 - Data Engineering
 ---
 
-Recently, I was using <a href="https://github.com/jondot/sneakers">sneakers</a> for rails, which is a small framework for Ruby and RabbitMQ. One issue with sneakers is that, if you have faulty configuration for a queue or you do not provide a queue name, it leaves it upto rabbitmq to define it. So, for some reason (which I don't want to focus on), we had more than 1600 queues created on that particular exchange, and unfortunately they were not Auto-delete and we didn't want other exchanges and queues to get hurt because of this ;)
+<a target="_blank" href="http://spark.apache.org/">Apache Spark</a> is a great project, could be plugged with most of the data sources/databases eg, HDFS, Cassandra, MongoDB, Kafka, Postgres, Redshift etc. I have been using Spark for ad-hoc querying, bunch of Aggregations &amp; Segregations over Cassandra from a long time and noticed that, every time I use to write (or paste) same code for configuration &amp; connection. Also, I knew when someone else wants to do the similar work from my team, he/she will have to do the same thing, including learning what that means and understanding it. Think of someone doing that, if he is using Spark for the first time?
 
-Anyway, Now the challenge was to delete them, because for that you have to manually click on each queue, select 'Delete' on the new page and finally, confirm it on pop-up.
+<br>TLDR;
 
-I was like, :O
+I decided to write a wrapper over `PySpark` which obviously supports Cassandra, Redshift etc. It primarily provided following two advantages:
+1. I never repeated myself while writing the workers again
+2. My Team members do not need to figure out those Spark specific code in order to do some simple ad-hoc tasks
 
-Anyways, Thanks to handy APIs of rabbitmq, these are the following few commands I used in order to delete them quickly. (rabbitmq generally creates default queues with names like `amq.gen--*`)
+I named it "`Simple Spark Lib`" and, here's how to use it:
 
-First let's list all the queues in the form of bash arrays:
+Step 1: Clone the repo from <a href="https://github.com/rootcss/simple_spark_lib">here</a>:
 {% highlight bash %}
-rabbitmqadmin --host=<mqserver.hostname.com> --port=443 --ssl --vhost=<your_vhost> --username=<your_username> --password=<your_password> list queues | awk '{print $2}' | grep amq.gen  | xargs | sed -e 's/ /" "/g'
+git clone https://github.com/rootcss/simple_spark_lib.git
 {% endhighlight %}
-
-Now copy the output of it, declare as an array and run a loop to delete them all.
-
+Step 2: Install the library:
 {% highlight bash %}
-declare -a arr=("amq.gen--PxKpFBHkIxxebJEwbmV6g" "amq.gen--Q6BeLdfGHsXY6RgVmu8Ig" "amq.gen--WI0hRAHCOkPIrEULYc1vQ" "amq.gen--XufS0RrnfZUXyf0Rt1tAg" "amq.gen--_NXdwlSHYDJwGDiuX8_XA" ......)
-
-for i in "${arr[@]}"
-do
-   echo "$i"
-   rabbitmqadmin --host=<mqserver.hostname.com> --port=443 --ssl --vhost=<your_vhost> --username=<your_username> --password=<your_password> delete queue name="$i"
-done
+python setup.py install
 {% endhighlight %}
+Step 3: Write the worker:
+{% highlight python %}
+# First, import the library
+from simple_spark_lib import SimpleSparkCassandraWorkflow
 
-That's it. These small hacks makes me fall in love with programming everyday <3
-
-Thanks!
-
-<style type="text/css">
-pre {
-    white-space: pre-wrap;
+# Define connection configuration for cassandra
+cassandra_connection_config = {
+  'host':     '192.168.56.101',
+  'username': 'cassandra',
+  'password': 'cassandra'
 }
-</style>
+
+# Define Cassandra Schema information
+cassandra_config = {
+  'cluster': 'rootCSSCluster',
+  'tables': {
+    'api_events': 'events_production.api_events',
+  }
+}
+# Initiate your workflow
+workflow = SimpleSparkCassandraWorkflow(appName="Simple Example Worker")
+
+# Setup the workflow with configurations
+workflow.setup(cassandra_connection_config, cassandra_config)
+
+# Run your favourite query
+df = workflow.process(query="SELECT * FROM api_events LIMIT 10")
+
+print df.show()
+{% endhighlight %}
+Step 4: Save it &amp; Execute the worker:
+{% highlight bash %}
+simple-runner my_spark_woker.py -d cassandra
+{% endhighlight %}
+
+`simple_spark_lib` enables you to use the capability of spark without writing the actual Spark codes. I made it public, hoping it might be useful to someone else too.
+
+If you are interested, go through other examples in the repo and feel free to contribute. :-)
