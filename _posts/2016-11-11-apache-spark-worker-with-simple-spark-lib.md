@@ -7,11 +7,12 @@ tags:
 - Data Engineering
 ---
 
-<a target="_blank" href="http://spark.apache.org/">Apache Spark</a> is a great project, could be plugged with most of the data sources/databases eg, HDFS, Cassandra, MongoDB, Kafka, Postgres, Redshift etc. I have been using Spark for ad-hoc querying, bunch of Aggregations &amp; Segregations over Cassandra from a long time and noticed that, every time I use to write (or paste) same code for configuration &amp; connection. Also, I knew when someone else wants to do the similar work from my team, he/she will have to do the same thing, including learning what that means and understanding it. Think of someone doing that, if he is using Spark for the first time?
+<a target="_blank" href="http://spark.apache.org/">Apache Spark</a> is a great project, could be plugged with most of the data sources/databases eg, HDFS, Cassandra, MongoDB, Kafka, Postgres, Redshift etc. I have been using Spark for ad-hoc querying, bunch of Aggregations &amp; Segregations over Cassandra from a long time and noticed that, every time I used to write (or paste) same code for configuration &amp; connection. Also, I knew when someone else wants to do the similar work from my team, he/she will have to do the same thing, including learning what that means and understanding it. Think of someone doing that, if he is using Spark for the first time?
 
 <br>TLDR;
 
 I decided to write a wrapper over `PySpark` which obviously supports Cassandra, Redshift etc. It primarily provided following two advantages:
+
 1. I never repeated myself while writing the workers again
 2. My Team members do not need to figure out those Spark specific code in order to do some simple ad-hoc tasks
 
