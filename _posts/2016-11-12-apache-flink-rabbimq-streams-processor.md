@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Processing Rabbitmq's Realtime Streams with "Apache Flink"
+title: Processing Rabbitmq's Stream with "Apache Flink"
 tags:
 - Flink
 - Rabbitmq
