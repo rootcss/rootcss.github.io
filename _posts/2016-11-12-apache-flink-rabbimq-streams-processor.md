@@ -19,6 +19,7 @@ Anyways, this post is not about comparing them, but to provide a detailed exampl
 <b>Step 1:</b> Install Rabbitmq, Apache Flink in your system. Both installations are very straightforward.
 
 <b>Step 2:</b> Start Rabbitmq server
+
 ```bash
 rabbitmq-server &
 ```
@@ -27,25 +28,35 @@ rabbitmq-server &
 
 <b>Step 4:</b> Clone the repo from <a target="_blank" href="https://github.com/rootcss/flink-rabbitmq.git
 ">here</a>: (will be explaining the codes inline)
+
 ```html
 git clone https://github.com/rootcss/flink-rabbitmq.git
 ```
+
 <b>Step 5:</b> It's built with maven. (Java) So, build it using:
+
 ```bash
 mvn clean package
 ```
+
 <b>Step 6:</b> Once built, You're all set to run it now:
+
 ```bash
 flink run -c com.rootcss.flink.RabbitmqStreamProcessor target/flink-rabbitmq-0.1.jar
 ```
+
 <b>Step 7:</b> Check the logs at:
+
 ```bash
 tail -f $FLINK_HOME/log/*
 ```
+
 and Flink's dashboard at: 
+
 ```html
 http://localhost:8081/
 ```
+
 <b>Step 8:</b> Now, you can start publishing events from the RabbitMQ's exchange and see the output in the logs.
 
 Note that, I am not using any <b>Flink's Sink</b> here (writing into the logs). You can use a file system like HDFS or a Database or even Rabbitmq (on a different channel ;))
@@ -53,6 +64,7 @@ Note that, I am not using any <b>Flink's Sink</b> here (writing into the logs). 
 
 ### Code Explanation
 (This version might be a little different from the code in my repo. Just to keep this concise)
+
 ```java
 // Extend the RMQSource class, since we need to override a method to bind our queue
 public class RabbitmqStreamProcessor extends RMQSource{

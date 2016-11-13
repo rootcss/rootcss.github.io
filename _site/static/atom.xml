@@ -6,7 +6,7 @@
   
   <link href="http://localhost:3000/"/>
   <id>http://localhost:3000/</id>
-  <updated>2016-11-14T00:04:04Z</updated>
+  <updated>2016-11-14T00:05:52Z</updated>
   <author>
     <name>Shekhar Singh</name>
     <email>shekhar.singh@msn.com</email>
@@ -30,6 +30,7 @@
 <p><b>Step 1:</b> Install Rabbitmq, Apache Flink in your system. Both installations are very straightforward.</p>
 
 <p><b>Step 2:</b> Start Rabbitmq server</p>
+
 <div class="language-bash highlighter-rouge"><pre class="highlight"><code>rabbitmq-server &amp;
 </code></pre>
 </div>
@@ -37,31 +38,42 @@
 <p><b>Step 3:</b> Create an exchange in it. Go to <code class="highlighter-rouge">http://localhost:15672</code> (In my example, I’m binding a queue to the exchange. You can directly use a queue, but make sure to make corresponding changes in the code)</p>
 
 <p><b>Step 4:</b> Clone the repo from <a target="_blank" href="https://github.com/rootcss/flink-rabbitmq.git ">here</a>: (will be explaining the codes inline)</p>
+
 <div class="language-html highlighter-rouge"><pre class="highlight"><code>git clone https://github.com/rootcss/flink-rabbitmq.git
 </code></pre>
 </div>
+
 <p><b>Step 5:</b> It’s built with maven. (Java) So, build it using:</p>
+
 <div class="language-bash highlighter-rouge"><pre class="highlight"><code>mvn clean package
 </code></pre>
 </div>
+
 <p><b>Step 6:</b> Once built, You’re all set to run it now:</p>
+
 <div class="language-bash highlighter-rouge"><pre class="highlight"><code>flink run -c com.rootcss.flink.RabbitmqStreamProcessor target/flink-rabbitmq-0.1.jar
 </code></pre>
 </div>
+
 <p><b>Step 7:</b> Check the logs at:</p>
+
 <div class="language-bash highlighter-rouge"><pre class="highlight"><code>tail -f <span class="nv">$FLINK_HOME</span>/log/<span class="k">*</span>
 </code></pre>
 </div>
+
 <p>and Flink’s dashboard at:</p>
+
 <div class="language-html highlighter-rouge"><pre class="highlight"><code>http://localhost:8081/
 </code></pre>
 </div>
+
 <p><b>Step 8:</b> Now, you can start publishing events from the RabbitMQ’s exchange and see the output in the logs.</p>
 
 <p>Note that, I am not using any <b>Flink’s Sink</b> here (writing into the logs). You can use a file system like HDFS or a Database or even Rabbitmq (on a different channel ;))</p>
 
 <h3 id="code-explanation">Code Explanation</h3>
 <p>(This version might be a little different from the code in my repo. Just to keep this concise)</p>
+
 <div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="c1">// Extend the RMQSource class, since we need to override a method to bind our queue</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">RabbitmqStreamProcessor</span> <span class="kd">extends</span> <span class="n">RMQSource</span><span class="o">{</span>
 
