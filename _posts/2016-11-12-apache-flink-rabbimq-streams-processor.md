@@ -24,7 +24,7 @@ Anyways, this post is not about comparing them, but to provide a detailed exampl
 rabbitmq-server &
 ```
 
-<b>Step 3:</b> Create an exchange in it. Go to `http://localhost:15672` (In my example, I'm binding a queue to the exchange. You can directly use a queue, but make sure to make corresponding changes in the code)
+<b>Step 3:</b> Create an exchange in the rabbitmq. Go to `http://localhost:15672` (In my example, I'm binding a queue to the exchange. You can directly use a queue, but make sure to make corresponding changes in the code)
 
 <b>Step 4:</b> Clone the repo from <a target="_blank" href="https://github.com/rootcss/flink-rabbitmq.git
 ">here</a>: (will be explaining the codes inline)
