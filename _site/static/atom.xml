@@ -6,7 +6,7 @@
   
   <link href="http://localhost:3000/"/>
   <id>http://localhost:3000/</id>
-  <updated>2017-01-19T22:29:53Z</updated>
+  <updated>2017-01-23T23:06:50Z</updated>
   <author>
     <name>Shekhar Singh</name>
     <email>shekhar.singh@msn.com</email>
@@ -371,7 +371,9 @@ code {
   <id>http://localhost:3000/new</id>
   <published>2011-12-31T00:00:00Z</published>
   <updated>2011-12-31T00:00:00Z</updated>
-  <content type="html"><![CDATA[ 
+  <content type="html"><![CDATA[ <p>Hey! Welcome to my blog. This blog is going to be more like Notes to self. However, sometimes I’d post random ideas, thoughts, thinking-out-louds.</p>
+
+<p>It’s mostly going to be technical, mostly.</p>
  ]]></content>
 </entry>
 
