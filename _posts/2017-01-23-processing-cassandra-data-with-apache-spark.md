@@ -21,7 +21,7 @@ I'm going to use the package `spark-cassandra-connector` written by awesome <a h
 Assuming you have already configured Cassandra & Spark, it's time to start writing a small Spark job.
 
 <b>Code with explanation</b>:
-```python
+{% highlight python %}
 # imports necessary methods
 from pyspark import SparkContext, SparkConf
 from pyspark.sql import SQLContext
@@ -76,7 +76,8 @@ df_payload = sqlContext.sql(query)
 
 # priting the content of dataframe
 df_payload.show()
-```
+{% endhighlight %}
+
 
 <br>
 
