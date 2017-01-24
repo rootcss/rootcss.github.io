@@ -123,7 +123,7 @@ Here, `df_payload` is DataFrame object. You can use all Spark's <i>Transformatio
 <br>
 <b>Second Part</b>: <u>Starting a Spark shell with Cassandra connection</u>
 <br>
-Steps for this is part of separate <a href="">post</a>.
+Steps for this is part of separate <a href="processing-cassandra-data-with-apache-spark-part-2.html">post</a>.
 
 <hr>
 <b>Useful Links </b>:-
