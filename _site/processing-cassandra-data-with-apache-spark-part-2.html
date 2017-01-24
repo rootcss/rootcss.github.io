@@ -8,9 +8,9 @@
     <meta name="description" content="Blog of Shekhar Singh a.k.a rootcss | Big Data/Data Engineer | Full Stack Developer | Researcher | Data Science | DevOps | Security | Shekhar Singh">
     <link rel="favicon" href="static/img/favicon.ico">
     
-    <meta name="keywords" content="RabbitMQ, Hacker, Programming">
+    <meta name="keywords" content="Spark, Cassandra, Data Engineering, Big Data">
     
-    <link rel="canonical" href="http://localhost:3000/rabbitmq-queues-overflow-automated-deletion.html">
+    <link rel="canonical" href="http://localhost:3000/processing-cassandra-data-with-apache-spark-part-2.html">
     <meta name="title" content="Blog of Shekhar Singh a.k.a rootcss | Big Data/Data Engineer | Full Stack Developer | Researcher | Data Science | DevOps | Security | Shekhar Singh">
     <meta name="description" content="Blog of Shekhar Singh a.k.a rootcss | Big Data/Data Engineer | Full Stack Developer | Researcher | Data Science | DevOps | Security | Shekhar Singh">
     <meta name="author" content="Shekhar Singh">
@@ -25,7 +25,7 @@
     <meta name="twitter:title" content="Blog of Shekhar Singh a.k.a rootcss | Big Data/Data Engineer | Full Stack Developer | Researcher | Data Science | DevOps | Security | Shekhar Singh">
     <meta name="twitter:description" content="Blog of Shekhar Singh a.k.a rootcss | Big Data/Data Engineer | Full Stack Developer | Researcher | Data Science | DevOps | Security | Shekhar Singh">
     
-    <title>RabbitMQ - Automated deletion of 1000s of queues | Shekhar Singh | www.shekharsingh.com</title>
+    <title>Spark Shell for Processing &amp; Querying data in Cassandra | Shekhar Singh | www.shekharsingh.com</title>
     
 
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"
@@ -83,59 +83,30 @@
     <div class="container">
 	<div class="blog-post">
 		<h3>
-		  <strong><a href="/rabbitmq-queues-overflow-automated-deletion.html">RabbitMQ - Automated deletion of 1000s of queues</a></strong>
+		  <strong><a href="/processing-cassandra-data-with-apache-spark-part-2.html">Spark Shell for Processing &amp; Querying data in Cassandra</a></strong>
 		</h3>
 	</div>
 	<div class="blog-title">
 		<h4>
-		March 24, 2016
+		January 24, 2017
 		</h4>
 	</div>
 	<br>
 	<div class="panel panel-default">
 		<div class="panel-body">
 			<div class="blogpost">
-			  <p>Recently, I was using <a href="https://github.com/jondot/sneakers">sneakers</a> for rails, which is a small framework for Ruby and RabbitMQ. One issue with sneakers is that, if you have faulty configuration for a queue or you do not provide a queue name, it leaves it upto rabbitmq to define it. So, for some reason (which I don’t want to focus on), we had more than 1600 queues created on that particular exchange, and unfortunately they were not Auto-delete and we didn’t want other exchanges and queues to get hurt because of this ;)</p>
-
-<p>Anyway, Now the challenge was to delete them, because for that you have to manually click on each queue, select ‘Delete’ on the new page and finally, confirm it on pop-up.</p>
-
-<p>I was like, :O</p>
-
-<p>Anyways, Thanks to handy APIs of rabbitmq, these are the following few commands I used in order to delete them quickly. (rabbitmq generally creates default queues with names like <code class="highlighter-rouge">amq.gen--*</code>)</p>
-
-<p>First let’s list all the queues in the form of bash arrays:</p>
-
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash">rabbitmqadmin --host<span class="o">=</span>&lt;mqserver.hostname.com&gt; --port<span class="o">=</span>443 --ssl --vhost<span class="o">=</span>&lt;your_vhost&gt; --username<span class="o">=</span>&lt;your_username&gt; --password<span class="o">=</span>&lt;your_password&gt; list queues | awk <span class="s1">'{print $2}'</span> | grep amq.gen  | xargs | sed -e <span class="s1">'s/ /" "/g'</span></code></pre></figure>
-
-<p>Now copy the output of it, declare as an array and run a loop to delete them all.</p>
-
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">declare</span> -a <span class="nv">arr</span><span class="o">=(</span><span class="s2">"amq.gen--PxKpFBHkIxxebJEwbmV6g"</span> <span class="s2">"amq.gen--Q6BeLdfGHsXY6RgVmu8Ig"</span> <span class="s2">"amq.gen--WI0hRAHCOkPIrEULYc1vQ"</span> <span class="s2">"amq.gen--XufS0RrnfZUXyf0Rt1tAg"</span> <span class="s2">"amq.gen--_NXdwlSHYDJwGDiuX8_XA"</span> ......<span class="o">)</span>
-
-<span class="k">for </span>i <span class="k">in</span> <span class="s2">"</span><span class="k">${</span><span class="nv">arr</span><span class="p">[@]</span><span class="k">}</span><span class="s2">"</span>
-<span class="k">do
-   </span><span class="nb">echo</span> <span class="s2">"</span><span class="nv">$i</span><span class="s2">"</span>
-   rabbitmqadmin --host<span class="o">=</span>&lt;mqserver.hostname.com&gt; --port<span class="o">=</span>443 --ssl --vhost<span class="o">=</span>&lt;your_vhost&gt; --username<span class="o">=</span>&lt;your_username&gt; --password<span class="o">=</span>&lt;your_password&gt; delete queue <span class="nv">name</span><span class="o">=</span><span class="s2">"</span><span class="nv">$i</span><span class="s2">"</span>
-<span class="k">done</span></code></pre></figure>
-
-<p>That’s it. These small hacks makes me fall in love with programming everyday &lt;3</p>
-
-<p>Thanks!</p>
-
-<style type="text/css">
-pre {
-    white-space: pre-wrap;
-}
-</style>
-
+			  <p>Updating soon.</p>
 
 				<br>
 				Tags:
 				
-				 <span class="label label-success">RabbitMQ</span>
+				 <span class="label label-success">Spark</span>
 				
-				 <span class="label label-success">Hacker</span>
+				 <span class="label label-success">Cassandra</span>
 				
-				 <span class="label label-success">Programming</span>
+				 <span class="label label-success">Data Engineering</span>
+				
+				 <span class="label label-success">Big Data</span>
 				
 
 				<br><br>
@@ -148,19 +119,6 @@ pre {
 			   <div class="related-posts">
 				   <h5>Related Posts</h5>
 				   
-						<div class="row">
-							 <div class="col-sm-4 col-md-4 col-lg-4">
-								 <h6 style="text-align: right">
-								 	January 24, 2017
-								 </h6>
-							 </div>
-							 <div class="col-sm-8 col-md-8 col-lg-8">
-								 <h6 style="text-align: left">
-								 	<strong><a href="/processing-cassandra-data-with-apache-spark-part-2.html">Spark Shell for Processing &amp; Querying data in Cassandra</a></strong>
-								 </h6>
-							 </div>
-						</div>
-					
 						<div class="row">
 							 <div class="col-sm-4 col-md-4 col-lg-4">
 								 <h6 style="text-align: right">
@@ -187,6 +145,19 @@ pre {
 							 </div>
 						</div>
 					
+						<div class="row">
+							 <div class="col-sm-4 col-md-4 col-lg-4">
+								 <h6 style="text-align: right">
+								 	November 11, 2016
+								 </h6>
+							 </div>
+							 <div class="col-sm-8 col-md-8 col-lg-8">
+								 <h6 style="text-align: left">
+								 	<strong><a href="/apache-spark-worker-with-simple-spark-lib.html">Writing Apache Spark workers with "Simple Spark Lib"</a></strong>
+								 </h6>
+							 </div>
+						</div>
+					
 			   </div>
 			</div>
 		</div>
@@ -197,8 +168,8 @@ pre {
 <script type="text/javascript">
 		/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
 		var disqus_shortname = 'rootcss'; // required: replace example with your forum shortname
-		var disqus_identifier = '/rabbitmq-queues-overflow-automated-deletion.html';
-		var disqus_url = 'http://localhost:3000/rabbitmq-queues-overflow-automated-deletion.html';
+		var disqus_identifier = '/processing-cassandra-data-with-apache-spark-part-2.html';
+		var disqus_url = 'http://localhost:3000/processing-cassandra-data-with-apache-spark-part-2.html';
  
             /* * * DON'T EDIT BELOW THIS LINE * * */
             (function() {
