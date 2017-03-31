@@ -6,7 +6,7 @@
   
   <link href="http://localhost:3000/"/>
   <id>http://localhost:3000/</id>
-  <updated>2017-04-01T00:38:07Z</updated>
+  <updated>2017-04-01T00:39:34Z</updated>
   <author>
     <name>Shekhar Singh</name>
     <email>shekhar.singh@msn.com</email>
@@ -80,7 +80,7 @@ However, If your cluster is significantly large, it will be very slow and highly
 
 <p>We cannot say this is an extremely optimized solution, but considering the huge number of advantages that we get from Cassandra, we can compromise a bit here ;-)</p>
 
-<p>And by the way, this method is not yet available for Pyspark, only in Scala. I am attempting to write one in Python, will be sharing the details soon.</p>
+<p>And by the way, this method is not yet available for Pyspark, only in Scala. I am attempting to write one for Pyspark, will be sharing the details soon.</p>
  ]]></content>
 </entry>
 

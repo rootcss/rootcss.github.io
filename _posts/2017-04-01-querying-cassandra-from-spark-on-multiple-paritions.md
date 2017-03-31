@@ -69,4 +69,4 @@ val myResult = myList.joinWithCassandraTable(keyspace, "users")
 
 We cannot say this is an extremely optimized solution, but considering the huge number of advantages that we get from Cassandra, we can compromise a bit here ;-)
 
-And by the way, this method is not yet available for Pyspark, only in Scala. I am attempting to write one in Python, will be sharing the details soon.
+And by the way, this method is not yet available for Pyspark, only in Scala. I am attempting to write one for Pyspark, will be sharing the details soon.
