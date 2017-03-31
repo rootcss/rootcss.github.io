@@ -6,7 +6,7 @@
   
   <link href="http://localhost:3000/"/>
   <id>http://localhost:3000/</id>
-  <updated>2017-04-01T00:39:34Z</updated>
+  <updated>2017-04-01T00:54:20Z</updated>
   <author>
     <name>Shekhar Singh</name>
     <email>shekhar.singh@msn.com</email>
@@ -40,14 +40,18 @@
 
 <p>Now, If I write a query like:</p>
 
-<p><code class="highlighter-rouge">SELECT * FROM users where id = 1</code></p>
+<div class="language-sql highlighter-rouge"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">users</span> <span class="k">where</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">1</span>
+</code></pre>
+</div>
 
 <p>This is perfectly optimized, and thanks to our Murmur3 partitioner we will get the result instantly.</p>
 
 <p><br />
 However, if I write a query like:</p>
 
-<p><code class="highlighter-rouge">SELECT * FROM users where id IN (1, 3, 4, 9, 123, 25, 345, 56, 457, 58, 768, 5435, 2, 547, 456, 345, 2342, 34....)</code></p>
+<div class="language-sql highlighter-rouge"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">users</span> <span class="k">where</span> <span class="n">id</span> <span class="k">IN</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">123</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">345</span><span class="p">,</span> <span class="mi">56</span><span class="p">,</span> <span class="mi">457</span><span class="p">,</span> <span class="mi">58</span><span class="p">,</span> <span class="mi">768</span><span class="p">,</span> <span class="mi">5435</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">547</span><span class="p">,</span> <span class="mi">456</span><span class="p">,</span> <span class="mi">345</span><span class="p">,</span> <span class="mi">2342</span><span class="p">,</span> <span class="mi">34</span><span class="p">....)</span>
+</code></pre>
+</div>
 
 <p>On a small cluster this will cause no major issues, but on a 500 nodes cluster, it’s going to affect the JVM’s Heap badly, as explained above.</p>
 

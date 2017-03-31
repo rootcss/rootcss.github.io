@@ -29,14 +29,18 @@ id | event_timestamp | city
 
 Now, If I write a query like:
 
-`SELECT * FROM users where id = 1`
+```sql
+SELECT * FROM users where id = 1
+```
 
 This is perfectly optimized, and thanks to our Murmur3 partitioner we will get the result instantly.
 
 <br>
 However, if I write a query like:
 
-`SELECT * FROM users where id IN (1, 3, 4, 9, 123, 25, 345, 56, 457, 58, 768, 5435, 2, 547, 456, 345, 2342, 34....)`
+```sql
+SELECT * FROM users where id IN (1, 3, 4, 9, 123, 25, 345, 56, 457, 58, 768, 5435, 2, 547, 456, 345, 2342, 34....)
+```
 
 On a small cluster this will cause no major issues, but on a 500 nodes cluster, it's going to affect the JVM's Heap badly, as explained above.
 
