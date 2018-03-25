@@ -2,13 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>http://localhost:3000/</loc>
-    <lastmod>2017-04-01T00:54:20+05:30</lastmod>
+    <lastmod>2018-03-25T15:19:39+05:30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   
     <url>
-      <loc>http://localhost:3000/querying-cassandra-from-spark-on-multiple-paritions.html</loc>
+      <loc>http://localhost:3000/blog/2017/04/01/querying-cassandra-from-spark-on-multiple-paritions.html</loc>
       
         <lastmod>2017-04-01T00:00:00+05:30</lastmod>
       
@@ -21,7 +21,7 @@
     </url>
   
     <url>
-      <loc>http://localhost:3000/processing-cassandra-data-with-apache-spark-part-2.html</loc>
+      <loc>http://localhost:3000/blog/2017/01/24/processing-cassandra-data-with-apache-spark-part-2.html</loc>
       
         <lastmod>2017-01-24T00:00:00+05:30</lastmod>
       
@@ -34,7 +34,7 @@
     </url>
   
     <url>
-      <loc>http://localhost:3000/processing-cassandra-data-with-apache-spark.html</loc>
+      <loc>http://localhost:3000/blog/2017/01/23/processing-cassandra-data-with-apache-spark.html</loc>
       
         <lastmod>2017-01-23T00:00:00+05:30</lastmod>
       
@@ -47,7 +47,7 @@
     </url>
   
     <url>
-      <loc>http://localhost:3000/apache-flink-rabbimq-streams-processor.html</loc>
+      <loc>http://localhost:3000/blog/2016/11/12/apache-flink-rabbimq-streams-processor.html</loc>
       
         <lastmod>2016-11-12T00:00:00+05:30</lastmod>
       
@@ -60,7 +60,7 @@
     </url>
   
     <url>
-      <loc>http://localhost:3000/apache-spark-worker-with-simple-spark-lib.html</loc>
+      <loc>http://localhost:3000/blog/2016/11/11/apache-spark-worker-with-simple-spark-lib.html</loc>
       
         <lastmod>2016-11-11T00:00:00+05:30</lastmod>
       
@@ -73,7 +73,7 @@
     </url>
   
     <url>
-      <loc>http://localhost:3000/rabbitmq-queues-overflow-automated-deletion.html</loc>
+      <loc>http://localhost:3000/blog/2016/03/24/rabbitmq-queues-overflow-automated-deletion.html</loc>
       
         <lastmod>2016-03-24T00:00:00+05:30</lastmod>
       
@@ -86,7 +86,7 @@
     </url>
   
     <url>
-      <loc>http://localhost:3000/linux-io-redirections.html</loc>
+      <loc>http://localhost:3000/blog/2016/02/15/linux-io-redirections.html</loc>
       
         <lastmod>2016-02-15T00:00:00+05:30</lastmod>
       
@@ -99,7 +99,7 @@
     </url>
   
     <url>
-      <loc>http://localhost:3000/postgres-update-timestamp-when-row-is-updated.html</loc>
+      <loc>http://localhost:3000/blog/2015/11/24/postgres-update-timestamp-when-row-is-updated.html</loc>
       
         <lastmod>2015-11-24T00:00:00+05:30</lastmod>
       
@@ -112,7 +112,7 @@
     </url>
   
     <url>
-      <loc>http://localhost:3000/accessing-postgreSQL-through-ssh-tunnel.html</loc>
+      <loc>http://localhost:3000/blog/2015/11/20/accessing-postgreSQL-through-ssh-tunnel.html</loc>
       
         <lastmod>2015-11-20T00:00:00+05:30</lastmod>
       
@@ -125,7 +125,7 @@
     </url>
   
     <url>
-      <loc>http://localhost:3000/new.html</loc>
+      <loc>http://localhost:3000/blog/2011/12/31/new.html</loc>
       
         <lastmod>2011-12-31T00:00:00+05:30</lastmod>
       
@@ -141,7 +141,7 @@
   <url>
     <loc>http://localhost:3000/help/2013-02-10-post5</loc>
     
-      <lastmod>2017-04-01T00:54:20+05:30</lastmod>
+      <lastmod>2018-03-25T15:19:39+05:30</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -154,7 +154,7 @@
   <url>
     <loc>http://localhost:3000/help/2013-03-15-post4</loc>
     
-      <lastmod>2017-04-01T00:54:20+05:30</lastmod>
+      <lastmod>2018-03-25T15:19:39+05:30</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -167,7 +167,7 @@
   <url>
     <loc>http://localhost:3000/help/2013-04-02-post3</loc>
     
-      <lastmod>2017-04-01T00:54:20+05:30</lastmod>
+      <lastmod>2018-03-25T15:19:39+05:30</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -180,7 +180,7 @@
   <url>
     <loc>http://localhost:3000/help/2013-05-27-post2</loc>
     
-      <lastmod>2017-04-01T00:54:20+05:30</lastmod>
+      <lastmod>2018-03-25T15:19:39+05:30</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -193,20 +193,7 @@
   <url>
     <loc>http://localhost:3000/help/2013-06-05-post1</loc>
     
-      <lastmod>2017-04-01T00:54:20+05:30</lastmod>
-    
-    
-      <changefreq>monthly</changefreq>
-    
-    
-      <priority>0.3</priority>
-    
-  </url>
-  
-  <url>
-    <loc>http://localhost:3000/static/404</loc>
-    
-      <lastmod>2017-04-01T00:54:20+05:30</lastmod>
+      <lastmod>2018-03-25T15:19:39+05:30</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -219,7 +206,20 @@
   <url>
     <loc>http://localhost:3000/404</loc>
     
-      <lastmod>2017-04-01T00:54:20+05:30</lastmod>
+      <lastmod>2018-03-25T15:19:39+05:30</lastmod>
+    
+    
+      <changefreq>monthly</changefreq>
+    
+    
+      <priority>0.3</priority>
+    
+  </url>
+  
+  <url>
+    <loc>http://localhost:3000/static/404</loc>
+    
+      <lastmod>2018-03-25T15:19:39+05:30</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -232,7 +232,7 @@
   <url>
     <loc>http://localhost:3000/about</loc>
     
-      <lastmod>2017-04-01T00:54:20+05:30</lastmod>
+      <lastmod>2018-03-25T15:19:39+05:30</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -245,7 +245,7 @@
   <url>
     <loc>http://localhost:3000/static/atom.xml</loc>
     
-      <lastmod>2017-04-01T00:54:20+05:30</lastmod>
+      <lastmod>2018-03-25T15:19:39+05:30</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -258,7 +258,7 @@
   <url>
     <loc>http://localhost:3000/atom.xml</loc>
     
-      <lastmod>2017-04-01T00:54:20+05:30</lastmod>
+      <lastmod>2018-03-25T15:19:39+05:30</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -271,7 +271,7 @@
   <url>
     <loc>http://localhost:3000/static/blog</loc>
     
-      <lastmod>2017-04-01T00:54:20+05:30</lastmod>
+      <lastmod>2018-03-25T15:19:39+05:30</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -284,7 +284,7 @@
   <url>
     <loc>http://localhost:3000/</loc>
     
-      <lastmod>2017-04-01T00:54:20+05:30</lastmod>
+      <lastmod>2018-03-25T15:19:39+05:30</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -297,20 +297,7 @@
   <url>
     <loc>http://localhost:3000/static/</loc>
     
-      <lastmod>2017-04-01T00:54:20+05:30</lastmod>
-    
-    
-      <changefreq>monthly</changefreq>
-    
-    
-      <priority>0.3</priority>
-    
-  </url>
-  
-  <url>
-    <loc>http://localhost:3000/projects</loc>
-    
-      <lastmod>2017-04-01T00:54:20+05:30</lastmod>
+      <lastmod>2018-03-25T15:19:39+05:30</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -323,7 +310,20 @@
   <url>
     <loc>http://localhost:3000/static/projects</loc>
     
-      <lastmod>2017-04-01T00:54:20+05:30</lastmod>
+      <lastmod>2018-03-25T15:19:39+05:30</lastmod>
+    
+    
+      <changefreq>monthly</changefreq>
+    
+    
+      <priority>0.3</priority>
+    
+  </url>
+  
+  <url>
+    <loc>http://localhost:3000/projects</loc>
+    
+      <lastmod>2018-03-25T15:19:39+05:30</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -336,7 +336,7 @@
   <url>
     <loc>http://localhost:3000/static/sitemap.xml</loc>
     
-      <lastmod>2017-04-01T00:54:20+05:30</lastmod>
+      <lastmod>2018-03-25T15:19:39+05:30</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -349,7 +349,7 @@
   <url>
     <loc>http://localhost:3000/sitemap.xml</loc>
     
-      <lastmod>2017-04-01T00:54:20+05:30</lastmod>
+      <lastmod>2018-03-25T15:19:39+05:30</lastmod>
     
     
       <changefreq>monthly</changefreq>

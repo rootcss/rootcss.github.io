@@ -8,9 +8,9 @@
     <meta name="description" content="Shekhar Singh | Software Engineer | Big Data Engineer | Full Stack Developer | Researcher | Data Science | DevOps | rootcss">
     <link rel="favicon" href="static/img/favicon.ico">
     
-    <meta name="keywords" content="Spark, Cassandra, Data Engineering, Big Data">
+    <meta name="keywords" content="PostgreSQL, SSH Tunnel, Hacker">
     
-    <link rel="canonical" href="http://localhost:3000/processing-cassandra-data-with-apache-spark-part-2.html">
+    <link rel="canonical" href="http://localhost:3000/blog/2015/11/20/accessing-postgreSQL-through-ssh-tunnel.html">
     <meta name="title" content="Shekhar Singh | Software Engineer | Big Data Engineer | Full Stack Developer | Researcher | Data Science | DevOps | rootcss">
     <meta name="description" content="Shekhar Singh | Software Engineer | Big Data Engineer | Full Stack Developer | Researcher | Data Science | DevOps | rootcss">
     <meta name="author" content="Shekhar Singh">
@@ -25,7 +25,7 @@
     <meta name="twitter:title" content="Shekhar Singh | Software Engineer | Big Data Engineer | Full Stack Developer | Researcher | Data Science | DevOps | rootcss">
     <meta name="twitter:description" content="Shekhar Singh | Software Engineer | Big Data Engineer | Full Stack Developer | Researcher | Data Science | DevOps | rootcss">
     
-    <title>Spark Shell for Processing &amp; Querying data in Cassandra | Shekhar Singh | www.shekharsingh.com</title>
+    <title>Accessing PostgreSQL server through a SSH Tunnel | Shekhar Singh | www.shekharsingh.com</title>
     
 
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"
@@ -108,152 +108,38 @@
     <div class="container">
 	<div class="blog-post">
 		<h3>
-		  <strong><a href="/processing-cassandra-data-with-apache-spark-part-2.html">Spark Shell for Processing &amp; Querying data in Cassandra</a></strong>
+		  <strong><a href="/blog/2015/11/20/accessing-postgreSQL-through-ssh-tunnel.html">Accessing PostgreSQL server through a SSH Tunnel</a></strong>
 		</h3>
 	</div>
 	<div class="blog-title">
 		<h4>
-		January 24, 2017
+		November 20, 2015
 		</h4>
 	</div>
 	<br>
 	<div class="panel panel-default">
 		<div class="panel-body">
 			<div class="blogpost">
-			  <p>My previous <a href="processing-cassandra-data-with-apache-spark.html">post</a>  explains, how can you write a Spark job and execute it. In this post, I am writing down steps to initiate a Spark shell (pyspark or spark-shell), with a pre-established connection to Cassandra. In addition to this, I’ll write down some sample codes and their outputs, in order to show the usage of Spark Transformations/Actions.</p>
+			  <p><b>Step 1:</b> Check the SSH connectivity with the server, verify username and password.</p>
 
-<p>To start the shell, just run this command on your shell.
-<br /></p>
-<pre>
-pyspark \
-      --packages com.datastax.spark:spark-cassandra-connector_2.10:1.5.0-M2 \
-      --conf spark.cassandra.connection.host=192.168.56.101 \
-      --conf spark.cassandra.auth.username=cassandra \
-      --conf spark.cassandra.auth.password=cassandra
-</pre>
+<p><b>Step 2:</b> Create the tunnel in your local system by executing the following command (It will prompt for password):</p>
 
-<p>I think, most of the parameters are pretty intuitive. In short, we are just providing the dependency packages and cassandra connection configurations. Make sure you provide path to <code class="highlighter-rouge">pyspark</code> or add it in your <code class="highlighter-rouge">$PATH</code>.</p>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">ssh <span class="nt">-fNg</span> <span class="nt">-L</span> 5555:localhost:5432 &lt;user&gt;@&lt;server&gt;</code></pre></figure>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>Python 2.7.11 <span class="o">(</span>default, Nov 10 2016, 03:37:47<span class="o">)</span>
-<span class="o">[</span>GCC 4.2.1 Compatible Apple LLVM 8.0.0 <span class="o">(</span>clang-800.0.42.1<span class="o">)]</span> on darwin
+<p><b>Step 3:</b> Now, open your PostgreSQL client (eg, <code class="highlighter-rouge">pgAdmin 3</code> or <code class="highlighter-rouge">DBeaver</code> or <code class="highlighter-rouge">Postico</code> for OS X or <code class="highlighter-rouge">Terminal</code>) and fill in the connection details as usual. Check the image below.</p>
 
-Welcome to
-      ____              __
-     / __/__  ___ _____/ /__
-    _<span class="se">\ \/</span> _ <span class="se">\/</span> _ <span class="sb">`</span>/ __/  <span class="s1">'_/
-   /__ / .__/\_,_/_/ /_/\_\   version 1.6.0
-      /_/
+<p><img class="img-responsive" src="assets/images/postico-port-forwarding.png" alt="Postico DB connection" /></p>
 
-Using Python version 2.7.11 (default, Nov 10 2016 03:37:47)
-SparkContext available as sc, HiveContext available as sqlContext.
-
-
-&gt;&gt;&gt; sqlContext.sql("""CREATE TEMPORARY TABLE roles \
-...                   USING org.apache.spark.sql.cassandra \
-...                   OPTIONS ( table "roles", \
-...                             keyspace "system_auth", \
-...                             cluster "rootCSSCluster", \
-...                             pushdown "true") \
-...               """)
-DataFrame[]
-
-
-&gt;&gt;&gt; sqlContext.sql('</span>SELECT <span class="k">*</span> from roles<span class="s1">').show()
-+---------+---------+------------+---------+--------------------+
-|     role|can_login|is_superuser|member_of|         salted_hash|
-+---------+---------+------------+---------+--------------------+
-|cassandra|     true|        true|       []|$2a$10$pQW3iGSC.m...|
-+---------+---------+------------+---------+--------------------+
-
-
-&gt;&gt;&gt; sqlContext.sql("""CREATE TEMPORARY TABLE compaction_history \
-...                   USING org.apache.spark.sql.cassandra \
-...                   OPTIONS ( table "compaction_history", \
-...                             keyspace "system", \
-...                             cluster "rootCSSCluster", \
-...                             pushdown "true") \
-...               """)
-DataFrame[]
-
-
-&gt;&gt;&gt; sqlContext.sql('</span>SELECT <span class="k">*</span> FROM compaction_history LIMIT 3<span class="s1">').show()
-+--------------------+--------+---------+-----------------+--------------------+-------------+
-|                  id|bytes_in|bytes_out|columnfamily_name|        compacted_at|keyspace_name|
-+--------------------+--------+---------+-----------------+--------------------+-------------+
-|b54ccf00-e236-11e...|   20729|     4301|   size_estimates|2017-01-24 18:42:...|       system|
-|170ddba0-e23f-11e...|   12481|     3085| sstable_activity|2017-01-24 19:42:...|       system|
-|914d2e70-e195-11e...|      41|        0|  schema_triggers|2017-01-23 23:28:...|       system|
-+--------------------+--------+---------+-----------------+--------------------+-------------+
-
-
-&gt;&gt;&gt; sqlContext.sql('</span>SELECT columnfamily_name, COUNT<span class="o">(</span><span class="k">*</span><span class="o">)</span> AS count FROM compaction_history GROUP BY columnfamily_name<span class="s1">').show()
-+-----------------+-----+
-|columnfamily_name|count|
-+-----------------+-----+
-| schema_functions|    2|
-|schema_aggregates|    2|
-|  schema_triggers|    2|
-| schema_usertypes|    2|
-|   size_estimates|    2|
-| sstable_activity|    4|
-+-----------------+-----+
-
-
-&gt;&gt;&gt; sqlContext.sql('</span>SELECT SUM<span class="o">(</span>bytes_in<span class="o">)</span> AS sum FROM compaction_history<span class="s1">').show()
-+-----+
-|  sum|
-+-----+
-|73610|
-+-----+
-
-
-&gt;&gt;&gt; df_payload = sqlContext.sql('</span>SELECT bytes_in, bytes_out, columnfamily_name FROM compaction_history<span class="s1">')
-&gt;&gt;&gt; df_payload.count()
-14
-
-
-# Simple Map Reduce example
-&gt;&gt;&gt; df_payload\
-...      .map(lambda x: (x['</span>columnfamily_name<span class="s1">'], 1))\
-...      .reduceByKey(lambda x, y: x+y)\
-...      .toDF()\
-...      .show()
-+-----------------+---+
-|               _1| _2|
-+-----------------+---+
-|   size_estimates|  2|
-| sstable_activity|  4|
-| schema_usertypes|  2|
-|schema_aggregates|  2|
-| schema_functions|  2|
-|  schema_triggers|  2|
-+-----------------+---+
-
-&gt;&gt;&gt;
-
-</span></code></pre>
-</div>
-
-<p><br />
-I’ll be adding more examples with time. :)</p>
-
-<style>
-pre code{
-  white-space: pre;
-}
-</style>
-
+<p><b>Note:</b> Yes, you’ll have to use <code class="highlighter-rouge">'localhost'</code>.</p>
 
 				<br>
 				Tags:
 				
-				 <span class="label label-success">Spark</span>
+				 <span class="label label-success">PostgreSQL</span>
 				
-				 <span class="label label-success">Cassandra</span>
+				 <span class="label label-success">SSH Tunnel</span>
 				
-				 <span class="label label-success">Data Engineering</span>
-				
-				 <span class="label label-success">Big Data</span>
+				 <span class="label label-success">Hacker</span>
 				
 
 				<br><br>
@@ -274,7 +160,20 @@ pre code{
 							 </div>
 							 <div class="col-sm-8 col-md-8 col-lg-8">
 								 <h6 style="text-align: left">
-								 	<strong><a href="/querying-cassandra-from-spark-on-multiple-paritions.html">Observations on querying Cassandra on 'multiple' partitions (with/without Spark)</a></strong>
+								 	<strong><a href="/blog/2017/04/01/querying-cassandra-from-spark-on-multiple-paritions.html">Observations on querying Cassandra on 'multiple' partitions (with/without Spark)</a></strong>
+								 </h6>
+							 </div>
+						</div>
+					
+						<div class="row">
+							 <div class="col-sm-4 col-md-4 col-lg-4">
+								 <h6 style="text-align: right">
+								 	January 24, 2017
+								 </h6>
+							 </div>
+							 <div class="col-sm-8 col-md-8 col-lg-8">
+								 <h6 style="text-align: left">
+								 	<strong><a href="/blog/2017/01/24/processing-cassandra-data-with-apache-spark-part-2.html">Spark Shell for Processing &amp; Querying data in Cassandra</a></strong>
 								 </h6>
 							 </div>
 						</div>
@@ -287,20 +186,7 @@ pre code{
 							 </div>
 							 <div class="col-sm-8 col-md-8 col-lg-8">
 								 <h6 style="text-align: left">
-								 	<strong><a href="/processing-cassandra-data-with-apache-spark.html">Processing &amp; Querying data in Cassandra with Apache Spark</a></strong>
-								 </h6>
-							 </div>
-						</div>
-					
-						<div class="row">
-							 <div class="col-sm-4 col-md-4 col-lg-4">
-								 <h6 style="text-align: right">
-								 	November 12, 2016
-								 </h6>
-							 </div>
-							 <div class="col-sm-8 col-md-8 col-lg-8">
-								 <h6 style="text-align: left">
-								 	<strong><a href="/apache-flink-rabbimq-streams-processor.html">Processing Rabbitmq's Stream with "Apache Flink"</a></strong>
+								 	<strong><a href="/blog/2017/01/23/processing-cassandra-data-with-apache-spark.html">Processing &amp; Querying data in Cassandra with Apache Spark</a></strong>
 								 </h6>
 							 </div>
 						</div>
@@ -315,8 +201,8 @@ pre code{
 <script type="text/javascript">
 		/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
 		var disqus_shortname = 'rootcss'; // required: replace example with your forum shortname
-		var disqus_identifier = '/processing-cassandra-data-with-apache-spark-part-2.html';
-		var disqus_url = 'http://localhost:3000/processing-cassandra-data-with-apache-spark-part-2.html';
+		var disqus_identifier = '/blog/2015/11/20/accessing-postgreSQL-through-ssh-tunnel.html';
+		var disqus_url = 'http://localhost:3000/blog/2015/11/20/accessing-postgreSQL-through-ssh-tunnel.html';
  
             /* * * DON'T EDIT BELOW THIS LINE * * */
             (function() {

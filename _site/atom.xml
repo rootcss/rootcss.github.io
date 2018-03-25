@@ -6,17 +6,17 @@
   
   <link href="http://localhost:3000/"/>
   <id>http://localhost:3000/</id>
-  <updated>2017-04-01T00:54:20Z</updated>
+  <updated>2018-03-25T15:19:39Z</updated>
   <author>
     <name>Shekhar Singh</name>
     <email>shekhar.singh@msn.com</email>
   </author>
-  <rights type="text">Copyright © 2017 Shekhar Singh. All rights reserved.</rights>
+  <rights type="text">Copyright © 2018 Shekhar Singh. All rights reserved.</rights>
   
   <entry>
   <title type="text">Observations on querying Cassandra on 'multiple' partitions (with/without Spark)</title>
-  <link rel="alternate" type="text/html" href="http://localhost:3000/querying-cassandra-from-spark-on-multiple-paritions.html" />
-  <id>http://localhost:3000/querying-cassandra-from-spark-on-multiple-paritions</id>
+  <link rel="alternate" type="text/html" href="http://localhost:3000/blog/2017/04/01/querying-cassandra-from-spark-on-multiple-paritions.html" />
+  <id>http://localhost:3000/blog/2017/04/01/querying-cassandra-from-spark-on-multiple-paritions</id>
   <published>2017-04-01T00:00:00Z</published>
   <updated>2017-04-01T00:00:00Z</updated>
   <content type="html"><![CDATA[ <p>Cassandra’s brilliancy totally depends on your data models. You should know beforehand about how the data will be accessed/queried; and then design accordingly.</p>
@@ -28,30 +28,27 @@
 <p>For example, Let’s say, I have a <code class="highlighter-rouge">users</code> table like this:</p>
 
 <p>(partition key - id, clustering key - event_timestamp)</p>
-<div class="highlighter-rouge"><pre class="highlight"><code>id | event_timestamp | city
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>id | event_timestamp | city
 1  | abc............ | A
 1  | def............ | B
 2  | abc............ | B
 3  | abc............ | C
 :
 :
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Now, If I write a query like:</p>
 
-<div class="language-sql highlighter-rouge"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">users</span> <span class="k">where</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">1</span>
-</code></pre>
-</div>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">users</span> <span class="k">where</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">1</span>
+</code></pre></div></div>
 
 <p>This is perfectly optimized, and thanks to our Murmur3 partitioner we will get the result instantly.</p>
 
 <p><br />
 However, if I write a query like:</p>
 
-<div class="language-sql highlighter-rouge"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">users</span> <span class="k">where</span> <span class="n">id</span> <span class="k">IN</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">123</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">345</span><span class="p">,</span> <span class="mi">56</span><span class="p">,</span> <span class="mi">457</span><span class="p">,</span> <span class="mi">58</span><span class="p">,</span> <span class="mi">768</span><span class="p">,</span> <span class="mi">5435</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">547</span><span class="p">,</span> <span class="mi">456</span><span class="p">,</span> <span class="mi">345</span><span class="p">,</span> <span class="mi">2342</span><span class="p">,</span> <span class="mi">34</span><span class="p">....)</span>
-</code></pre>
-</div>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">users</span> <span class="k">where</span> <span class="n">id</span> <span class="k">IN</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">123</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">345</span><span class="p">,</span> <span class="mi">56</span><span class="p">,</span> <span class="mi">457</span><span class="p">,</span> <span class="mi">58</span><span class="p">,</span> <span class="mi">768</span><span class="p">,</span> <span class="mi">5435</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">547</span><span class="p">,</span> <span class="mi">456</span><span class="p">,</span> <span class="mi">345</span><span class="p">,</span> <span class="mi">2342</span><span class="p">,</span> <span class="mi">34</span><span class="p">....)</span>
+</code></pre></div></div>
 
 <p>On a small cluster this will cause no major issues, but on a 500 nodes cluster, it’s going to affect the JVM’s Heap badly, as explained above.</p>
 
@@ -66,21 +63,19 @@ However, If your cluster is significantly large, it will be very slow and highly
 <p>Internally, this method extracts all the partition keys from the list, and runs a separate parallel query (spark tasks) for each partition key on our “distributed” Spark cluster (it uses Cassandra Java driver to perform this operation). Finally returns an RDD object consisting of results from all tasks.</p>
 
 <p>So, our 2nd query was converted into something like this,</p>
-<div class="language-sql highlighter-rouge"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">users</span> <span class="k">where</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">1</span>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">users</span> <span class="k">where</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">users</span> <span class="k">where</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">3</span>
 <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">users</span> <span class="k">where</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">4</span>
 <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">users</span> <span class="k">where</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">123</span>
 <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">users</span> <span class="k">where</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">25</span>
 <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">users</span> <span class="k">where</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">345</span>
 <span class="p">:</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Usage of the method:</p>
-<div class="language-scala highlighter-rouge"><pre class="highlight"><code><span class="k">val</span> <span class="n">myList</span> <span class="k">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="o">(</span><span class="n">partition_keys</span><span class="o">).</span><span class="n">map</span><span class="o">(</span><span class="nc">Tuple1</span><span class="o">(</span><span class="k">_</span><span class="o">))</span>
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">val</span> <span class="n">myList</span> <span class="k">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="o">(</span><span class="n">partition_keys</span><span class="o">).</span><span class="n">map</span><span class="o">(</span><span class="nc">Tuple1</span><span class="o">(</span><span class="k">_</span><span class="o">))</span>
 <span class="k">val</span> <span class="n">myResult</span> <span class="k">=</span> <span class="n">myList</span><span class="o">.</span><span class="n">joinWithCassandraTable</span><span class="o">(</span><span class="n">keyspace</span><span class="o">,</span> <span class="s">"users"</span><span class="o">)</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>We cannot say this is an extremely optimized solution, but considering the huge number of advantages that we get from Cassandra, we can compromise a bit here ;-)</p>
 
@@ -91,8 +86,8 @@ However, If your cluster is significantly large, it will be very slow and highly
 
   <entry>
   <title type="text">Spark Shell for Processing &amp;amp; Querying data in Cassandra</title>
-  <link rel="alternate" type="text/html" href="http://localhost:3000/processing-cassandra-data-with-apache-spark-part-2.html" />
-  <id>http://localhost:3000/processing-cassandra-data-with-apache-spark-part-2</id>
+  <link rel="alternate" type="text/html" href="http://localhost:3000/blog/2017/01/24/processing-cassandra-data-with-apache-spark-part-2.html" />
+  <id>http://localhost:3000/blog/2017/01/24/processing-cassandra-data-with-apache-spark-part-2</id>
   <published>2017-01-24T00:00:00Z</published>
   <updated>2017-01-24T00:00:00Z</updated>
   <content type="html"><![CDATA[ <p>My previous <a href="processing-cassandra-data-with-apache-spark.html">post</a>  explains, how can you write a Spark job and execute it. In this post, I am writing down steps to initiate a Spark shell (pyspark or spark-shell), with a pre-established connection to Cassandra. In addition to this, I’ll write down some sample codes and their outputs, in order to show the usage of Spark Transformations/Actions.</p>
@@ -109,7 +104,7 @@ pyspark \
 
 <p>I think, most of the parameters are pretty intuitive. In short, we are just providing the dependency packages and cassandra connection configurations. Make sure you provide path to <code class="highlighter-rouge">pyspark</code> or add it in your <code class="highlighter-rouge">$PATH</code>.</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>Python 2.7.11 <span class="o">(</span>default, Nov 10 2016, 03:37:47<span class="o">)</span>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Python 2.7.11 <span class="o">(</span>default, Nov 10 2016, 03:37:47<span class="o">)</span>
 <span class="o">[</span>GCC 4.2.1 Compatible Apple LLVM 8.0.0 <span class="o">(</span>clang-800.0.42.1<span class="o">)]</span> on darwin
 
 Welcome to
@@ -174,7 +169,7 @@ DataFrame[]
 +-----------------+-----+
 
 
-&gt;&gt;&gt; sqlContext.sql('</span>SELECT SUM<span class="o">(</span>bytes_in<span class="o">)</span> AS sum FROM compaction_history<span class="s1">').show()
+&gt;&gt;&gt; sqlContext.sql('</span>SELECT SUM<span class="o">(</span>bytes_in<span class="o">)</span> AS <span class="nb">sum </span>FROM compaction_history<span class="s1">').show()
 +-----+
 |  sum|
 +-----+
@@ -206,8 +201,7 @@ DataFrame[]
 
 &gt;&gt;&gt;
 
-</span></code></pre>
-</div>
+</span></code></pre></div></div>
 
 <p><br />
 I’ll be adding more examples with time. :)</p>
@@ -224,8 +218,8 @@ pre code{
 
   <entry>
   <title type="text">Processing &amp;amp; Querying data in Cassandra with Apache Spark</title>
-  <link rel="alternate" type="text/html" href="http://localhost:3000/processing-cassandra-data-with-apache-spark.html" />
-  <id>http://localhost:3000/processing-cassandra-data-with-apache-spark</id>
+  <link rel="alternate" type="text/html" href="http://localhost:3000/blog/2017/01/23/processing-cassandra-data-with-apache-spark.html" />
+  <id>http://localhost:3000/blog/2017/01/23/processing-cassandra-data-with-apache-spark</id>
   <published>2017-01-23T00:00:00Z</published>
   <updated>2017-01-23T00:00:00Z</updated>
   <content type="html"><![CDATA[ <p>This post is one of my <a href="new.html">Notes to Self</a> one. I’m simply going to write, how can you connect to Cassandra from Spark, run “SQL” queries and perform analysis on Cassandra’s data.</p>
@@ -312,17 +306,16 @@ spark-submit --packages com.datastax.spark:spark-cassandra-connector_2.10:1.5.0-
 
 <p>In our case, we are using <code class="highlighter-rouge">spark-cassandra-connector</code>:</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>groupId: com.datastax.spark
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>groupId: com.datastax.spark
 artifactId: spark-cassandra-connector_2.10
 version: 1.5.0-M2
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p><br /></p>
 
 <p><b>Output</b>:</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>&lt;all your logs will be printed here. including ivy logs&gt;
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;all your logs will be printed here. including ivy logs&gt;
 :
 :
 <span class="o">[</span>Spark] Executing query: <span class="k">select</span> <span class="k">*</span> from roles
@@ -331,8 +324,7 @@ version: 1.5.0-M2
 +---------+---------+------------+---------+--------------------+
 |cassandra|     <span class="nb">true</span>|        <span class="nb">true</span>|       <span class="o">[]</span>|<span class="nv">$2a$10$pQW3iGSC</span>.m...|
 +---------+---------+------------+---------+--------------------+
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p><br />
 Here, <code class="highlighter-rouge">df_payload</code> is DataFrame object. You can use all Spark’s <i>Transformations</i> &amp; <i>Actions</i> on this. (Check <a href="http://spark.apache.org/docs/latest/sql-programming-guide.html">here</a> for more details)</p>
@@ -363,8 +355,8 @@ Steps for this is part of separate <a href="processing-cassandra-data-with-apach
 
   <entry>
   <title type="text">Processing Rabbitmq's Stream with &quot;Apache Flink&quot;</title>
-  <link rel="alternate" type="text/html" href="http://localhost:3000/apache-flink-rabbimq-streams-processor.html" />
-  <id>http://localhost:3000/apache-flink-rabbimq-streams-processor</id>
+  <link rel="alternate" type="text/html" href="http://localhost:3000/blog/2016/11/12/apache-flink-rabbimq-streams-processor.html" />
+  <id>http://localhost:3000/blog/2016/11/12/apache-flink-rabbimq-streams-processor</id>
   <published>2016-11-12T00:00:00Z</published>
   <updated>2016-11-12T00:00:00Z</updated>
   <content type="html"><![CDATA[ <p>I love <a target="_blank" href="http://spark.apache.org/">Apache Spark</a>. Not just becacuse of it’s capability to adapt to so many use-cases, but because it’s one of shining star in the <i>Distributing Computing</i> world, has a great design and superb community backing.</p>
@@ -379,41 +371,35 @@ Steps for this is part of separate <a href="processing-cassandra-data-with-apach
 
 <p><b>Step 2:</b> Start Rabbitmq server</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>rabbitmq-server &amp;
-</code></pre>
-</div>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rabbitmq-server &amp;
+</code></pre></div></div>
 
 <p><b>Step 3:</b> Create an exchange in the rabbitmq. Go to <code class="highlighter-rouge">http://localhost:15672</code> (In my example, I’m binding a queue to the exchange. You can directly use a queue, but make sure to make corresponding changes in the code)</p>
 
 <p><b>Step 4:</b> Clone the repo from <a target="_blank" href="https://github.com/rootcss/flink-rabbitmq.git ">here</a>: (will be explaining the codes inline)</p>
 
-<div class="language-html highlighter-rouge"><pre class="highlight"><code>git clone https://github.com/rootcss/flink-rabbitmq.git
-</code></pre>
-</div>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://github.com/rootcss/flink-rabbitmq.git
+</code></pre></div></div>
 
 <p><b>Step 5:</b> It’s built with maven. (Java) So, build it using:</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>mvn clean package
-</code></pre>
-</div>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mvn clean package
+</code></pre></div></div>
 
 <p><b>Step 6:</b> Once built, You’re all set to run it now:</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>flink run -c com.rootcss.flink.RabbitmqStreamProcessor target/flink-rabbitmq-0.1.jar
-</code></pre>
-</div>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>flink run <span class="nt">-c</span> com.rootcss.flink.RabbitmqStreamProcessor target/flink-rabbitmq-0.1.jar
+</code></pre></div></div>
 
 <p><b>Step 7:</b> Check the logs at:</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>tail -f <span class="nv">$FLINK_HOME</span>/log/<span class="k">*</span>
-</code></pre>
-</div>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">tail</span> <span class="nt">-f</span> <span class="nv">$FLINK_HOME</span>/log/<span class="k">*</span>
+</code></pre></div></div>
 
 <p>and Flink’s dashboard at:</p>
 
-<div class="language-html highlighter-rouge"><pre class="highlight"><code>http://localhost:8081/
-</code></pre>
-</div>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>http://localhost:8081/
+</code></pre></div></div>
 
 <p><b>Step 8:</b> Now, you can start publishing events from the RabbitMQ’s exchange and see the output in the logs.</p>
 
@@ -422,7 +408,7 @@ Steps for this is part of separate <a href="processing-cassandra-data-with-apach
 <h3 id="code-explanation">Code Explanation</h3>
 <p>(This version might be a little different from the code in my repo. Just to keep this concise)</p>
 
-<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="c1">// Extend the RMQSource class, since we need to override a method to bind our queue</span>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Extend the RMQSource class, since we need to override a method to bind our queue</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">RabbitmqStreamProcessor</span> <span class="kd">extends</span> <span class="n">RMQSource</span><span class="o">{</span>
 
     <span class="c1">// This is mainly because we have to bind our queue to an exchange. If you are using a queue directly, you may skip it</span>
@@ -455,8 +441,7 @@ Steps for this is part of separate <a href="processing-cassandra-data-with-apach
         <span class="c1">// Start the execution of the worker</span>
         <span class="n">env</span><span class="o">.</span><span class="na">execute</span><span class="o">();</span>
     <span class="o">}</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <style>
 pre code{
@@ -477,8 +462,8 @@ In the next post, I will be explaining how I bomarded events on both Spark &amp;
 
   <entry>
   <title type="text">Writing Apache Spark workers with &quot;Simple Spark Lib&quot;</title>
-  <link rel="alternate" type="text/html" href="http://localhost:3000/apache-spark-worker-with-simple-spark-lib.html" />
-  <id>http://localhost:3000/apache-spark-worker-with-simple-spark-lib</id>
+  <link rel="alternate" type="text/html" href="http://localhost:3000/blog/2016/11/11/apache-spark-worker-with-simple-spark-lib.html" />
+  <id>http://localhost:3000/blog/2016/11/11/apache-spark-worker-with-simple-spark-lib</id>
   <published>2016-11-11T00:00:00Z</published>
   <updated>2016-11-11T00:00:00Z</updated>
   <content type="html"><![CDATA[ <p><a target="_blank" href="http://spark.apache.org/">Apache Spark</a> is a great project, could be plugged with most of the data sources/databases eg, HDFS, Cassandra, MongoDB, Kafka, Postgres, Redshift etc. I have been using Spark for ad-hoc querying, bunch of Aggregations &amp; Segregations over Cassandra from a long time and noticed that, every time I used to write (or paste) same code for configuration &amp; connection. Also, I knew when someone else wants to do the similar work from my team, he/she will have to do the same thing, including learning what that means and understanding it. Think of someone doing that, if he is using Spark for the first time?</p>
@@ -500,7 +485,7 @@ In the next post, I will be explaining how I bomarded events on both Spark &amp;
 
 <p>Step 2: Install the library:</p>
 
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash">python setup.py install</code></pre></figure>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">python setup.py <span class="nb">install</span></code></pre></figure>
 
 <p>Step 3: Write the worker:</p>
 
@@ -534,7 +519,7 @@ In the next post, I will be explaining how I bomarded events on both Spark &amp;
 
 <p>Step 4: Save it &amp; Execute the worker:</p>
 
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash">simple-runner my_spark_woker.py -d cassandra</code></pre></figure>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">simple-runner my_spark_woker.py <span class="nt">-d</span> cassandra</code></pre></figure>
 
 <p><code class="highlighter-rouge">simple_spark_lib</code> enables you to use the capability of spark without writing the actual Spark codes. I made it public, hoping it might be useful to someone else too.</p>
 
@@ -545,8 +530,8 @@ In the next post, I will be explaining how I bomarded events on both Spark &amp;
 
   <entry>
   <title type="text">RabbitMQ - Automated deletion of 1000s of queues</title>
-  <link rel="alternate" type="text/html" href="http://localhost:3000/rabbitmq-queues-overflow-automated-deletion.html" />
-  <id>http://localhost:3000/rabbitmq-queues-overflow-automated-deletion</id>
+  <link rel="alternate" type="text/html" href="http://localhost:3000/blog/2016/03/24/rabbitmq-queues-overflow-automated-deletion.html" />
+  <id>http://localhost:3000/blog/2016/03/24/rabbitmq-queues-overflow-automated-deletion</id>
   <published>2016-03-24T00:00:00Z</published>
   <updated>2016-03-24T00:00:00Z</updated>
   <content type="html"><![CDATA[ <p>Recently, I was using <a href="https://github.com/jondot/sneakers">sneakers</a> for rails, which is a small framework for Ruby and RabbitMQ. One issue with sneakers is that, if you have faulty configuration for a queue or you do not provide a queue name, it leaves it upto rabbitmq to define it. So, for some reason (which I don’t want to focus on), we had more than 1600 queues created on that particular exchange, and unfortunately they were not Auto-delete and we didn’t want other exchanges and queues to get hurt because of this ;)</p>
@@ -559,16 +544,16 @@ In the next post, I will be explaining how I bomarded events on both Spark &amp;
 
 <p>First let’s list all the queues in the form of bash arrays:</p>
 
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash">rabbitmqadmin --host<span class="o">=</span>&lt;mqserver.hostname.com&gt; --port<span class="o">=</span>443 --ssl --vhost<span class="o">=</span>&lt;your_vhost&gt; --username<span class="o">=</span>&lt;your_username&gt; --password<span class="o">=</span>&lt;your_password&gt; list queues | awk <span class="s1">'{print $2}'</span> | grep amq.gen  | xargs | sed -e <span class="s1">'s/ /" "/g'</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">rabbitmqadmin <span class="nt">--host</span><span class="o">=</span>&lt;mqserver.hostname.com&gt; <span class="nt">--port</span><span class="o">=</span>443 <span class="nt">--ssl</span> <span class="nt">--vhost</span><span class="o">=</span>&lt;your_vhost&gt; <span class="nt">--username</span><span class="o">=</span>&lt;your_username&gt; <span class="nt">--password</span><span class="o">=</span>&lt;your_password&gt; list queues | <span class="nb">awk</span> <span class="s1">'{print $2}'</span> | <span class="nb">grep </span>amq.gen  | xargs | <span class="nb">sed</span> <span class="nt">-e</span> <span class="s1">'s/ /" "/g'</span></code></pre></figure>
 
 <p>Now copy the output of it, declare as an array and run a loop to delete them all.</p>
 
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">declare</span> -a <span class="nv">arr</span><span class="o">=(</span><span class="s2">"amq.gen--PxKpFBHkIxxebJEwbmV6g"</span> <span class="s2">"amq.gen--Q6BeLdfGHsXY6RgVmu8Ig"</span> <span class="s2">"amq.gen--WI0hRAHCOkPIrEULYc1vQ"</span> <span class="s2">"amq.gen--XufS0RrnfZUXyf0Rt1tAg"</span> <span class="s2">"amq.gen--_NXdwlSHYDJwGDiuX8_XA"</span> ......<span class="o">)</span>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">declare</span> <span class="nt">-a</span> <span class="nv">arr</span><span class="o">=(</span><span class="s2">"amq.gen--PxKpFBHkIxxebJEwbmV6g"</span> <span class="s2">"amq.gen--Q6BeLdfGHsXY6RgVmu8Ig"</span> <span class="s2">"amq.gen--WI0hRAHCOkPIrEULYc1vQ"</span> <span class="s2">"amq.gen--XufS0RrnfZUXyf0Rt1tAg"</span> <span class="s2">"amq.gen--_NXdwlSHYDJwGDiuX8_XA"</span> ......<span class="o">)</span>
 
 <span class="k">for </span>i <span class="k">in</span> <span class="s2">"</span><span class="k">${</span><span class="nv">arr</span><span class="p">[@]</span><span class="k">}</span><span class="s2">"</span>
 <span class="k">do
    </span><span class="nb">echo</span> <span class="s2">"</span><span class="nv">$i</span><span class="s2">"</span>
-   rabbitmqadmin --host<span class="o">=</span>&lt;mqserver.hostname.com&gt; --port<span class="o">=</span>443 --ssl --vhost<span class="o">=</span>&lt;your_vhost&gt; --username<span class="o">=</span>&lt;your_username&gt; --password<span class="o">=</span>&lt;your_password&gt; delete queue <span class="nv">name</span><span class="o">=</span><span class="s2">"</span><span class="nv">$i</span><span class="s2">"</span>
+   rabbitmqadmin <span class="nt">--host</span><span class="o">=</span>&lt;mqserver.hostname.com&gt; <span class="nt">--port</span><span class="o">=</span>443 <span class="nt">--ssl</span> <span class="nt">--vhost</span><span class="o">=</span>&lt;your_vhost&gt; <span class="nt">--username</span><span class="o">=</span>&lt;your_username&gt; <span class="nt">--password</span><span class="o">=</span>&lt;your_password&gt; delete queue <span class="nv">name</span><span class="o">=</span><span class="s2">"</span><span class="nv">$i</span><span class="s2">"</span>
 <span class="k">done</span></code></pre></figure>
 
 <p>That’s it. These small hacks makes me fall in love with programming everyday &lt;3</p>
@@ -587,8 +572,8 @@ pre {
 
   <entry>
   <title type="text">Linux I/O redirection examples</title>
-  <link rel="alternate" type="text/html" href="http://localhost:3000/linux-io-redirections.html" />
-  <id>http://localhost:3000/linux-io-redirections</id>
+  <link rel="alternate" type="text/html" href="http://localhost:3000/blog/2016/02/15/linux-io-redirections.html" />
+  <id>http://localhost:3000/blog/2016/02/15/linux-io-redirections</id>
   <published>2016-02-15T00:00:00Z</published>
   <updated>2016-02-15T00:00:00Z</updated>
   <content type="html"><![CDATA[ <p>I/O redirections are one of the prettiest things we have in linux (IMO!) Following are commands and their usage.
@@ -643,8 +628,8 @@ code {
 
   <entry>
   <title type="text">PostgreSQL - update timestamp when row(s) is updated</title>
-  <link rel="alternate" type="text/html" href="http://localhost:3000/postgres-update-timestamp-when-row-is-updated.html" />
-  <id>http://localhost:3000/postgres-update-timestamp-when-row-is-updated</id>
+  <link rel="alternate" type="text/html" href="http://localhost:3000/blog/2015/11/24/postgres-update-timestamp-when-row-is-updated.html" />
+  <id>http://localhost:3000/blog/2015/11/24/postgres-update-timestamp-when-row-is-updated</id>
   <published>2015-11-24T00:00:00Z</published>
   <updated>2015-11-24T00:00:00Z</updated>
   <content type="html"><![CDATA[ <p>In PostgreSQL, if you want to set current timestamp as default value, you can simply keep a column’s default expression as <code class="highlighter-rouge">now()</code>. However, by default there is no function defined to update the timestamp when a particular row (or multiple rows) need to be updated.</p>
@@ -694,15 +679,15 @@ code {
 
   <entry>
   <title type="text">Accessing PostgreSQL server through a SSH Tunnel</title>
-  <link rel="alternate" type="text/html" href="http://localhost:3000/accessing-postgreSQL-through-ssh-tunnel.html" />
-  <id>http://localhost:3000/accessing-postgreSQL-through-ssh-tunnel</id>
+  <link rel="alternate" type="text/html" href="http://localhost:3000/blog/2015/11/20/accessing-postgreSQL-through-ssh-tunnel.html" />
+  <id>http://localhost:3000/blog/2015/11/20/accessing-postgreSQL-through-ssh-tunnel</id>
   <published>2015-11-20T00:00:00Z</published>
   <updated>2015-11-20T00:00:00Z</updated>
   <content type="html"><![CDATA[ <p><b>Step 1:</b> Check the SSH connectivity with the server, verify username and password.</p>
 
 <p><b>Step 2:</b> Create the tunnel in your local system by executing the following command (It will prompt for password):</p>
 
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash">ssh -fNg -L 5555:localhost:5432 &lt;user&gt;@&lt;server&gt;</code></pre></figure>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">ssh <span class="nt">-fNg</span> <span class="nt">-L</span> 5555:localhost:5432 &lt;user&gt;@&lt;server&gt;</code></pre></figure>
 
 <p><b>Step 3:</b> Now, open your PostgreSQL client (eg, <code class="highlighter-rouge">pgAdmin 3</code> or <code class="highlighter-rouge">DBeaver</code> or <code class="highlighter-rouge">Postico</code> for OS X or <code class="highlighter-rouge">Terminal</code>) and fill in the connection details as usual. Check the image below.</p>
 
@@ -715,8 +700,8 @@ code {
 
   <entry>
   <title type="text">Welcome!</title>
-  <link rel="alternate" type="text/html" href="http://localhost:3000/new.html" />
-  <id>http://localhost:3000/new</id>
+  <link rel="alternate" type="text/html" href="http://localhost:3000/blog/2011/12/31/new.html" />
+  <id>http://localhost:3000/blog/2011/12/31/new</id>
   <published>2011-12-31T00:00:00Z</published>
   <updated>2011-12-31T00:00:00Z</updated>
   <content type="html"><![CDATA[ <p>Hey! Welcome to my blog. This blog is going to be more like Notes to self. However, sometimes I’d post random ideas, thoughts, thinking-out-louds.</p>

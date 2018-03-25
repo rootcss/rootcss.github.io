@@ -8,9 +8,9 @@
     <meta name="description" content="Shekhar Singh | Software Engineer | Big Data Engineer | Full Stack Developer | Researcher | Data Science | DevOps | rootcss">
     <link rel="favicon" href="static/img/favicon.ico">
     
-    <meta name="keywords" content="shekharsingh.com">
+    <meta name="keywords" content="Spark, Cassandra, Spark, Big Data">
     
-    <link rel="canonical" href="http://localhost:3000/new.html">
+    <link rel="canonical" href="http://localhost:3000/blog/2017/04/01/querying-cassandra-from-spark-on-multiple-paritions.html">
     <meta name="title" content="Shekhar Singh | Software Engineer | Big Data Engineer | Full Stack Developer | Researcher | Data Science | DevOps | rootcss">
     <meta name="description" content="Shekhar Singh | Software Engineer | Big Data Engineer | Full Stack Developer | Researcher | Data Science | DevOps | rootcss">
     <meta name="author" content="Shekhar Singh">
@@ -25,7 +25,7 @@
     <meta name="twitter:title" content="Shekhar Singh | Software Engineer | Big Data Engineer | Full Stack Developer | Researcher | Data Science | DevOps | rootcss">
     <meta name="twitter:description" content="Shekhar Singh | Software Engineer | Big Data Engineer | Full Stack Developer | Researcher | Data Science | DevOps | rootcss">
     
-    <title>Welcome! | Shekhar Singh | www.shekharsingh.com</title>
+    <title>Observations on querying Cassandra on 'multiple' partitions (with/without Spark) | Shekhar Singh | www.shekharsingh.com</title>
     
 
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"
@@ -108,26 +108,90 @@
     <div class="container">
 	<div class="blog-post">
 		<h3>
-		  <strong><a href="/new.html">Welcome!</a></strong>
+		  <strong><a href="/blog/2017/04/01/querying-cassandra-from-spark-on-multiple-paritions.html">Observations on querying Cassandra on 'multiple' partitions (with/without Spark)</a></strong>
 		</h3>
 	</div>
 	<div class="blog-title">
 		<h4>
-		December 31, 2011
+		April  1, 2017
 		</h4>
 	</div>
 	<br>
 	<div class="panel panel-default">
 		<div class="panel-body">
 			<div class="blogpost">
-			  <p>Hey! Welcome to my blog. This blog is going to be more like Notes to self. However, sometimes I’d post random ideas, thoughts, thinking-out-louds.</p>
+			  <p>Cassandra’s brilliancy totally depends on your data models. You should know beforehand about how the data will be accessed/queried; and then design accordingly.</p>
 
-<p>It’s mostly going to be technical, mostly.</p>
+<p>If you’re querying a Cassandra table, you are going to start writing your query with the <b>partition key</b>, because as we know, the partition key tells about the data locality in the cluster. Writing a query that includes multiple partition keys is never optimized, because those keys might be on different nodes. Just assume, you have 500 nodes with RF=3 and each node is being scanned for those partition keys.</p>
+
+<p>It’s going to be super expensive.</p>
+
+<p>For example, Let’s say, I have a <code class="highlighter-rouge">users</code> table like this:</p>
+
+<p>(partition key - id, clustering key - event_timestamp)</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>id | event_timestamp | city
+1  | abc............ | A
+1  | def............ | B
+2  | abc............ | B
+3  | abc............ | C
+:
+:
+</code></pre></div></div>
+
+<p>Now, If I write a query like:</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">users</span> <span class="k">where</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">1</span>
+</code></pre></div></div>
+
+<p>This is perfectly optimized, and thanks to our Murmur3 partitioner we will get the result instantly.</p>
+
+<p><br />
+However, if I write a query like:</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">users</span> <span class="k">where</span> <span class="n">id</span> <span class="k">IN</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">123</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">345</span><span class="p">,</span> <span class="mi">56</span><span class="p">,</span> <span class="mi">457</span><span class="p">,</span> <span class="mi">58</span><span class="p">,</span> <span class="mi">768</span><span class="p">,</span> <span class="mi">5435</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">547</span><span class="p">,</span> <span class="mi">456</span><span class="p">,</span> <span class="mi">345</span><span class="p">,</span> <span class="mi">2342</span><span class="p">,</span> <span class="mi">34</span><span class="p">....)</span>
+</code></pre></div></div>
+
+<p>On a small cluster this will cause no major issues, but on a 500 nodes cluster, it’s going to affect the JVM’s Heap badly, as explained above.</p>
+
+<p><br />
+Now, coming to <b>Spark</b>.</p>
+
+<p>On a small scale, you wouldn’t even notice the problem. Not just with Spark, but even with CQLSH you wouldn’t notice the delay and issues significantly.
+However, If your cluster is significantly large, it will be very slow and highly unoptimized, and we don’t really like that, right.</p>
+
+<p><a href="https://github.com/datastax/spark-cassandra-connector" target="_blank"><code class="highlighter-rouge">cassandra-spark-connector</code></a> has a method called <code class="highlighter-rouge">joinWithCassandraTable()</code> to which you can pass a list of partition keys to be looked up.</p>
+
+<p>Internally, this method extracts all the partition keys from the list, and runs a separate parallel query (spark tasks) for each partition key on our “distributed” Spark cluster (it uses Cassandra Java driver to perform this operation). Finally returns an RDD object consisting of results from all tasks.</p>
+
+<p>So, our 2nd query was converted into something like this,</p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">users</span> <span class="k">where</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">users</span> <span class="k">where</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">users</span> <span class="k">where</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">users</span> <span class="k">where</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">123</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">users</span> <span class="k">where</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">25</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">users</span> <span class="k">where</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">345</span>
+<span class="p">:</span>
+</code></pre></div></div>
+
+<p>Usage of the method:</p>
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">val</span> <span class="n">myList</span> <span class="k">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="o">(</span><span class="n">partition_keys</span><span class="o">).</span><span class="n">map</span><span class="o">(</span><span class="nc">Tuple1</span><span class="o">(</span><span class="k">_</span><span class="o">))</span>
+<span class="k">val</span> <span class="n">myResult</span> <span class="k">=</span> <span class="n">myList</span><span class="o">.</span><span class="n">joinWithCassandraTable</span><span class="o">(</span><span class="n">keyspace</span><span class="o">,</span> <span class="s">"users"</span><span class="o">)</span>
+</code></pre></div></div>
+
+<p>We cannot say this is an extremely optimized solution, but considering the huge number of advantages that we get from Cassandra, we can compromise a bit here ;-)</p>
+
+<p>And by the way, this method is not yet available for Pyspark, only in Scala. I am attempting to write one for Pyspark, will be sharing the details soon.</p>
 
 				<br>
 				Tags:
 				
-				 <span class="label label-success">shekharsingh.com</span>
+				 <span class="label label-success">Spark</span>
+				
+				 <span class="label label-success">Cassandra</span>
+				
+				 <span class="label label-success">Spark</span>
+				
+				 <span class="label label-success">Big Data</span>
 				
 
 				<br><br>
@@ -143,25 +207,12 @@
 						<div class="row">
 							 <div class="col-sm-4 col-md-4 col-lg-4">
 								 <h6 style="text-align: right">
-								 	April  1, 2017
-								 </h6>
-							 </div>
-							 <div class="col-sm-8 col-md-8 col-lg-8">
-								 <h6 style="text-align: left">
-								 	<strong><a href="/querying-cassandra-from-spark-on-multiple-paritions.html">Observations on querying Cassandra on 'multiple' partitions (with/without Spark)</a></strong>
-								 </h6>
-							 </div>
-						</div>
-					
-						<div class="row">
-							 <div class="col-sm-4 col-md-4 col-lg-4">
-								 <h6 style="text-align: right">
 								 	January 24, 2017
 								 </h6>
 							 </div>
 							 <div class="col-sm-8 col-md-8 col-lg-8">
 								 <h6 style="text-align: left">
-								 	<strong><a href="/processing-cassandra-data-with-apache-spark-part-2.html">Spark Shell for Processing &amp; Querying data in Cassandra</a></strong>
+								 	<strong><a href="/blog/2017/01/24/processing-cassandra-data-with-apache-spark-part-2.html">Spark Shell for Processing &amp; Querying data in Cassandra</a></strong>
 								 </h6>
 							 </div>
 						</div>
@@ -174,7 +225,20 @@
 							 </div>
 							 <div class="col-sm-8 col-md-8 col-lg-8">
 								 <h6 style="text-align: left">
-								 	<strong><a href="/processing-cassandra-data-with-apache-spark.html">Processing &amp; Querying data in Cassandra with Apache Spark</a></strong>
+								 	<strong><a href="/blog/2017/01/23/processing-cassandra-data-with-apache-spark.html">Processing &amp; Querying data in Cassandra with Apache Spark</a></strong>
+								 </h6>
+							 </div>
+						</div>
+					
+						<div class="row">
+							 <div class="col-sm-4 col-md-4 col-lg-4">
+								 <h6 style="text-align: right">
+								 	November 12, 2016
+								 </h6>
+							 </div>
+							 <div class="col-sm-8 col-md-8 col-lg-8">
+								 <h6 style="text-align: left">
+								 	<strong><a href="/blog/2016/11/12/apache-flink-rabbimq-streams-processor.html">Processing Rabbitmq's Stream with "Apache Flink"</a></strong>
 								 </h6>
 							 </div>
 						</div>
@@ -189,8 +253,8 @@
 <script type="text/javascript">
 		/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
 		var disqus_shortname = 'rootcss'; // required: replace example with your forum shortname
-		var disqus_identifier = '/new.html';
-		var disqus_url = 'http://localhost:3000/new.html';
+		var disqus_identifier = '/blog/2017/04/01/querying-cassandra-from-spark-on-multiple-paritions.html';
+		var disqus_url = 'http://localhost:3000/blog/2017/04/01/querying-cassandra-from-spark-on-multiple-paritions.html';
  
             /* * * DON'T EDIT BELOW THIS LINE * * */
             (function() {

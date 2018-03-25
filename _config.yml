@@ -1,6 +1,6 @@
 # top level stuff you probably don't need to touch
 markdown: kramdown
-permalink: /:title.html
+permalink: /blog/:year/:month/:day/:title.html
 paginate: 5
 gems: [jekyll-paginate]
 port: 3000
