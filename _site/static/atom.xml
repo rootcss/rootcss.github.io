@@ -6,7 +6,7 @@
   
   <link href="http://localhost:3000/"/>
   <id>http://localhost:3000/</id>
-  <updated>2018-03-25T15:30:32Z</updated>
+  <updated>2018-03-25T15:45:23Z</updated>
   <author>
     <name>Shekhar Singh</name>
     <email>shekhar.singh@msn.com</email>
@@ -15,7 +15,7 @@
   
   <entry>
   <title type="text">Observations on querying Cassandra on 'multiple' partitions (with/without Spark)</title>
-  <link rel="alternate" type="text/html" href="http://localhost:3000/blog/2017/04/01/querying-cassandra-from-spark-on-multiple-paritions.html" />
+  <link rel="alternate" type="text/html" href="http://localhost:3000//blog/2017/04/01/querying-cassandra-from-spark-on-multiple-paritions.html" />
   <id>http://localhost:3000/blog/2017/04/01/querying-cassandra-from-spark-on-multiple-paritions</id>
   <published>2017-04-01T00:00:00Z</published>
   <updated>2017-04-01T00:00:00Z</updated>
@@ -86,7 +86,7 @@ However, If your cluster is significantly large, it will be very slow and highly
 
   <entry>
   <title type="text">Spark Shell for Processing &amp;amp; Querying data in Cassandra</title>
-  <link rel="alternate" type="text/html" href="http://localhost:3000/blog/2017/01/24/processing-cassandra-data-with-apache-spark-part-2.html" />
+  <link rel="alternate" type="text/html" href="http://localhost:3000//blog/2017/01/24/processing-cassandra-data-with-apache-spark-part-2.html" />
   <id>http://localhost:3000/blog/2017/01/24/processing-cassandra-data-with-apache-spark-part-2</id>
   <published>2017-01-24T00:00:00Z</published>
   <updated>2017-01-24T00:00:00Z</updated>
@@ -218,7 +218,7 @@ pre code{
 
   <entry>
   <title type="text">Processing &amp;amp; Querying data in Cassandra with Apache Spark</title>
-  <link rel="alternate" type="text/html" href="http://localhost:3000/blog/2017/01/23/processing-cassandra-data-with-apache-spark.html" />
+  <link rel="alternate" type="text/html" href="http://localhost:3000//blog/2017/01/23/processing-cassandra-data-with-apache-spark.html" />
   <id>http://localhost:3000/blog/2017/01/23/processing-cassandra-data-with-apache-spark</id>
   <published>2017-01-23T00:00:00Z</published>
   <updated>2017-01-23T00:00:00Z</updated>
@@ -355,7 +355,7 @@ Steps for this is part of separate <a href="processing-cassandra-data-with-apach
 
   <entry>
   <title type="text">Processing Rabbitmq's Stream with &quot;Apache Flink&quot;</title>
-  <link rel="alternate" type="text/html" href="http://localhost:3000/blog/2016/11/12/apache-flink-rabbimq-streams-processor.html" />
+  <link rel="alternate" type="text/html" href="http://localhost:3000//blog/2016/11/12/apache-flink-rabbimq-streams-processor.html" />
   <id>http://localhost:3000/blog/2016/11/12/apache-flink-rabbimq-streams-processor</id>
   <published>2016-11-12T00:00:00Z</published>
   <updated>2016-11-12T00:00:00Z</updated>
@@ -462,7 +462,7 @@ In the next post, I will be explaining how I bomarded events on both Spark &amp;
 
   <entry>
   <title type="text">Writing Apache Spark workers with &quot;Simple Spark Lib&quot;</title>
-  <link rel="alternate" type="text/html" href="http://localhost:3000/blog/2016/11/11/apache-spark-worker-with-simple-spark-lib.html" />
+  <link rel="alternate" type="text/html" href="http://localhost:3000//blog/2016/11/11/apache-spark-worker-with-simple-spark-lib.html" />
   <id>http://localhost:3000/blog/2016/11/11/apache-spark-worker-with-simple-spark-lib</id>
   <published>2016-11-11T00:00:00Z</published>
   <updated>2016-11-11T00:00:00Z</updated>
@@ -530,7 +530,7 @@ In the next post, I will be explaining how I bomarded events on both Spark &amp;
 
   <entry>
   <title type="text">RabbitMQ - Automated deletion of 1000s of queues</title>
-  <link rel="alternate" type="text/html" href="http://localhost:3000/blog/2016/03/24/rabbitmq-queues-overflow-automated-deletion.html" />
+  <link rel="alternate" type="text/html" href="http://localhost:3000//blog/2016/03/24/rabbitmq-queues-overflow-automated-deletion.html" />
   <id>http://localhost:3000/blog/2016/03/24/rabbitmq-queues-overflow-automated-deletion</id>
   <published>2016-03-24T00:00:00Z</published>
   <updated>2016-03-24T00:00:00Z</updated>
@@ -572,7 +572,7 @@ pre {
 
   <entry>
   <title type="text">Linux I/O redirection examples</title>
-  <link rel="alternate" type="text/html" href="http://localhost:3000/blog/2016/02/15/linux-io-redirections.html" />
+  <link rel="alternate" type="text/html" href="http://localhost:3000//blog/2016/02/15/linux-io-redirections.html" />
   <id>http://localhost:3000/blog/2016/02/15/linux-io-redirections</id>
   <published>2016-02-15T00:00:00Z</published>
   <updated>2016-02-15T00:00:00Z</updated>
@@ -628,7 +628,7 @@ code {
 
   <entry>
   <title type="text">PostgreSQL - update timestamp when row(s) is updated</title>
-  <link rel="alternate" type="text/html" href="http://localhost:3000/blog/2015/11/24/postgres-update-timestamp-when-row-is-updated.html" />
+  <link rel="alternate" type="text/html" href="http://localhost:3000//blog/2015/11/24/postgres-update-timestamp-when-row-is-updated.html" />
   <id>http://localhost:3000/blog/2015/11/24/postgres-update-timestamp-when-row-is-updated</id>
   <published>2015-11-24T00:00:00Z</published>
   <updated>2015-11-24T00:00:00Z</updated>
@@ -679,7 +679,7 @@ code {
 
   <entry>
   <title type="text">Accessing PostgreSQL server through a SSH Tunnel</title>
-  <link rel="alternate" type="text/html" href="http://localhost:3000/blog/2015/11/20/accessing-postgreSQL-through-ssh-tunnel.html" />
+  <link rel="alternate" type="text/html" href="http://localhost:3000//blog/2015/11/20/accessing-postgreSQL-through-ssh-tunnel.html" />
   <id>http://localhost:3000/blog/2015/11/20/accessing-postgreSQL-through-ssh-tunnel</id>
   <published>2015-11-20T00:00:00Z</published>
   <updated>2015-11-20T00:00:00Z</updated>
@@ -700,7 +700,7 @@ code {
 
   <entry>
   <title type="text">Welcome!</title>
-  <link rel="alternate" type="text/html" href="http://localhost:3000/blog/2011/12/31/new.html" />
+  <link rel="alternate" type="text/html" href="http://localhost:3000//blog/2011/12/31/new.html" />
   <id>http://localhost:3000/blog/2011/12/31/new</id>
   <published>2011-12-31T00:00:00Z</published>
   <updated>2011-12-31T00:00:00Z</updated>

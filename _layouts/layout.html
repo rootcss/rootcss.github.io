@@ -1,17 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	  <meta name="author" content="{{ site.author }}" />
+    <meta name="author" content="{{ site.author }}" />
     <meta name="description" content="{{ site.description }}">
-    <link rel="favicon" href="static/img/favicon.ico">
-    {% if page.tags %}
-    <meta name="keywords" content="{{ page.tags | join: ', ' }}">
-    {% else %}
-    <meta name="keywords" content="{{ site.title }}">
-    {% endif %}
+    <link rel="favicon" href="static/img/favicon.ico"> {% if page.tags %}
+    <meta name="keywords" content="{{ page.tags | join: ', ' }}"> {% else %}
+    <meta name="keywords" content="{{ site.title }}"> {% endif %}
     <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.url }}">
     <meta name="title" content="{{ site.title }}">
     <meta name="description" content="{{ site.description }}">
@@ -25,16 +23,14 @@
     <meta name="twitter:card" content="summary">
     <meta name="twitter:site" content="@{{ site.twitter }}">
     <meta name="twitter:title" content="{{ site.title }}">
-    <meta name="twitter:description" content="{{ site.description }}">
-    {% if page.title %}
+    <meta name="twitter:description" content="{{ site.description }}"> {% if page.title %}
     <title>{{ page.title }} | {{ site.author }} | www.shekharsingh.com</title>
     {% else %}
     <title>{{ site.title }}</title>
     {% endif %}
 
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ=="
-    crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ=="
+        crossorigin="anonymous">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -44,37 +40,35 @@
     <![endif]-->
 
     <!-- Custom styles for this template -->
-    <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}static/css/main.css" />
-	  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400,200bold,400old" />
-	  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
-    <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}static/css/syntax.css" />
+    <link rel="stylesheet" type="text/css" href="{{ site.url }}/static/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400,200bold,400old" />
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="{{ site.url }}/static/css/syntax.css" />
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <!-- Google Analytics -->
     {% include analytics.html %}
-  </head>
-  <!-- Main Body-->
-  <body>
-  <!-- Wrap all page content here -->
-  <div id="wrap">
-    <!-- Navbar header -->
-    {% include header.html %}
+</head>
+<!-- Main Body-->
 
-    {{ content }}
+<body>
+    <!-- Wrap all page content here -->
+    <div id="wrap">
+        <!-- Navbar header -->
+        {% include header.html %} {{ content }}
 
-  </div>
-  <!-- Footer -->
-  {% include footer.html %}
+    </div>
+    <!-- Footer -->
+    {% include footer.html %}
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Bootstrap core JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"
-    integrity="sha256-Sk3nkD6mLTMOF0EOpNtsIry+s1CsaqQC1rVLTAy+0yc= sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ=="
-    crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha256-Sk3nkD6mLTMOF0EOpNtsIry+s1CsaqQC1rVLTAy+0yc= sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-	   <script src="{{ site.baseurl }}static/js/docs.min.js"></script>
-     <script src="{{ site.baseurl }}static/js/main.js"></script>
-     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-     <script src="{{ site.baseurl }}static/js/ie10-viewport-bug-workaround.js"></script>
-  </body>
+    <script src="{{ site.url }}/static/js/docs.min.js"></script>
+    <script src="{{ site.url }}/static/js/main.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="{{ site.url }}/static/js/ie10-viewport-bug-workaround.js"></script>
+</body>
+
 </html>
