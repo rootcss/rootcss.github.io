@@ -15,7 +15,7 @@ Coming to the point, <a target="_blank" href="https://www.cloudflare.com/">Cloud
 - In the next step, they will provide few (usually 2) new Nameservers (something like blah.ns.cloudflare.com)
 - You just need to replace the existing Nameservers with these new ones in your Domain provider's dashboard.
 - Wait for DNS resolution to complete. Meanwhile, go to Cloudflare dashboard's Crypto menu, and Turn ON <b>Always use HTTPS</b> option.
-- Once you see <b>Universal SSL Status: Active Certificate"</b> in the dashboard, your website will have working SSL. (happend for me within 5 minutes; but might take upto 24 hours)
+- Once you see <b>Universal SSL Status: Active Certificate</b> in the dashboard, your website will have working SSL. (happend for me within 5 minutes; but might take upto 24 hours)
 
 
 <br>
