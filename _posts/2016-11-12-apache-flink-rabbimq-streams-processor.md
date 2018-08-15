@@ -109,7 +109,7 @@ pre code{
 
 And, here is the beautiful web interface of Apache Flink:
 
-<p><img class="img-responsive" src="assets/images/2016-11-12-apache-flink-rabbimq-streams-processor_1.png" alt="Flink Web Dashboard" /></p>
+<p><img class="img-responsive" src="{{ site.url }}/assets/images/2016-11-12-apache-flink-rabbimq-streams-processor_1.png" alt="Flink Web Dashboard" /></p>
 <br>
 In the next post, I will be explaining how I bomarded events on both Spark & Flink, to compare their endurance. Just for fun :-D
 
