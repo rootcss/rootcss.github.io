@@ -1,10 +1,11 @@
 <footer>
     <div id="footer">
         <div class="container">
-            <p class="text-muted">&copy; 2016 Copyright. All rights reserved.</p>
-            <p class="text-muted">
-                <a href="{{ site.url }}/about.html">ABOUT</a> &nbsp; &nbsp; <a href="{{ site.url }}/index.html">BLOG</a>
-            </p>
+            {% include social.html %}
+            <p class="text-muted">&copy;
+                <script>
+                    document.write(new Date().getFullYear())
+                </script> Copyright. All rights reserved.</p>
         </div>
     </div>
 </footer>

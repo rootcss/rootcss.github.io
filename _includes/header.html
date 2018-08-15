@@ -1,13 +1,32 @@
-<nav class="navbar navbar-default">
+<!-- <nav class="navbar navbar-default">
     <div class="container">
         <br>
         <div class="navbar-header">
-            <!-- <a class="navbar-brand" href="{{ site.url }}"><i class="fa fa-home"></i></a> -->
+            <a style="font-size: 30px;" class="navbar-brand" href="{{ site.url }}"><b>Shekhar Singh</b></a>
+        </div>
+        <div id="navbar">
+            <br>
+            <a href="{{ site.url }}/about.html">ABOUT</a> &nbsp; &nbsp; <a href="{{ site.url }}/index.html">BLOG</a>
+            <br>
+            <ul class="nav navbar-nav navbar-right">
+                {% include social.html %}
+            </ul>
+        </div>
+    </div>
+</nav> -->
+
+<nav class="navbar navbar-default">
+    <div class="container">
+        <div class="navbar-header">
             <a style="font-size: 30px;" class="navbar-brand" href="{{ site.url }}"><b>Shekhar Singh</b></a>
         </div>
         <div id="navbar">
             <ul class="nav navbar-nav navbar-right">
-                {% include social.html %}
+                <li><a href="{{ site.baseurl }}">BLOG</a></li>
+                <li><a href="{{ site.baseurl }}about.html">ABOUT</a></li>
+                <li><a href="{{ site.baseurl }}offwork.html">OFF-WORK</a></li>
+                <li><a target="_blank" href="https://github.com/rootcss">GITHUB</a></li>
+                <li><a target="_blank" href="https://www.linkedin.com/in/cshekharsingh/">LINKEDIN</a></li>
             </ul>
         </div>
     </div>
