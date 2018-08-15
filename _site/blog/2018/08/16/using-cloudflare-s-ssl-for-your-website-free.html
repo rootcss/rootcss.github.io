@@ -8,8 +8,8 @@
     <meta name="author" content="Shekhar Singh" />
     <meta name="description" content="Shekhar Singh | All things Backend. Services, Big Data, Blockchain | Consultant, Freelancer | rootcss">
     <link rel="favicon" href="static/img/favicon.ico"> 
-    <meta name="keywords" content="shekharsingh.com"> 
-    <link rel="canonical" href="http://localhost:3000/blog/2011/12/31/new.html">
+    <meta name="keywords" content="SSL, Security"> 
+    <link rel="canonical" href="http://localhost:3000/blog/2018/08/16/using-cloudflare-s-ssl-for-your-website-free.html">
     <meta name="title" content="Shekhar Singh | All things Backend. Services, Big Data, Blockchain | Consultant, Freelancer">
     <meta name="description" content="Shekhar Singh | All things Backend. Services, Big Data, Blockchain | Consultant, Freelancer | rootcss">
     <meta name="author" content="Shekhar Singh">
@@ -23,7 +23,7 @@
     <meta name="twitter:site" content="@rootcss">
     <meta name="twitter:title" content="Shekhar Singh | All things Backend. Services, Big Data, Blockchain | Consultant, Freelancer">
     <meta name="twitter:description" content="Shekhar Singh | All things Backend. Services, Big Data, Blockchain | Consultant, Freelancer | rootcss"> 
-    <title>Welcome! | Shekhar Singh | www.shekharsingh.com</title>
+    <title>Using Cloudflare's SSL for your website (FREE!) | Shekhar Singh | www.shekharsingh.com</title>
     
 
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ=="
@@ -123,26 +123,59 @@
 </nav> <div class="container">
 	<div class="blog-post">
 		<h3>
-		  <strong><a href="/blog/2011/12/31/new.html">Welcome!</a></strong>
+		  <strong><a href="/blog/2018/08/16/using-cloudflare-s-ssl-for-your-website-free.html">Using Cloudflare's SSL for your website (FREE!)</a></strong>
 		</h3>
 	</div>
 	<div class="blog-title">
 		<h4>
-		December 31, 2011
+		August 16, 2018
 		</h4>
 	</div>
 	<br>
 	<div class="panel panel-default">
 		<div class="panel-body">
 			<div class="blogpost">
-			  <p>Hey! Welcome to my blog. This blog is going to be more like Notes to self. However, sometimes I’d post random ideas, thoughts, thinking-out-louds.</p>
+			  <p>Many people who have static websites/blogs would say, they don’t really need SSL for their website and I’ve said that too in past. SSL certificates are not cheap comparatively and we try to save that additional cost.</p>
 
-<p>It’s mostly going to be technical, mostly.</p>
+<p>Internet Providers have been playing around with the web traffic and tampering it for a while now. Sniffing the traffic and content injection in web pages is common. These are some simple examples for why SSL is important.</p>
+
+<p>Coming to the point, <a target="_blank" href="https://www.cloudflare.com/">Cloudflare</a> provides free SSL for your website, and it’s super-easy to configure:</p>
+<ul>
+  <li>Sign up on Cloudflare and enter your DNS. After that, they will automatically fetch all the DNS Records associated with your domain. You can cross-check from your domain provider to be sure.</li>
+  <li>In the next step, they will provide few (usually 2) new Nameservers (something like blah.ns.cloudflare.com)</li>
+  <li>You just need to replace the existing Nameservers with these new ones in your Domain provider’s dashboard.</li>
+  <li>Wait for DNS resolution to complete. Meanwhile, go to Cloudflare dashboard’s Crypto menu, and Turn ON <b>Always use HTTPS</b> option.</li>
+  <li>Once you see <b>Universal SSL Status: Active Certificate”</b> in the dashboard, your website will have working SSL. (happend for me within 5 minutes; but might take upto 24 hours)</li>
+</ul>
+
+<p><br />
+<b>How does it work?</b></p>
+
+<p>Cloudflare has three ways in which you can use SSL.</p>
+<ul>
+  <li><b>Flexible SSL</b>: Traffic between User &amp; Cloudflare is over HTTPS, but only HTTP between Cloudflare and your server.</li>
+  <li><b>Full SSL</b>: If your server is configured with SSL, then the traffic is end to end over HTTPS. In my case, my website is hosted on Github Pages, which is configured with SSL, so I chose this option.</li>
+  <li><b>Full SSL (Strict)</b>: Same as Full SSL, but additionally, the connection between Cloudflare &amp; web server is authenticated for every request as well. This needs a signed certificate from a trusted authority.</li>
+</ul>
+
+<p>You can <a target="_blank" href="https://support.cloudflare.com/hc/en-us/articles/200170416">read more</a> about it in Cloudflare’s official documentation.</p>
+
+<p>Cloudflare also provides a lot of other useful features like Caching, Firewall to name a few.</p>
+
+<p>PS: I got to know about Cloudflare’s free SSL plan today. Thank you Cloudflare.</p>
+
+<p><b>References:</b></p>
+<ul>
+  <li>https://support.cloudflare.com/hc/en-us/articles/200170416</li>
+  <li>https://www.cloudflare.com/</li>
+</ul>
 
 				<br>
 				Tags:
 				
-				 <span class="label label-success">shekharsingh.com</span>
+				 <span class="label label-success">SSL</span>
+				
+				 <span class="label label-success">Security</span>
 				
 
 				<br><br>
@@ -155,19 +188,6 @@
 			   <div class="related-posts">
 				   <h5>Related Posts</h5>
 				   
-						<div class="row">
-							 <div class="col-sm-4 col-md-4 col-lg-4">
-								 <h6 style="text-align: right">
-								 	August 16, 2018
-								 </h6>
-							 </div>
-							 <div class="col-sm-8 col-md-8 col-lg-8">
-								 <h6 style="text-align: left">
-								 	<strong><a href="/blog/2018/08/16/using-cloudflare-s-ssl-for-your-website-free.html">Using Cloudflare's SSL for your website (FREE!)</a></strong>
-								 </h6>
-							 </div>
-						</div>
-					
 						<div class="row">
 							 <div class="col-sm-4 col-md-4 col-lg-4">
 								 <h6 style="text-align: right">
@@ -194,6 +214,19 @@
 							 </div>
 						</div>
 					
+						<div class="row">
+							 <div class="col-sm-4 col-md-4 col-lg-4">
+								 <h6 style="text-align: right">
+								 	January 24, 2017
+								 </h6>
+							 </div>
+							 <div class="col-sm-8 col-md-8 col-lg-8">
+								 <h6 style="text-align: left">
+								 	<strong><a href="/blog/2017/01/24/processing-cassandra-data-with-apache-spark-part-2.html">Spark Shell for Processing &amp; Querying data in Cassandra</a></strong>
+								 </h6>
+							 </div>
+						</div>
+					
 			   </div>
 			</div>
 		</div>
@@ -204,8 +237,8 @@
     <script type="text/javascript">
         /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
         var disqus_shortname = 'rootcss'; // required: replace example with your forum shortname
-        var disqus_identifier = '/blog/2011/12/31/new.html';
-        var disqus_url = 'http://localhost:3000//blog/2011/12/31/new.html';
+        var disqus_identifier = '/blog/2018/08/16/using-cloudflare-s-ssl-for-your-website-free.html';
+        var disqus_url = 'http://localhost:3000//blog/2018/08/16/using-cloudflare-s-ssl-for-your-website-free.html';
 
         /* * * DON'T EDIT BELOW THIS LINE * * */
         (function() {
