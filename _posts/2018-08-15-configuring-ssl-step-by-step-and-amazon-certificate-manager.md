@@ -6,7 +6,7 @@ tags:
 - AWS
 ---
 
-Configuring SSL for your domains is still not as simple as it can be. Everytime I do that, I need to refer my previous notes. Recently, I was using <a href="https://aws.amazon.com/certificate-manager/" target="_blank">`AWS Certificate Manager`</a> to setup a PositiveSSL Wildcard certificate, so I thought of putting up my notes on the blog.
+Configuring SSL for your domains is still not as simple as it can be. Everytime I do that, I need to refer to my previous notes. Recently, I was using <a href="https://aws.amazon.com/certificate-manager/" target="_blank">`AWS Certificate Manager`</a> to setup a PositiveSSL Wildcard certificate, so I thought of putting up my notes on the blog.
 
 Note: This post focuses on configuring SSL, and very less on details about what & why.
 

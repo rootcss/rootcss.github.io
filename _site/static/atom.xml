@@ -6,7 +6,7 @@
   
   <link href="http://localhost:3000/"/>
   <id>http://localhost:3000/</id>
-  <updated>2018-08-15T18:13:55Z</updated>
+  <updated>2018-08-15T18:18:59Z</updated>
   <author>
     <name>Shekhar Singh</name>
     <email>shekhar.singh@msn.com</email>
@@ -19,7 +19,7 @@
   <id>http://localhost:3000/blog/2018/08/15/configuring-ssl-step-by-step-and-amazon-certificate-manager</id>
   <published>2018-08-15T00:00:00Z</published>
   <updated>2018-08-15T00:00:00Z</updated>
-  <content type="html"><![CDATA[ <p>Configuring SSL for your domains is still not as simple as it can be. Everytime I do that, I need to refer my previous notes. Recently, I was using <a href="https://aws.amazon.com/certificate-manager/" target="_blank"><code class="highlighter-rouge">AWS Certificate Manager</code></a> to setup a PositiveSSL Wildcard certificate, so I thought of putting up my notes on the blog.</p>
+  <content type="html"><![CDATA[ <p>Configuring SSL for your domains is still not as simple as it can be. Everytime I do that, I need to refer to my previous notes. Recently, I was using <a href="https://aws.amazon.com/certificate-manager/" target="_blank"><code class="highlighter-rouge">AWS Certificate Manager</code></a> to setup a PositiveSSL Wildcard certificate, so I thought of putting up my notes on the blog.</p>
 
 <p>Note: This post focuses on configuring SSL, and very less on details about what &amp; why.</p>
 
