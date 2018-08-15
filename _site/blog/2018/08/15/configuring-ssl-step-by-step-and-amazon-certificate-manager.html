@@ -8,8 +8,8 @@
     <meta name="author" content="Shekhar Singh" />
     <meta name="description" content="Shekhar Singh | All things Backend. Services, Big Data, Blockchain | Consultant, Freelancer | rootcss">
     <link rel="favicon" href="static/img/favicon.ico"> 
-    <meta name="keywords" content="Spark, Cassandra, Spark, Big Data"> 
-    <link rel="canonical" href="http://localhost:3000/blog/2017/04/01/querying-cassandra-from-spark-on-multiple-paritions.html">
+    <meta name="keywords" content="SSL, AWS"> 
+    <link rel="canonical" href="http://localhost:3000/blog/2018/08/15/configuring-ssl-step-by-step-and-amazon-certificate-manager.html">
     <meta name="title" content="Shekhar Singh | All things Backend. Services, Big Data, Blockchain | Consultant, Freelancer">
     <meta name="description" content="Shekhar Singh | All things Backend. Services, Big Data, Blockchain | Consultant, Freelancer | rootcss">
     <meta name="author" content="Shekhar Singh">
@@ -23,7 +23,7 @@
     <meta name="twitter:site" content="@rootcss">
     <meta name="twitter:title" content="Shekhar Singh | All things Backend. Services, Big Data, Blockchain | Consultant, Freelancer">
     <meta name="twitter:description" content="Shekhar Singh | All things Backend. Services, Big Data, Blockchain | Consultant, Freelancer | rootcss"> 
-    <title>Observations on querying Cassandra on 'multiple' partitions (with/without Spark) | Shekhar Singh | www.shekharsingh.com</title>
+    <title>Configuring SSL step by step (and Amazon Certificate Manager) | Shekhar Singh | www.shekharsingh.com</title>
     
 
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ=="
@@ -123,90 +123,158 @@
 </nav> <div class="container">
 	<div class="blog-post">
 		<h3>
-		  <strong><a href="/blog/2017/04/01/querying-cassandra-from-spark-on-multiple-paritions.html">Observations on querying Cassandra on 'multiple' partitions (with/without Spark)</a></strong>
+		  <strong><a href="/blog/2018/08/15/configuring-ssl-step-by-step-and-amazon-certificate-manager.html">Configuring SSL step by step (and Amazon Certificate Manager)</a></strong>
 		</h3>
 	</div>
 	<div class="blog-title">
 		<h4>
-		April  1, 2017
+		August 15, 2018
 		</h4>
 	</div>
 	<br>
 	<div class="panel panel-default">
 		<div class="panel-body">
 			<div class="blogpost">
-			  <p>Cassandra’s brilliancy totally depends on your data models. You should know beforehand about how the data will be accessed/queried; and then design accordingly.</p>
+			  <p>Configuring SSL for your domains is still not as simple as it can be. Everytime I do that, I need to refer my previous notes. Recently, I was using <a href="https://aws.amazon.com/certificate-manager/" target="_blank"><code class="highlighter-rouge">AWS Certificate Manager</code></a> to setup a PositiveSSL Wildcard certificate, so I thought of putting up my notes on the blog.</p>
 
-<p>If you’re querying a Cassandra table, you are going to start writing your query with the <b>partition key</b>, because as we know, the partition key tells about the data locality in the cluster. Writing a query that includes multiple partition keys is never optimized, because those keys might be on different nodes. Just assume, you have 500 nodes with RF=3 and each node is being scanned for those partition keys.</p>
+<p>Note: This post focuses on configuring SSL, and very less on details about what &amp; why.</p>
 
-<p>It’s going to be super expensive.</p>
+<p><b>Step 1: Generate Certificate Signing Request (CSR) and Private key</b></p>
 
-<p>For example, Let’s say, I have a <code class="highlighter-rouge">users</code> table like this:</p>
-
-<p>(partition key - id, clustering key - event_timestamp)</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>id | event_timestamp | city
-1  | abc............ | A
-1  | def............ | B
-2  | abc............ | B
-3  | abc............ | C
-:
-:
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>openssl req <span class="nt">-new</span> <span class="nt">-newkey</span> rsa:2048 <span class="nt">-nodes</span> <span class="nt">-keyout</span> mydomain.key <span class="nt">-out</span> mydomain.csr
 </code></pre></div></div>
 
-<p>Now, If I write a query like:</p>
+<p>Enter the details like country, state etc when asked. After this step you will have two files:</p>
 
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">users</span> <span class="k">where</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">1</span>
+<ul>
+  <li>mydomain.csr (the CSR file)</li>
+  <li>mydomain.key (the private key)</li>
+</ul>
+
+<p>Content of these files look like following:</p>
+
+<p>mydomain.csr</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-----BEGIN CERTIFICATE REQUEST-----
+:
+-----END CERTIFICATE REQUEST-----
 </code></pre></div></div>
 
-<p>This is perfectly optimized, and thanks to our Murmur3 partitioner we will get the result instantly.</p>
+<p>mydomain.key</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-----BEGIN PRIVATE KEY-----
+:
+-----END PRIVATE KEY-----
+</code></pre></div></div>
 
 <p><br />
-However, if I write a query like:</p>
+<b>Step 2: Buying the certificate from providers</b></p>
 
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">users</span> <span class="k">where</span> <span class="n">id</span> <span class="k">IN</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">123</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">345</span><span class="p">,</span> <span class="mi">56</span><span class="p">,</span> <span class="mi">457</span><span class="p">,</span> <span class="mi">58</span><span class="p">,</span> <span class="mi">768</span><span class="p">,</span> <span class="mi">5435</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">547</span><span class="p">,</span> <span class="mi">456</span><span class="p">,</span> <span class="mi">345</span><span class="p">,</span> <span class="mi">2342</span><span class="p">,</span> <span class="mi">34</span><span class="p">....)</span>
-</code></pre></div></div>
+<p>When requesting for your SSL certificate on the providers like namecheap, godaddy etc, you’ll be asked to enter your CSR content. Once you complete all the steps, you’ll receive following files from the provider (I’m taking the example of files from Namecheap where I purchased the  certificate)</p>
 
-<p>On a small cluster this will cause no major issues, but on a 500 nodes cluster, it’s going to affect the JVM’s Heap badly, as explained above.</p>
+<ol>
+  <li>AddTrustExternalCARoot.crt [Root CA Certificate]</li>
+  <li>COMODORSAAddTrustCA.crt [Intermediate CA Certificate]</li>
+  <li>COMODORSADomainValidationSecureServerCA.crt [Intermediate CA Certificate]</li>
+  <li>STAR_mydomain.crt [Your PositiveSSL Certificate]</li>
+</ol>
 
 <p><br />
-Now, coming to <b>Spark</b>.</p>
+<b>Step 3: Creating SSL Bundle</b></p>
 
-<p>On a small scale, you wouldn’t even notice the problem. Not just with Spark, but even with CQLSH you wouldn’t notice the delay and issues significantly.
-However, If your cluster is significantly large, it will be very slow and highly unoptimized, and we don’t really like that, right.</p>
+<p>Using the files mentioned in Step 2, we’ll be creating a SSL bundle, which is very simple. Just concatenate the content of first three files in right order as mentioned in the command:</p>
 
-<p><a href="https://github.com/datastax/spark-cassandra-connector" target="_blank"><code class="highlighter-rouge">cassandra-spark-connector</code></a> has a method called <code class="highlighter-rouge">joinWithCassandraTable()</code> to which you can pass a list of partition keys to be looked up.</p>
-
-<p>Internally, this method extracts all the partition keys from the list, and runs a separate parallel query (spark tasks) for each partition key on our “distributed” Spark cluster (it uses Cassandra Java driver to perform this operation). Finally returns an RDD object consisting of results from all tasks.</p>
-
-<p>So, our 2nd query was converted into something like this,</p>
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">users</span> <span class="k">where</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">users</span> <span class="k">where</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">3</span>
-<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">users</span> <span class="k">where</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">4</span>
-<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">users</span> <span class="k">where</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">123</span>
-<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">users</span> <span class="k">where</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">25</span>
-<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">users</span> <span class="k">where</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">345</span>
-<span class="p">:</span>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>COMODORSADomainValidationSecureServerCA.crt COMODORSAAddTrustCA.crt AddTrustExternalCARoot.crt <span class="o">&gt;</span> ssl-bundle.crt
 </code></pre></div></div>
 
-<p>Usage of the method:</p>
-<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">val</span> <span class="n">myList</span> <span class="k">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="o">(</span><span class="n">partition_keys</span><span class="o">).</span><span class="n">map</span><span class="o">(</span><span class="nc">Tuple1</span><span class="o">(</span><span class="k">_</span><span class="o">))</span>
-<span class="k">val</span> <span class="n">myResult</span> <span class="k">=</span> <span class="n">myList</span><span class="o">.</span><span class="n">joinWithCassandraTable</span><span class="o">(</span><span class="n">keyspace</span><span class="o">,</span> <span class="s">"users"</span><span class="o">)</span>
+<p>If you want to configure it for NGINX, then you need to concatenate your PositiveSSL certificate as well.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>STAR_mydomain.crt COMODORSADomainValidationSecureServerCA.crt COMODORSAAddTrustCA.crt AddTrustExternalCARoot.crt <span class="o">&gt;</span> ssl-bundle.crt
 </code></pre></div></div>
 
-<p>We cannot say this is an extremely optimized solution, but considering the huge number of advantages that we get from Cassandra, we can compromise a bit here ;-)</p>
+<p>Content of the bundle file will look something like this: (for ACM, only three entries will be there)</p>
 
-<p>And by the way, this method is not yet available for Pyspark, only in Scala. I am attempting to write one for Pyspark, will be sharing the details soon.</p>
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-----BEGIN CERTIFICATE-----
+: - STAR_mydomain.crt
+-----END CERTIFICATE-----
+-----BEGIN CERTIFICATE-----
+: - COMODORSADomainValidationSecureServerCA.crt
+-----END CERTIFICATE-----
+-----BEGIN CERTIFICATE-----
+: - COMODORSAAddTrustCA.crt
+-----END CERTIFICATE-----
+-----BEGIN CERTIFICATE-----
+: - AddTrustExternalCARoot.crt
+-----END CERTIFICATE-----
+</code></pre></div></div>
+
+<p>Note:</p>
+<ul>
+  <li>The order of above files is very important.</li>
+  <li>There shouldn’t be empty lines or line break between the certificates.</li>
+</ul>
+
+<p><br />
+<b>Step 4: Configuring on NGINX</b></p>
+
+<p>If you wanted to configure on NGINX, you just need these two files:</p>
+<ul>
+  <li>ssl-bundle.crt</li>
+  <li>mydomain.key</li>
+</ul>
+
+<p>In you NGINX configuration, point these parameters to right path, restart NGINX and you’re good to go:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssl_certificate /etc/nginx/ssl/mydomain/ssl-bundle.crt;
+ssl_certificate_key /etc/nginx/ssl/mydomain/mydomain.key;
+</code></pre></div></div>
+
+<p><br />
+<b>Step 5: Configuring on Amazon Certificate Manager (ACM)</b></p>
+
+<p>To configure it with ACM, you need to go through couple of more steps, as they required the certificates to be in certain format.
+First convert your private key to .pem format:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>openssl rsa <span class="nt">-in</span> mydomain.key <span class="nt">-text</span> <span class="o">&gt;</span> mydomain-private-key.pem
+</code></pre></div></div>
+
+<p>Content:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-----BEGIN RSA PRIVATE KEY-----
+:
+-----END RSA PRIVATE KEY-----
+</code></pre></div></div>
+
+<p>At last, to upload these certificates on ACM, use the following command:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aws acm import-certificate <span class="se">\</span>
+	<span class="nt">--certificate</span> file:///Users/rootcss/Downloads/ssl/STAR_mydomain.crt <span class="se">\</span>
+	<span class="nt">--private-key</span> file:///Users/rootcss/Downloads/ssl/mydomain-private-key.pem <span class="se">\</span>
+	<span class="nt">--certificate-chain</span> file:///Users/rootcss/Downloads/ssl/ssl-bundle.crt
+</code></pre></div></div>
+
+<p><br />
+<b>Other notes:</b></p>
+
+<ol>
+  <li>If your private key is of format .pfx, you can convert it to .pem format directly using the command:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>openssl pkcs12 <span class="nt">-in</span> mydomain-private-key.pfx <span class="nt">-out</span> mydomain-private-key.pem <span class="nt">-nodes</span>
+</code></pre></div>    </div>
+    <p>(Enter the created password when asked)</p>
+  </li>
+  <li>If you need to convert your CSR file into PEM format, you can use the command:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>openssl x509 <span class="nt">-inform</span> PEM <span class="nt">-in</span> ssl-bundle.crt <span class="o">&gt;</span> ssl-bundle.crt
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<p><br />
+<b>References:</b></p>
+<ul>
+  <li>https://aws.amazon.com/certificate-manager/</li>
+  <li>http://nginx.org/en/docs/http/configuring_https_servers.html</li>
+  <li>https://stackoverflow.com/questions/991758/how-to-get-pem-file-from-key-and-crt-files</li>
+</ul>
 
 				<br>
 				Tags:
 				
-				 <span class="label label-success">Spark</span>
+				 <span class="label label-success">SSL</span>
 				
-				 <span class="label label-success">Cassandra</span>
-				
-				 <span class="label label-success">Spark</span>
-				
-				 <span class="label label-success">Big Data</span>
+				 <span class="label label-success">AWS</span>
 				
 
 				<br><br>
@@ -222,12 +290,12 @@ However, If your cluster is significantly large, it will be very slow and highly
 						<div class="row">
 							 <div class="col-sm-4 col-md-4 col-lg-4">
 								 <h6 style="text-align: right">
-								 	August 15, 2018
+								 	April  1, 2017
 								 </h6>
 							 </div>
 							 <div class="col-sm-8 col-md-8 col-lg-8">
 								 <h6 style="text-align: left">
-								 	<strong><a href="/blog/2018/08/15/configuring-ssl-step-by-step-and-amazon-certificate-manager.html">Configuring SSL step by step (and Amazon Certificate Manager)</a></strong>
+								 	<strong><a href="/blog/2017/04/01/querying-cassandra-from-spark-on-multiple-paritions.html">Observations on querying Cassandra on 'multiple' partitions (with/without Spark)</a></strong>
 								 </h6>
 							 </div>
 						</div>
@@ -268,8 +336,8 @@ However, If your cluster is significantly large, it will be very slow and highly
     <script type="text/javascript">
         /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
         var disqus_shortname = 'rootcss'; // required: replace example with your forum shortname
-        var disqus_identifier = '/blog/2017/04/01/querying-cassandra-from-spark-on-multiple-paritions.html';
-        var disqus_url = 'http://localhost:3000//blog/2017/04/01/querying-cassandra-from-spark-on-multiple-paritions.html';
+        var disqus_identifier = '/blog/2018/08/15/configuring-ssl-step-by-step-and-amazon-certificate-manager.html';
+        var disqus_url = 'http://localhost:3000//blog/2018/08/15/configuring-ssl-step-by-step-and-amazon-certificate-manager.html';
 
         /* * * DON'T EDIT BELOW THIS LINE * * */
         (function() {

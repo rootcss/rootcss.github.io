@@ -6,13 +6,156 @@
   
   <link href="http://localhost:3000/"/>
   <id>http://localhost:3000/</id>
-  <updated>2018-08-15T14:19:34Z</updated>
+  <updated>2018-08-15T18:13:55Z</updated>
   <author>
     <name>Shekhar Singh</name>
     <email>shekhar.singh@msn.com</email>
   </author>
   <rights type="text">Copyright © 2018 Shekhar Singh. All rights reserved.</rights>
   
+  <entry>
+  <title type="text">Configuring SSL step by step (and Amazon Certificate Manager)</title>
+  <link rel="alternate" type="text/html" href="http://localhost:3000//blog/2018/08/15/configuring-ssl-step-by-step-and-amazon-certificate-manager.html" />
+  <id>http://localhost:3000/blog/2018/08/15/configuring-ssl-step-by-step-and-amazon-certificate-manager</id>
+  <published>2018-08-15T00:00:00Z</published>
+  <updated>2018-08-15T00:00:00Z</updated>
+  <content type="html"><![CDATA[ <p>Configuring SSL for your domains is still not as simple as it can be. Everytime I do that, I need to refer my previous notes. Recently, I was using <a href="https://aws.amazon.com/certificate-manager/" target="_blank"><code class="highlighter-rouge">AWS Certificate Manager</code></a> to setup a PositiveSSL Wildcard certificate, so I thought of putting up my notes on the blog.</p>
+
+<p>Note: This post focuses on configuring SSL, and very less on details about what &amp; why.</p>
+
+<p><b>Step 1: Generate Certificate Signing Request (CSR) and Private key</b></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>openssl req <span class="nt">-new</span> <span class="nt">-newkey</span> rsa:2048 <span class="nt">-nodes</span> <span class="nt">-keyout</span> mydomain.key <span class="nt">-out</span> mydomain.csr
+</code></pre></div></div>
+
+<p>Enter the details like country, state etc when asked. After this step you will have two files:</p>
+
+<ul>
+  <li>mydomain.csr (the CSR file)</li>
+  <li>mydomain.key (the private key)</li>
+</ul>
+
+<p>Content of these files look like following:</p>
+
+<p>mydomain.csr</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-----BEGIN CERTIFICATE REQUEST-----
+:
+-----END CERTIFICATE REQUEST-----
+</code></pre></div></div>
+
+<p>mydomain.key</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-----BEGIN PRIVATE KEY-----
+:
+-----END PRIVATE KEY-----
+</code></pre></div></div>
+
+<p><br />
+<b>Step 2: Buying the certificate from providers</b></p>
+
+<p>When requesting for your SSL certificate on the providers like namecheap, godaddy etc, you’ll be asked to enter your CSR content. Once you complete all the steps, you’ll receive following files from the provider (I’m taking the example of files from Namecheap where I purchased the  certificate)</p>
+
+<ol>
+  <li>AddTrustExternalCARoot.crt [Root CA Certificate]</li>
+  <li>COMODORSAAddTrustCA.crt [Intermediate CA Certificate]</li>
+  <li>COMODORSADomainValidationSecureServerCA.crt [Intermediate CA Certificate]</li>
+  <li>STAR_mydomain.crt [Your PositiveSSL Certificate]</li>
+</ol>
+
+<p><br />
+<b>Step 3: Creating SSL Bundle</b></p>
+
+<p>Using the files mentioned in Step 2, we’ll be creating a SSL bundle, which is very simple. Just concatenate the content of first three files in right order as mentioned in the command:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>COMODORSADomainValidationSecureServerCA.crt COMODORSAAddTrustCA.crt AddTrustExternalCARoot.crt <span class="o">&gt;</span> ssl-bundle.crt
+</code></pre></div></div>
+
+<p>If you want to configure it for NGINX, then you need to concatenate your PositiveSSL certificate as well.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>STAR_mydomain.crt COMODORSADomainValidationSecureServerCA.crt COMODORSAAddTrustCA.crt AddTrustExternalCARoot.crt <span class="o">&gt;</span> ssl-bundle.crt
+</code></pre></div></div>
+
+<p>Content of the bundle file will look something like this: (for ACM, only three entries will be there)</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-----BEGIN CERTIFICATE-----
+: - STAR_mydomain.crt
+-----END CERTIFICATE-----
+-----BEGIN CERTIFICATE-----
+: - COMODORSADomainValidationSecureServerCA.crt
+-----END CERTIFICATE-----
+-----BEGIN CERTIFICATE-----
+: - COMODORSAAddTrustCA.crt
+-----END CERTIFICATE-----
+-----BEGIN CERTIFICATE-----
+: - AddTrustExternalCARoot.crt
+-----END CERTIFICATE-----
+</code></pre></div></div>
+
+<p>Note:</p>
+<ul>
+  <li>The order of above files is very important.</li>
+  <li>There shouldn’t be empty lines or line break between the certificates.</li>
+</ul>
+
+<p><br />
+<b>Step 4: Configuring on NGINX</b></p>
+
+<p>If you wanted to configure on NGINX, you just need these two files:</p>
+<ul>
+  <li>ssl-bundle.crt</li>
+  <li>mydomain.key</li>
+</ul>
+
+<p>In you NGINX configuration, point these parameters to right path, restart NGINX and you’re good to go:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssl_certificate /etc/nginx/ssl/mydomain/ssl-bundle.crt;
+ssl_certificate_key /etc/nginx/ssl/mydomain/mydomain.key;
+</code></pre></div></div>
+
+<p><br />
+<b>Step 5: Configuring on Amazon Certificate Manager (ACM)</b></p>
+
+<p>To configure it with ACM, you need to go through couple of more steps, as they required the certificates to be in certain format.
+First convert your private key to .pem format:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>openssl rsa <span class="nt">-in</span> mydomain.key <span class="nt">-text</span> <span class="o">&gt;</span> mydomain-private-key.pem
+</code></pre></div></div>
+
+<p>Content:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-----BEGIN RSA PRIVATE KEY-----
+:
+-----END RSA PRIVATE KEY-----
+</code></pre></div></div>
+
+<p>At last, to upload these certificates on ACM, use the following command:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aws acm import-certificate <span class="se">\</span>
+	<span class="nt">--certificate</span> file:///Users/rootcss/Downloads/ssl/STAR_mydomain.crt <span class="se">\</span>
+	<span class="nt">--private-key</span> file:///Users/rootcss/Downloads/ssl/mydomain-private-key.pem <span class="se">\</span>
+	<span class="nt">--certificate-chain</span> file:///Users/rootcss/Downloads/ssl/ssl-bundle.crt
+</code></pre></div></div>
+
+<p><br />
+<b>Other notes:</b></p>
+
+<ol>
+  <li>If your private key is of format .pfx, you can convert it to .pem format directly using the command:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>openssl pkcs12 <span class="nt">-in</span> mydomain-private-key.pfx <span class="nt">-out</span> mydomain-private-key.pem <span class="nt">-nodes</span>
+</code></pre></div>    </div>
+    <p>(Enter the created password when asked)</p>
+  </li>
+  <li>If you need to convert your CSR file into PEM format, you can use the command:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>openssl x509 <span class="nt">-inform</span> PEM <span class="nt">-in</span> ssl-bundle.crt <span class="o">&gt;</span> ssl-bundle.crt
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<p><br />
+<b>References:</b></p>
+<ul>
+  <li>https://aws.amazon.com/certificate-manager/</li>
+  <li>http://nginx.org/en/docs/http/configuring_https_servers.html</li>
+  <li>https://stackoverflow.com/questions/991758/how-to-get-pem-file-from-key-and-crt-files</li>
+</ul>
+ ]]></content>
+</entry>
+
+
   <entry>
   <title type="text">Observations on querying Cassandra on 'multiple' partitions (with/without Spark)</title>
   <link rel="alternate" type="text/html" href="http://localhost:3000//blog/2017/04/01/querying-cassandra-from-spark-on-multiple-paritions.html" />
@@ -694,19 +837,6 @@ code {
 <p><img class="img-responsive" src="assets/images/postico-port-forwarding.png" alt="Postico DB connection" /></p>
 
 <p><b>Note:</b> Yes, you’ll have to use <code class="highlighter-rouge">'localhost'</code>.</p>
- ]]></content>
-</entry>
-
-
-  <entry>
-  <title type="text">Welcome!</title>
-  <link rel="alternate" type="text/html" href="http://localhost:3000//blog/2011/12/31/new.html" />
-  <id>http://localhost:3000/blog/2011/12/31/new</id>
-  <published>2011-12-31T00:00:00Z</published>
-  <updated>2011-12-31T00:00:00Z</updated>
-  <content type="html"><![CDATA[ <p>Hey! Welcome to my blog. This blog is going to be more like Notes to self. However, sometimes I’d post random ideas, thoughts, thinking-out-louds.</p>
-
-<p>It’s mostly going to be technical, mostly.</p>
  ]]></content>
 </entry>
 
