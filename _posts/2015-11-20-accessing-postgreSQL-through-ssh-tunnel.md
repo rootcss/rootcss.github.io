@@ -17,6 +17,6 @@ ssh -fNg -L 5555:localhost:5432 <user>@<server>
 
 <b>Step 3:</b> Now, open your PostgreSQL client (eg, `pgAdmin 3` or `DBeaver` or `Postico` for OS X or `Terminal`) and fill in the connection details as usual. Check the image below.
 
-<p><img class="img-responsive" src="assets/images/postico-port-forwarding.png" alt="Postico DB connection" /></p>
+<p><img class="img-responsive" src="{{ site.url }}/assets/images/postico-port-forwarding.png" alt="Postico DB connection" /></p>
 
 <b>Note:</b> Yes, you'll have to use `'localhost'`.

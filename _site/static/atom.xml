@@ -6,7 +6,7 @@
   
   <link href="http://localhost:3000/"/>
   <id>http://localhost:3000/</id>
-  <updated>2018-08-15T23:27:19Z</updated>
+  <updated>2018-08-15T23:32:58Z</updated>
   <author>
     <name>Shekhar Singh</name>
     <email>shekhar.singh@msn.com</email>
@@ -834,7 +834,7 @@ code {
 
 <p><b>Step 3:</b> Now, open your PostgreSQL client (eg, <code class="highlighter-rouge">pgAdmin 3</code> or <code class="highlighter-rouge">DBeaver</code> or <code class="highlighter-rouge">Postico</code> for OS X or <code class="highlighter-rouge">Terminal</code>) and fill in the connection details as usual. Check the image below.</p>
 
-<p><img class="img-responsive" src="assets/images/postico-port-forwarding.png" alt="Postico DB connection" /></p>
+<p><img class="img-responsive" src="http://localhost:3000/assets/images/postico-port-forwarding.png" alt="Postico DB connection" /></p>
 
 <p><b>Note:</b> Yes, you’ll have to use <code class="highlighter-rouge">'localhost'</code>.</p>
  ]]></content>
