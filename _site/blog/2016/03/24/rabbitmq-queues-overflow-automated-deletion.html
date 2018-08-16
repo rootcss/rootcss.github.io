@@ -2,30 +2,42 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <title>
+        
+            RabbitMQ - Automated deletion of 1000s of queues | Shekhar Singh
+        
+    </title>
     <meta name="author" content="Shekhar Singh" />
     <meta name="description" content="Shekhar Singh | All things Backend. Services, Big Data, Blockchain | Consultant, Freelancer | rootcss">
-    <link rel="favicon" href="static/img/favicon.ico"> 
-    <meta name="keywords" content="RabbitMQ, Hacker, Programming"> 
+    <link rel="favicon" href="static/img/favicon.ico">
+    
+    <meta name="keywords" content="RabbitMQ, Hacker, Programming | Shekhar Singh | All things Backend. Services, Big Data, Blockchain | Consultant, Freelancer">
+    
     <link rel="canonical" href="http://localhost:3000/blog/2016/03/24/rabbitmq-queues-overflow-automated-deletion.html">
-    <meta name="title" content="Shekhar Singh | All things Backend. Services, Big Data, Blockchain | Consultant, Freelancer">
-    <meta name="description" content="Shekhar Singh | All things Backend. Services, Big Data, Blockchain | Consultant, Freelancer | rootcss">
-    <meta name="author" content="Shekhar Singh">
-    <meta property="og:title" content="Shekhar Singh | All things Backend. Services, Big Data, Blockchain | Consultant, Freelancer">
-    <meta property="og:site_name" content="http://localhost:3000">
+    <meta property="og:title" content="RabbitMQ - Automated deletion of 1000s of queues" >
+    <meta property="twitter:title" content="RabbitMQ - Automated deletion of 1000s of queues" >
+    <meta property="og:url" content="http://localhost:3000/blog/2016/03/24/rabbitmq-queues-overflow-automated-deletion.html" >
+    
+    <meta property="article:published_time" content='2016-03-24' >
+    <meta property="og:type" content="article">
+    
+    <meta property="og:site_name" content="Shekhar Singh | All things Backend. Services, Big Data, Blockchain | Consultant, Freelancer" >
     <meta property="og:description" content="Shekhar Singh | All things Backend. Services, Big Data, Blockchain | Consultant, Freelancer | rootcss">
     <meta property="og:type" content="website">
     <meta property="og:url" content="http://localhost:3000">
     <meta property="og:locale" content="en_IN">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:site" content="@rootcss">
+    <meta name="twitter:creator" content="@rootcss">
     <meta name="twitter:title" content="Shekhar Singh | All things Backend. Services, Big Data, Blockchain | Consultant, Freelancer">
-    <meta name="twitter:description" content="Shekhar Singh | All things Backend. Services, Big Data, Blockchain | Consultant, Freelancer | rootcss"> 
-    <title>RabbitMQ - Automated deletion of 1000s of queues | Shekhar Singh | www.shekharsingh.com</title>
     
+    <meta name="twitter:description" content="Recently, I was using sneakers for rails, which is a small framework for Ruby and RabbitMQ. One issue with sneakers is that, if you have faulty configuration for a queue or you do not provide a queue name, it leaves it upto rabbitmq to define it. So, for some reason (which I don’t want to focus on), we had more than 1600 queues created on that particular exchange, and unfortunately they were not Auto-delete and we didn’t want other exchanges and queues to get hurt because of this ;)
 
+">
+    
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ=="
         crossorigin="anonymous">
 
@@ -60,52 +72,7 @@
     <!-- Wrap all page content here -->
     <div id="wrap">
         <!-- Navbar header -->
-        <!-- <nav class="navbar navbar-default">
-    <div class="container">
-        <br>
-        <div class="navbar-header">
-            <a style="font-size: 30px;" class="navbar-brand" href="http://localhost:3000"><b>Shekhar Singh</b></a>
-        </div>
-        <div id="navbar">
-            <br>
-            <a href="http://localhost:3000/about.html">ABOUT</a> &nbsp; &nbsp; <a href="http://localhost:3000/index.html">BLOG</a>
-            <br>
-            <ul class="nav navbar-nav navbar-right">
-                <div class="social">
-	<h4>
-    
-	  <a href="https://github.com/rootcss"><i class="fa fa-github"></i></a>
-    
-    
-	  <a href="mailto:shekhar.singh@msn.com"><i class="fa fa-envelope"></i></a>
-    
-    
-	  <a href="https://twitter.com/rootcss"><i class="fa fa-twitter"></i></a>
-    
-    
-	  <a href="https://linkedin.com/in/cshekharsingh"><i class="fa fa-linkedin"></i></a>
-    
-    
-	  <a href="https://stackoverflow.com/users/4908717/rootcss"><i class="fa fa-stack-overflow"></i></a>
-    
-    
-      <a href="https://facebook.com/rootcss"><i class="fa fa-facebook"></i></a>
-    
-    
-      <a href="https://google.com/+ShekharSingh3"><i class="fa fa-google-plus"></i></a>
-    
-    <a href="atom.xml" class="social-links__entry" target="_blank">
-        <i class="fa fa-rss"></i>
-    </a>
-	</h4>
-</div>
-
-            </ul>
-        </div>
-    </div>
-</nav> -->
-
-<nav class="navbar navbar-default">
+        <nav class="navbar navbar-default">
     <div class="container">
         <div class="navbar-header">
             <a style="font-size: 30px;" class="navbar-brand" href="http://localhost:3000"><b>Shekhar Singh</b></a>

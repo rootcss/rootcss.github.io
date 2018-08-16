@@ -2,33 +2,46 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <title>
+        {% if page.title %}
+            {{ page.title }} | Shekhar Singh
+        {% else %}
+            {{ site.title }}
+        {% endif %}
+    </title>
     <meta name="author" content="{{ site.author }}" />
     <meta name="description" content="{{ site.description }}">
-    <link rel="favicon" href="static/img/favicon.ico"> {% if page.tags %}
-    <meta name="keywords" content="{{ page.tags | join: ', ' }}"> {% else %}
-    <meta name="keywords" content="{{ site.title }}"> {% endif %}
+    <link rel="favicon" href="static/img/favicon.ico">
+    {% if page.tags %}
+    <meta name="keywords" content="{{ page.tags | join: ', ' }} | {{ site.title }}">
+    {% else %}
+    <meta name="keywords" content="{{ site.title }}">
+    {% endif %}
     <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.url }}">
-    <meta name="title" content="{{ site.title }}">
-    <meta name="description" content="{{ site.description }}">
-    <meta name="author" content="{{ site.author }}">
-    <meta property="og:title" content="{{ site.title }}">
-    <meta property="og:site_name" content="{{ site.url }}">
+    <meta property="og:title" content="{{ page.title }}" >
+    <meta property="twitter:title" content="{{ page.title }}" >
+    <meta property="og:url" content="{{ site.url }}{{ page.url }}" >
+    {% if page.date %}
+    <meta property="article:published_time" content='{{ page.date | date:"%Y-%m-%d" }}' >
+    <meta property="og:type" content="article">
+    {% endif %}
+    <meta property="og:site_name" content="{{ site.title }}" >
     <meta property="og:description" content="{{ site.description }}">
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ site.url }}">
     <meta property="og:locale" content="en_IN">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:site" content="@{{ site.twitter }}">
+    <meta name="twitter:creator" content="@{{ site.twitter }}">
     <meta name="twitter:title" content="{{ site.title }}">
-    <meta name="twitter:description" content="{{ site.description }}"> {% if page.title %}
-    <title>{{ page.title }} | {{ site.author }} | www.shekharsingh.com</title>
+    {% if page.layout == 'page' or page.layout == 'post' %}
+    <meta name="twitter:description" content="{{page.excerpt | strip_html}}">
     {% else %}
-    <title>{{ site.title }}</title>
+    <meta name="twitter:description" content="{{ site.title }}">
     {% endif %}
-
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ=="
         crossorigin="anonymous">
 
