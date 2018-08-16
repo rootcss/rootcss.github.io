@@ -210,3 +210,6 @@ div.footer{
   padding-bottom: 15px;
   
 }*/
+pre code{
+  white-space: pre;
+}
