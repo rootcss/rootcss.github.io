@@ -6,7 +6,7 @@
   
   <link href="http://localhost:3000/"/>
   <id>http://localhost:3000/</id>
-  <updated>2019-08-26T01:03:10Z</updated>
+  <updated>2019-08-26T01:04:49Z</updated>
   <author>
     <name>Shekhar Singh</name>
     <email>shekhar.singh@msn.com</email>
@@ -188,7 +188,8 @@ Every time I plan for a cycling trip, while preparing I always think about if I'
 <input type="checkbox" /> Breakfast bars (Yoga bars etc)<br />
 <input type="checkbox" /> My favourite: Roasted Grams + Almonds + Peanuts + Raisins mix<br />
 <input type="checkbox" /> Chikki and other dry fruits<br />
-<input type="checkbox" /> Water bottle(s)<br /></p>
+<input type="checkbox" /> Water bottle(s)<br />
+<input type="checkbox" /> ORS / Tang etc.<br /></p>
 
 <p><br />
 Note: Make sure to get the items as per your cycle’s size. These links are mostly where I got them from.</p>

@@ -46,6 +46,7 @@ Every time I plan for a cycling trip, while preparing I always think about if I'
 <input type="checkbox"> My favourite: Roasted Grams + Almonds + Peanuts + Raisins mix<br>
 <input type="checkbox"> Chikki and other dry fruits<br>
 <input type="checkbox"> Water bottle(s)<br>
+<input type="checkbox"> ORS / Tang etc.<br>
 
 <br>
 Note: Make sure to get the items as per your cycle's size. These links are mostly where I got them from.
