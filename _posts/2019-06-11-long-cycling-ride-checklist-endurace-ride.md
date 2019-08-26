@@ -50,3 +50,7 @@ Every time I plan for a cycling trip, while preparing I always think about if I'
 
 <br>
 Note: Make sure to get the items as per your cycle's size. These links are mostly where I got them from.
+
+
+Add a comment if you think I'm missing anything.
+

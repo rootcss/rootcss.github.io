@@ -59,16 +59,10 @@ Next two temples were within the Kolar city. Most of these temples were built by
 	</div>
 </div>
 
-<div style="width: 750px; height: 350px;">
-	<div style="width: 235px; height: 340px;float: left;">
-		<img class="img-responsive" src="{{ site.url }}/assets/images/cycling_trip/kolar_avani/sugarcane.jpg" alt="Kotilingeshwara Temple" style="height: 338px;" />
-	</div>
-	<div style="width: 500px; height: 340px;float: left;margin-left: 10px;">
-		Anyway, I realized in the search of lake and a good Dosa place, I had come out of the city on a state highway (SH 96) which took me out of the city and back to NH 75. Also, I got a call from home and got scolded for not tying the rakhi yet. I borrowed a few hours from them. <u>While cycling, you can talk to people for long.</u> :)
-		<br>
-		I decided to have the proper breakfast after reaching my next stop, Avani Village, which was roughly 30 km from here. Plus, I have already been snacking on the items I got with me. I had a few glasses of sugarcane juice and I started for the next stop. Although, it's not too tough to find restaruants on highways, sometimes it can get tough in remote areas; especially on a cycle.
-	</div>
-</div>
+Anyway, I realized in the search of lake and a good Dosa place, I had come out of the city on a state highway (SH 96) which took me out of the city and back to NH 75. Also, I got a call from home and got scolded for not tying the rakhi yet. I borrowed a few hours from them. <u>While cycling, you can talk to people for long.</u> :)
+
+I decided to have the proper breakfast after reaching my next stop, Avani Village, which was roughly 30 km from here. Plus, I have already been snacking on the items I got with me. I had a few glasses of sugarcane juice and I started for the next stop. Although, it's not too tough to find restaruants on highways, sometimes it can get tough in remote areas; especially on a cycle.
+
 Around 25 km later, I took a right-turn into Avani village, leaving the highway - which goes to Tirupathi. I saw a board saying it was 151 km from there, and it got me thinking if I should rather go Tirupathi, but maybe next time :) This road was better, huge trees on both sides and not wide like highways. Plus, my speed has been really good so far. I reached the next temple within 1 hour 12 mins. These villages were really small. I didn't see a lot of people. Weather was okay, not too humid or too hot.
 
 
