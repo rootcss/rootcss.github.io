@@ -31,6 +31,7 @@ Every time I plan for a cycling trip, while preparing I always think about if I'
 <input type="checkbox"> Arm UV protection cover (<a target="_blank" href="https://www.decathlon.in/p/8518751_roadr-arm-cover-uv-black.html">decathlon</a>)<br>
 <input type="checkbox"> Face mask/Headband (<a target="_blank" href="https://www.decathlon.in/p/8493103_mountain-trekking-headband-trek-500-multi-position-black.html">decathlon</a>)<br>
 <input type="checkbox"> Raincoat (<a target="_blank" href="https://www.decathlon.in/p/8300326_rain-cut-men-s-rain-hiking-jacket-black.html">decathlon</a>)<br>
+<input type="checkbox"> Earphones <br>
 
 <b>Others:</b><br>
 <input type="checkbox"> A small bag (waterproof if possible) (<a target="_blank" href="https://www.decathlon.in/p/8348925_arpenaz-10-ultra-compact-ultra-lightweight-backpack-blue.html">decathlon</a>)<br>
@@ -40,6 +41,7 @@ Every time I plan for a cycling trip, while preparing I always think about if I'
 <input type="checkbox"> Emergency contact details<br>
 <input type="checkbox"> Power bank<br>
 <input type="checkbox"> Pain relief spray<br>
+<input type="checkbox"> Tourch<br>
 
 <b>Nutrition:</b><br>
 <input type="checkbox"> Breakfast bars (Yoga bars etc)<br>

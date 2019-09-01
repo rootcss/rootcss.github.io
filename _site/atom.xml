@@ -6,7 +6,7 @@
   
   <link href="http://localhost:3000/"/>
   <id>http://localhost:3000/</id>
-  <updated>2019-08-26T20:44:50Z</updated>
+  <updated>2019-09-01T10:58:27Z</updated>
   <author>
     <name>Shekhar Singh</name>
     <email>shekhar.singh@msn.com</email>
@@ -166,7 +166,8 @@ Every time I plan for a cycling trip, while preparing I always think about if I'
 <input type="checkbox" /> Cycling sunglasses (<a target="_blank" href="https://www.decathlon.in/p/8118519_arenberg-sunglasses-cycling-running-adult-yellow-category-1.html">decathlon</a>)<br />
 <input type="checkbox" /> Arm UV protection cover (<a target="_blank" href="https://www.decathlon.in/p/8518751_roadr-arm-cover-uv-black.html">decathlon</a>)<br />
 <input type="checkbox" /> Face mask/Headband (<a target="_blank" href="https://www.decathlon.in/p/8493103_mountain-trekking-headband-trek-500-multi-position-black.html">decathlon</a>)<br />
-<input type="checkbox" /> Raincoat (<a target="_blank" href="https://www.decathlon.in/p/8300326_rain-cut-men-s-rain-hiking-jacket-black.html">decathlon</a>)<br /></p>
+<input type="checkbox" /> Raincoat (<a target="_blank" href="https://www.decathlon.in/p/8300326_rain-cut-men-s-rain-hiking-jacket-black.html">decathlon</a>)<br />
+<input type="checkbox" /> Earphones <br /></p>
 
 <p><b>Others:</b><br />
 <input type="checkbox" /> A small bag (waterproof if possible) (<a target="_blank" href="https://www.decathlon.in/p/8348925_arpenaz-10-ultra-compact-ultra-lightweight-backpack-blue.html">decathlon</a>)<br />
@@ -175,7 +176,8 @@ Every time I plan for a cycling trip, while preparing I always think about if I'
 <input type="checkbox" /> ID proof<br />
 <input type="checkbox" /> Emergency contact details<br />
 <input type="checkbox" /> Power bank<br />
-<input type="checkbox" /> Pain relief spray<br /></p>
+<input type="checkbox" /> Pain relief spray<br />
+<input type="checkbox" /> Tourch<br /></p>
 
 <p><b>Nutrition:</b><br />
 <input type="checkbox" /> Breakfast bars (Yoga bars etc)<br />
