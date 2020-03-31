@@ -2,10 +2,36 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>http://localhost:3000/</loc>
-    <lastmod>2019-09-01T10:58:27+05:30</lastmod>
+    <lastmod>2020-04-01T00:48:23+05:30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
+  
+    <url>
+      <loc>http://localhost:3000/blog/2019/12/22/running-the-bangalore-airport-solo-half-marathon-26-km.html</loc>
+      
+        <lastmod>2019-12-22T00:00:00+05:30</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+  
+    <url>
+      <loc>http://localhost:3000/blog/2019/09/25/cycling-trip-mangalore-to-panjim-goa-430-km.html</loc>
+      
+        <lastmod>2019-09-25T00:00:00+05:30</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
   
     <url>
       <loc>http://localhost:3000/blog/2019/08/15/cycling-trip-bangalore-to-kolar-avani-240-km-in-11-hours.html</loc>
@@ -47,6 +73,19 @@
     </url>
   
     <url>
+      <loc>http://localhost:3000/blog/2018/12/30/running-the-bangalore-airport-solo-half-marathon-26-km.html</loc>
+      
+        <lastmod>2018-12-30T00:00:00+05:30</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+  
+    <url>
       <loc>http://localhost:3000/blog/2018/08/17/spark-udf-in-scala-java-for-pyspark.html</loc>
       
         <lastmod>2018-08-17T00:00:00+05:30</lastmod>
@@ -76,6 +115,32 @@
       <loc>http://localhost:3000/blog/2018/08/15/configuring-ssl-step-by-step-and-amazon-certificate-manager.html</loc>
       
         <lastmod>2018-08-15T00:00:00+05:30</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+  
+    <url>
+      <loc>http://localhost:3000/blog/2017/12/30/running-the-bangalore-airport-solo-half-marathon-26-km.html</loc>
+      
+        <lastmod>2017-12-30T00:00:00+05:30</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+  
+    <url>
+      <loc>http://localhost:3000/blog/2017/09/21/cycling-trip-bangalore-to-sakleshpur-chikmagalur-335-km.html</loc>
+      
+        <lastmod>2017-09-21T00:00:00+05:30</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -219,7 +284,7 @@
   <url>
     <loc>http://localhost:3000/help/2013-02-10-post5</loc>
     
-      <lastmod>2019-09-01T10:58:27+05:30</lastmod>
+      <lastmod>2020-04-01T00:48:23+05:30</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -232,7 +297,7 @@
   <url>
     <loc>http://localhost:3000/help/2013-03-15-post4</loc>
     
-      <lastmod>2019-09-01T10:58:27+05:30</lastmod>
+      <lastmod>2020-04-01T00:48:23+05:30</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -245,7 +310,7 @@
   <url>
     <loc>http://localhost:3000/help/2013-04-02-post3</loc>
     
-      <lastmod>2019-09-01T10:58:27+05:30</lastmod>
+      <lastmod>2020-04-01T00:48:23+05:30</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -258,7 +323,7 @@
   <url>
     <loc>http://localhost:3000/help/2013-05-27-post2</loc>
     
-      <lastmod>2019-09-01T10:58:27+05:30</lastmod>
+      <lastmod>2020-04-01T00:48:23+05:30</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -271,33 +336,7 @@
   <url>
     <loc>http://localhost:3000/help/2013-06-05-post1</loc>
     
-      <lastmod>2019-09-01T10:58:27+05:30</lastmod>
-    
-    
-      <changefreq>monthly</changefreq>
-    
-    
-      <priority>0.3</priority>
-    
-  </url>
-  
-  <url>
-    <loc>http://localhost:3000/drafts/2019-04-06-learnings-from-building-a-data-platform-at-a-startup</loc>
-    
-      <lastmod>2019-09-01T10:58:27+05:30</lastmod>
-    
-    
-      <changefreq>monthly</changefreq>
-    
-    
-      <priority>0.3</priority>
-    
-  </url>
-  
-  <url>
-    <loc>http://localhost:3000/404</loc>
-    
-      <lastmod>2019-09-01T10:58:27+05:30</lastmod>
+      <lastmod>2020-04-01T00:48:23+05:30</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -310,7 +349,20 @@
   <url>
     <loc>http://localhost:3000/static/404</loc>
     
-      <lastmod>2019-09-01T10:58:27+05:30</lastmod>
+      <lastmod>2020-04-01T00:48:23+05:30</lastmod>
+    
+    
+      <changefreq>monthly</changefreq>
+    
+    
+      <priority>0.3</priority>
+    
+  </url>
+  
+  <url>
+    <loc>http://localhost:3000/404</loc>
+    
+      <lastmod>2020-04-01T00:48:23+05:30</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -323,7 +375,7 @@
   <url>
     <loc>http://localhost:3000/about</loc>
     
-      <lastmod>2019-09-01T10:58:27+05:30</lastmod>
+      <lastmod>2020-04-01T00:48:23+05:30</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -336,7 +388,7 @@
   <url>
     <loc>http://localhost:3000/static/atom.xml</loc>
     
-      <lastmod>2019-09-01T10:58:27+05:30</lastmod>
+      <lastmod>2020-04-01T00:48:23+05:30</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -349,7 +401,7 @@
   <url>
     <loc>http://localhost:3000/atom.xml</loc>
     
-      <lastmod>2019-09-01T10:58:27+05:30</lastmod>
+      <lastmod>2020-04-01T00:48:23+05:30</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -362,7 +414,7 @@
   <url>
     <loc>http://localhost:3000/disclaimer</loc>
     
-      <lastmod>2019-09-01T10:58:27+05:30</lastmod>
+      <lastmod>2020-04-01T00:48:23+05:30</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -375,7 +427,7 @@
   <url>
     <loc>http://localhost:3000/</loc>
     
-      <lastmod>2019-09-01T10:58:27+05:30</lastmod>
+      <lastmod>2020-04-01T00:48:23+05:30</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -388,7 +440,7 @@
   <url>
     <loc>http://localhost:3000/nontech</loc>
     
-      <lastmod>2019-09-01T10:58:27+05:30</lastmod>
+      <lastmod>2020-04-01T00:48:23+05:30</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -401,7 +453,7 @@
   <url>
     <loc>http://localhost:3000/projects</loc>
     
-      <lastmod>2019-09-01T10:58:27+05:30</lastmod>
+      <lastmod>2020-04-01T00:48:23+05:30</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -414,7 +466,7 @@
   <url>
     <loc>http://localhost:3000/static/projects</loc>
     
-      <lastmod>2019-09-01T10:58:27+05:30</lastmod>
+      <lastmod>2020-04-01T00:48:23+05:30</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -427,7 +479,7 @@
   <url>
     <loc>http://localhost:3000/sitemap.xml</loc>
     
-      <lastmod>2019-09-01T10:58:27+05:30</lastmod>
+      <lastmod>2020-04-01T00:48:23+05:30</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -440,7 +492,7 @@
   <url>
     <loc>http://localhost:3000/static/sitemap.xml</loc>
     
-      <lastmod>2019-09-01T10:58:27+05:30</lastmod>
+      <lastmod>2020-04-01T00:48:23+05:30</lastmod>
     
     
       <changefreq>monthly</changefreq>

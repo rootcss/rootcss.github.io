@@ -24,7 +24,6 @@
     
     <meta property="og:site_name" content="Shekhar Singh" >
     <meta property="og:description" content="While writing Pyspark programs, we would generally write UDFs in Python, which is a very obvious thing to do. However, the performance of Python UDFs are not as good as those written in Scala/Java.
-
  | Shekhar Singh">
     <meta property="og:type" content="website">
     <meta property="og:url" content="http://localhost:3000">
@@ -35,7 +34,6 @@
     <meta name="twitter:creator" content="@rootcss">
     
     <meta name="twitter:description" content="While writing Pyspark programs, we would generally write UDFs in Python, which is a very obvious thing to do. However, the performance of Python UDFs are not as good as those written in Scala/Java.
-
 ">
     
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ=="
@@ -111,12 +109,12 @@
 
 <p>Here is a very simple Java UDF to count length of a string:</p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="n">com</span><span class="o">.</span><span class="na">rootcss</span><span class="o">;</span>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">com.rootcss</span><span class="o">;</span>
 
 <span class="kn">import</span> <span class="nn">org.apache.spark.sql.api.java.UDF1</span><span class="o">;</span>
 
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SparkJavaUdfExample</span> <span class="kd">implements</span> <span class="n">UDF1</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="o">{</span>
-    <span class="kd">public</span> <span class="n">Integer</span> <span class="nf">call</span><span class="o">(</span><span class="n">String</span> <span class="n">input</span><span class="o">)</span> <span class="o">{</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SparkJavaUdfExample</span> <span class="kd">implements</span> <span class="no">UDF1</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">Integer</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="nc">Integer</span> <span class="nf">call</span><span class="o">(</span><span class="nc">String</span> <span class="n">input</span><span class="o">)</span> <span class="o">{</span>
         <span class="k">return</span> <span class="n">input</span><span class="o">.</span><span class="na">length</span><span class="o">();</span>
     <span class="o">}</span>
 <span class="o">}</span>
@@ -175,38 +173,38 @@
 						<div class="row">
 							 <div class="col-sm-4 col-md-4 col-lg-4">
 								 <h6 style="text-align: right">
+								 	December 22, 2019
+								 </h6>
+							 </div>
+							 <div class="col-sm-8 col-md-8 col-lg-8">
+								 <h6 style="text-align: left">
+								 	<strong><a href="/blog/2019/12/22/running-the-bangalore-airport-solo-half-marathon-26-km.html">Running - The Bangalore airport solo Half Marathaon 2019 - 26 km</a></strong>
+								 </h6>
+							 </div>
+						</div>
+					
+						<div class="row">
+							 <div class="col-sm-4 col-md-4 col-lg-4">
+								 <h6 style="text-align: right">
+								 	September 25, 2019
+								 </h6>
+							 </div>
+							 <div class="col-sm-8 col-md-8 col-lg-8">
+								 <h6 style="text-align: left">
+								 	<strong><a href="/blog/2019/09/25/cycling-trip-mangalore-to-panjim-goa-430-km.html">Cycling Trip - Mangalore to Goa across the diverse Indian west coast - 430+ km</a></strong>
+								 </h6>
+							 </div>
+						</div>
+					
+						<div class="row">
+							 <div class="col-sm-4 col-md-4 col-lg-4">
+								 <h6 style="text-align: right">
 								 	August 15, 2019
 								 </h6>
 							 </div>
 							 <div class="col-sm-8 col-md-8 col-lg-8">
 								 <h6 style="text-align: left">
 								 	<strong><a href="/blog/2019/08/15/cycling-trip-bangalore-to-kolar-avani-240-km-in-11-hours.html">Cycling Trip - Bangalore to Kolar/Avani village - 240 km in 11 hours</a></strong>
-								 </h6>
-							 </div>
-						</div>
-					
-						<div class="row">
-							 <div class="col-sm-4 col-md-4 col-lg-4">
-								 <h6 style="text-align: right">
-								 	June 11, 2019
-								 </h6>
-							 </div>
-							 <div class="col-sm-8 col-md-8 col-lg-8">
-								 <h6 style="text-align: left">
-								 	<strong><a href="/blog/2019/06/11/long-cycling-ride-checklist-endurace-ride.html">Checklist - Long cycling ride (endurance rides)</a></strong>
-								 </h6>
-							 </div>
-						</div>
-					
-						<div class="row">
-							 <div class="col-sm-4 col-md-4 col-lg-4">
-								 <h6 style="text-align: right">
-								 	March 26, 2019
-								 </h6>
-							 </div>
-							 <div class="col-sm-8 col-md-8 col-lg-8">
-								 <h6 style="text-align: left">
-								 	<strong><a href="/blog/2019/03/26/analyzing-pandas-memory-leak-issue-with-fix.html">Analyzing Python Pandas' memory leak and the fix</a></strong>
 								 </h6>
 							 </div>
 						</div>

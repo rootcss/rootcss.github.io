@@ -24,7 +24,6 @@
     
     <meta property="og:site_name" content="Shekhar Singh" >
     <meta property="og:description" content="Apache Spark is a great project, could be plugged with most of the data sources/databases eg, HDFS, Cassandra, MongoDB, Kafka, Postgres, Redshift etc. I have been using Spark for ad-hoc querying, bunch of Aggregations &amp; Segregations over Cassandra from a long time and noticed that, every time I used to write (or paste) same code for configuration &amp; connection. Also, I knew when someone else wants to do the similar work from my team, he/she will have to do the same thing, including learning what that means and understanding it. Think of someone doing that, if he is using Spark for the first time?
-
  | Shekhar Singh">
     <meta property="og:type" content="website">
     <meta property="og:url" content="http://localhost:3000">
@@ -35,7 +34,6 @@
     <meta name="twitter:creator" content="@rootcss">
     
     <meta name="twitter:description" content="Apache Spark is a great project, could be plugged with most of the data sources/databases eg, HDFS, Cassandra, MongoDB, Kafka, Postgres, Redshift etc. I have been using Spark for ad-hoc querying, bunch of Aggregations &amp; Segregations over Cassandra from a long time and noticed that, every time I used to write (or paste) same code for configuration &amp; connection. Also, I knew when someone else wants to do the similar work from my team, he/she will have to do the same thing, including learning what that means and understanding it. Think of someone doing that, if he is using Spark for the first time?
-
 ">
     
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ=="
@@ -125,31 +123,31 @@
 
 <p>Step 3: Write the worker:</p>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># First, import the library</span>
-<span class="kn">from</span> <span class="nn">simple_spark_lib</span> <span class="kn">import</span> <span class="n">SimpleSparkCassandraWorkflow</span>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c1"># First, import the library
+</span><span class="kn">from</span> <span class="nn">simple_spark_lib</span> <span class="kn">import</span> <span class="n">SimpleSparkCassandraWorkflow</span>
 
-<span class="c"># Define connection configuration for cassandra</span>
-<span class="n">cassandra_connection_config</span> <span class="o">=</span> <span class="p">{</span>
+<span class="c1"># Define connection configuration for cassandra
+</span><span class="n">cassandra_connection_config</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s">'host'</span><span class="p">:</span>     <span class="s">'192.168.56.101'</span><span class="p">,</span>
   <span class="s">'username'</span><span class="p">:</span> <span class="s">'cassandra'</span><span class="p">,</span>
   <span class="s">'password'</span><span class="p">:</span> <span class="s">'cassandra'</span>
 <span class="p">}</span>
 
-<span class="c"># Define Cassandra Schema information</span>
-<span class="n">cassandra_config</span> <span class="o">=</span> <span class="p">{</span>
+<span class="c1"># Define Cassandra Schema information
+</span><span class="n">cassandra_config</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s">'cluster'</span><span class="p">:</span> <span class="s">'rootCSSCluster'</span><span class="p">,</span>
   <span class="s">'tables'</span><span class="p">:</span> <span class="p">{</span>
     <span class="s">'api_events'</span><span class="p">:</span> <span class="s">'events_production.api_events'</span><span class="p">,</span>
   <span class="p">}</span>
 <span class="p">}</span>
-<span class="c"># Initiate your workflow</span>
-<span class="n">workflow</span> <span class="o">=</span> <span class="n">SimpleSparkCassandraWorkflow</span><span class="p">(</span><span class="n">appName</span><span class="o">=</span><span class="s">"Simple Example Worker"</span><span class="p">)</span>
+<span class="c1"># Initiate your workflow
+</span><span class="n">workflow</span> <span class="o">=</span> <span class="n">SimpleSparkCassandraWorkflow</span><span class="p">(</span><span class="n">appName</span><span class="o">=</span><span class="s">"Simple Example Worker"</span><span class="p">)</span>
 
-<span class="c"># Setup the workflow with configurations</span>
-<span class="n">workflow</span><span class="o">.</span><span class="n">setup</span><span class="p">(</span><span class="n">cassandra_connection_config</span><span class="p">,</span> <span class="n">cassandra_config</span><span class="p">)</span>
+<span class="c1"># Setup the workflow with configurations
+</span><span class="n">workflow</span><span class="o">.</span><span class="n">setup</span><span class="p">(</span><span class="n">cassandra_connection_config</span><span class="p">,</span> <span class="n">cassandra_config</span><span class="p">)</span>
 
-<span class="c"># Run your favourite query</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">workflow</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="s">"SELECT * FROM api_events LIMIT 10"</span><span class="p">)</span>
+<span class="c1"># Run your favourite query
+</span><span class="n">df</span> <span class="o">=</span> <span class="n">workflow</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="s">"SELECT * FROM api_events LIMIT 10"</span><span class="p">)</span>
 
 <span class="k">print</span> <span class="n">df</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></code></pre></figure>
 
@@ -186,38 +184,38 @@
 						<div class="row">
 							 <div class="col-sm-4 col-md-4 col-lg-4">
 								 <h6 style="text-align: right">
+								 	December 22, 2019
+								 </h6>
+							 </div>
+							 <div class="col-sm-8 col-md-8 col-lg-8">
+								 <h6 style="text-align: left">
+								 	<strong><a href="/blog/2019/12/22/running-the-bangalore-airport-solo-half-marathon-26-km.html">Running - The Bangalore airport solo Half Marathaon 2019 - 26 km</a></strong>
+								 </h6>
+							 </div>
+						</div>
+					
+						<div class="row">
+							 <div class="col-sm-4 col-md-4 col-lg-4">
+								 <h6 style="text-align: right">
+								 	September 25, 2019
+								 </h6>
+							 </div>
+							 <div class="col-sm-8 col-md-8 col-lg-8">
+								 <h6 style="text-align: left">
+								 	<strong><a href="/blog/2019/09/25/cycling-trip-mangalore-to-panjim-goa-430-km.html">Cycling Trip - Mangalore to Goa across the diverse Indian west coast - 430+ km</a></strong>
+								 </h6>
+							 </div>
+						</div>
+					
+						<div class="row">
+							 <div class="col-sm-4 col-md-4 col-lg-4">
+								 <h6 style="text-align: right">
 								 	August 15, 2019
 								 </h6>
 							 </div>
 							 <div class="col-sm-8 col-md-8 col-lg-8">
 								 <h6 style="text-align: left">
 								 	<strong><a href="/blog/2019/08/15/cycling-trip-bangalore-to-kolar-avani-240-km-in-11-hours.html">Cycling Trip - Bangalore to Kolar/Avani village - 240 km in 11 hours</a></strong>
-								 </h6>
-							 </div>
-						</div>
-					
-						<div class="row">
-							 <div class="col-sm-4 col-md-4 col-lg-4">
-								 <h6 style="text-align: right">
-								 	June 11, 2019
-								 </h6>
-							 </div>
-							 <div class="col-sm-8 col-md-8 col-lg-8">
-								 <h6 style="text-align: left">
-								 	<strong><a href="/blog/2019/06/11/long-cycling-ride-checklist-endurace-ride.html">Checklist - Long cycling ride (endurance rides)</a></strong>
-								 </h6>
-							 </div>
-						</div>
-					
-						<div class="row">
-							 <div class="col-sm-4 col-md-4 col-lg-4">
-								 <h6 style="text-align: right">
-								 	March 26, 2019
-								 </h6>
-							 </div>
-							 <div class="col-sm-8 col-md-8 col-lg-8">
-								 <h6 style="text-align: left">
-								 	<strong><a href="/blog/2019/03/26/analyzing-pandas-memory-leak-issue-with-fix.html">Analyzing Python Pandas' memory leak and the fix</a></strong>
 								 </h6>
 							 </div>
 						</div>

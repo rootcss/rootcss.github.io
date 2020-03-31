@@ -24,7 +24,6 @@
     
     <meta property="og:site_name" content="Shekhar Singh" >
     <meta property="og:description" content="I love Apache Spark. Not just becacuse of it’s capability to adapt to so many use-cases, but because it’s one of shining star in the Distributing Computing world, has a great design and superb community backing.
-
  | Shekhar Singh">
     <meta property="og:type" content="website">
     <meta property="og:url" content="http://localhost:3000">
@@ -35,7 +34,6 @@
     <meta name="twitter:creator" content="@rootcss">
     
     <meta name="twitter:description" content="I love Apache Spark. Not just becacuse of it’s capability to adapt to so many use-cases, but because it’s one of shining star in the Distributing Computing world, has a great design and superb community backing.
-
 ">
     
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ=="
@@ -152,31 +150,31 @@
 <p>(This version might be a little different from the code in my repo. Just to keep this concise)</p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Extend the RMQSource class, since we need to override a method to bind our queue</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">RabbitmqStreamProcessor</span> <span class="kd">extends</span> <span class="n">RMQSource</span><span class="o">{</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">RabbitmqStreamProcessor</span> <span class="kd">extends</span> <span class="nc">RMQSource</span><span class="o">{</span>
 
     <span class="c1">// This is mainly because we have to bind our queue to an exchange. If you are using a queue directly, you may skip it</span>
     <span class="nd">@Override</span>
-    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">setupQueue</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">IOException</span> <span class="o">{</span>
-        <span class="n">AMQP</span><span class="o">.</span><span class="na">Queue</span><span class="o">.</span><span class="na">DeclareOk</span> <span class="n">result</span> <span class="o">=</span> <span class="n">channel</span><span class="o">.</span><span class="na">queueDeclare</span><span class="o">(</span><span class="s">"simple_dev"</span><span class="o">,</span> <span class="kc">true</span><span class="o">,</span> <span class="kc">false</span><span class="o">,</span> <span class="kc">false</span><span class="o">,</span> <span class="kc">null</span><span class="o">);</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">setupQueue</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">IOException</span> <span class="o">{</span>
+        <span class="no">AMQP</span><span class="o">.</span><span class="na">Queue</span><span class="o">.</span><span class="na">DeclareOk</span> <span class="n">result</span> <span class="o">=</span> <span class="n">channel</span><span class="o">.</span><span class="na">queueDeclare</span><span class="o">(</span><span class="s">"simple_dev"</span><span class="o">,</span> <span class="kc">true</span><span class="o">,</span> <span class="kc">false</span><span class="o">,</span> <span class="kc">false</span><span class="o">,</span> <span class="kc">null</span><span class="o">);</span>
         <span class="n">channel</span><span class="o">.</span><span class="na">queueBind</span><span class="o">(</span><span class="n">result</span><span class="o">.</span><span class="na">getQueue</span><span class="o">(),</span> <span class="s">"simple_exchange"</span><span class="o">,</span> <span class="s">"*"</span><span class="o">);</span>
     <span class="o">}</span>
 
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
         <span class="c1">// Setting up rabbitmq's configurations; ignore the default values</span>
-        <span class="n">RMQConnectionConfig</span> <span class="n">connectionConfig</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RMQConnectionConfig</span><span class="o">.</span><span class="na">Builder</span><span class="o">()</span>
+        <span class="nc">RMQConnectionConfig</span> <span class="n">connectionConfig</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">RMQConnectionConfig</span><span class="o">.</span><span class="na">Builder</span><span class="o">()</span>
                 <span class="o">.</span><span class="na">setHost</span><span class="o">(</span><span class="s">"localhost"</span><span class="o">).</span><span class="na">setPort</span><span class="o">(</span><span class="mi">5672</span><span class="o">).</span><span class="na">setUserName</span><span class="o">(</span><span class="s">"rootcss"</span><span class="o">)</span>
                 <span class="o">.</span><span class="na">setPassword</span><span class="o">(</span><span class="s">"password"</span><span class="o">).</span><span class="na">setVirtualHost</span><span class="o">(</span><span class="s">"/"</span><span class="o">).</span><span class="na">build</span><span class="o">();</span>
 
         <span class="c1">// below ones are pretty intuitive class names, right?</span>
-        <span class="n">StreamExecutionEnvironment</span> <span class="n">env</span> <span class="o">=</span> <span class="n">StreamExecutionEnvironment</span><span class="o">.</span><span class="na">getExecutionEnvironment</span><span class="o">();</span>
+        <span class="nc">StreamExecutionEnvironment</span> <span class="n">env</span> <span class="o">=</span> <span class="nc">StreamExecutionEnvironment</span><span class="o">.</span><span class="na">getExecutionEnvironment</span><span class="o">();</span>
 
         <span class="c1">// Finally adding Rabbitmq as source of the stream for Flink</span>
-        <span class="n">DataStream</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">dataStream</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="na">addSource</span><span class="o">(</span><span class="k">new</span> <span class="n">RMQSource</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;(</span><span class="n">connectionConfig</span><span class="o">,</span>
+        <span class="nc">DataStream</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">dataStream</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="na">addSource</span><span class="o">(</span><span class="k">new</span> <span class="nc">RMQSource</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;(</span><span class="n">connectionConfig</span><span class="o">,</span>
                 <span class="s">"simple_dev"</span><span class="o">,</span>
                 <span class="k">new</span> <span class="nf">SimpleStringSchema</span><span class="o">()));</span>
 
         <span class="c1">// Accepting the events, and doing a flatMap to calculate string length of each event (to keep the things easy)</span>
-        <span class="n">DataStream</span><span class="o">&lt;</span><span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;&gt;</span> <span class="n">pairs</span> <span class="o">=</span> <span class="n">dataStream</span><span class="o">.</span><span class="na">flatMap</span><span class="o">(</span><span class="k">new</span> <span class="n">TextLengthCalculator</span><span class="o">());</span>
+        <span class="nc">DataStream</span><span class="o">&lt;</span><span class="nc">Tuple2</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">Integer</span><span class="o">&gt;&gt;</span> <span class="n">pairs</span> <span class="o">=</span> <span class="n">dataStream</span><span class="o">.</span><span class="na">flatMap</span><span class="o">(</span><span class="k">new</span> <span class="nc">TextLengthCalculator</span><span class="o">());</span>
 
         <span class="c1">// action on the pairs, you can plug your Flink's Sink here as well.</span>
         <span class="n">pairs</span><span class="o">.</span><span class="na">print</span><span class="o">();</span>
@@ -225,38 +223,38 @@ In the next post, I will be explaining how I bomarded events on both Spark &amp;
 						<div class="row">
 							 <div class="col-sm-4 col-md-4 col-lg-4">
 								 <h6 style="text-align: right">
+								 	December 22, 2019
+								 </h6>
+							 </div>
+							 <div class="col-sm-8 col-md-8 col-lg-8">
+								 <h6 style="text-align: left">
+								 	<strong><a href="/blog/2019/12/22/running-the-bangalore-airport-solo-half-marathon-26-km.html">Running - The Bangalore airport solo Half Marathaon 2019 - 26 km</a></strong>
+								 </h6>
+							 </div>
+						</div>
+					
+						<div class="row">
+							 <div class="col-sm-4 col-md-4 col-lg-4">
+								 <h6 style="text-align: right">
+								 	September 25, 2019
+								 </h6>
+							 </div>
+							 <div class="col-sm-8 col-md-8 col-lg-8">
+								 <h6 style="text-align: left">
+								 	<strong><a href="/blog/2019/09/25/cycling-trip-mangalore-to-panjim-goa-430-km.html">Cycling Trip - Mangalore to Goa across the diverse Indian west coast - 430+ km</a></strong>
+								 </h6>
+							 </div>
+						</div>
+					
+						<div class="row">
+							 <div class="col-sm-4 col-md-4 col-lg-4">
+								 <h6 style="text-align: right">
 								 	August 15, 2019
 								 </h6>
 							 </div>
 							 <div class="col-sm-8 col-md-8 col-lg-8">
 								 <h6 style="text-align: left">
 								 	<strong><a href="/blog/2019/08/15/cycling-trip-bangalore-to-kolar-avani-240-km-in-11-hours.html">Cycling Trip - Bangalore to Kolar/Avani village - 240 km in 11 hours</a></strong>
-								 </h6>
-							 </div>
-						</div>
-					
-						<div class="row">
-							 <div class="col-sm-4 col-md-4 col-lg-4">
-								 <h6 style="text-align: right">
-								 	June 11, 2019
-								 </h6>
-							 </div>
-							 <div class="col-sm-8 col-md-8 col-lg-8">
-								 <h6 style="text-align: left">
-								 	<strong><a href="/blog/2019/06/11/long-cycling-ride-checklist-endurace-ride.html">Checklist - Long cycling ride (endurance rides)</a></strong>
-								 </h6>
-							 </div>
-						</div>
-					
-						<div class="row">
-							 <div class="col-sm-4 col-md-4 col-lg-4">
-								 <h6 style="text-align: right">
-								 	March 26, 2019
-								 </h6>
-							 </div>
-							 <div class="col-sm-8 col-md-8 col-lg-8">
-								 <h6 style="text-align: left">
-								 	<strong><a href="/blog/2019/03/26/analyzing-pandas-memory-leak-issue-with-fix.html">Analyzing Python Pandas' memory leak and the fix</a></strong>
 								 </h6>
 							 </div>
 						</div>

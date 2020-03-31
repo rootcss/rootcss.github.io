@@ -24,7 +24,6 @@
     
     <meta property="og:site_name" content="Shekhar Singh" >
     <meta property="og:description" content="This post is one of my Notes to Self one. I’m simply going to write, how can you connect to Cassandra from Spark, run “SQL” queries and perform analysis on Cassandra’s data.
-
  | Shekhar Singh">
     <meta property="og:type" content="website">
     <meta property="og:url" content="http://localhost:3000">
@@ -35,7 +34,6 @@
     <meta name="twitter:creator" content="@rootcss">
     
     <meta name="twitter:description" content="This post is one of my Notes to Self one. I’m simply going to write, how can you connect to Cassandra from Spark, run “SQL” queries and perform analysis on Cassandra’s data.
-
 ">
     
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ=="
@@ -116,32 +114,32 @@ Let’s get started.</p>
 
 <p><b>Code with explanation</b>:</p>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># imports necessary methods</span>
-<span class="kn">from</span> <span class="nn">pyspark</span> <span class="kn">import</span> <span class="n">SparkContext</span><span class="p">,</span> <span class="n">SparkConf</span>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c1"># imports necessary methods
+</span><span class="kn">from</span> <span class="nn">pyspark</span> <span class="kn">import</span> <span class="n">SparkContext</span><span class="p">,</span> <span class="n">SparkConf</span>
 <span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SQLContext</span>
 
 
-<span class="c"># setup spark configuration object</span>
-<span class="c"># this contains your cassandra connection parameters</span>
-<span class="n">conf</span> <span class="o">=</span> <span class="n">SparkConf</span><span class="p">()</span>\
+<span class="c1"># setup spark configuration object
+# this contains your cassandra connection parameters
+</span><span class="n">conf</span> <span class="o">=</span> <span class="n">SparkConf</span><span class="p">()</span>\
     <span class="o">.</span><span class="n">setAppName</span><span class="p">(</span><span class="s">"PySpark Cassandra"</span><span class="p">)</span> \
     <span class="o">.</span><span class="nb">set</span><span class="p">(</span><span class="s">"spark.cassandra.connection.host"</span><span class="p">,</span> <span class="s">"192.168.56.101"</span><span class="p">)</span>\
     <span class="o">.</span><span class="nb">set</span><span class="p">(</span><span class="s">"spark.cassandra.auth.username"</span><span class="p">,</span> <span class="s">"cassandra"</span><span class="p">)</span>\
     <span class="o">.</span><span class="nb">set</span><span class="p">(</span><span class="s">"spark.cassandra.auth.password"</span><span class="p">,</span> <span class="s">"cassandra"</span><span class="p">)</span>
 
 
-<span class="c"># creates Spark Context with your cassandra configurations</span>
-<span class="c"># local[*] represents that spark is going to use all cores of CPU for this job</span>
-<span class="n">sc</span> <span class="o">=</span> <span class="n">SparkContext</span><span class="p">(</span><span class="s">"local[*]"</span><span class="p">,</span> <span class="s">"PySpark Cassandra"</span><span class="p">,</span> <span class="n">conf</span><span class="o">=</span><span class="n">conf</span><span class="p">)</span>
+<span class="c1"># creates Spark Context with your cassandra configurations
+# local[*] represents that spark is going to use all cores of CPU for this job
+</span><span class="n">sc</span> <span class="o">=</span> <span class="n">SparkContext</span><span class="p">(</span><span class="s">"local[*]"</span><span class="p">,</span> <span class="s">"PySpark Cassandra"</span><span class="p">,</span> <span class="n">conf</span><span class="o">=</span><span class="n">conf</span><span class="p">)</span>
 
 
-<span class="c"># creates Spark's sqlContext. This is going to be super useful.</span>
-<span class="n">sqlContext</span> <span class="o">=</span> <span class="n">SQLContext</span><span class="p">(</span><span class="n">sc</span><span class="p">)</span>
+<span class="c1"># creates Spark's sqlContext. This is going to be super useful.
+</span><span class="n">sqlContext</span> <span class="o">=</span> <span class="n">SQLContext</span><span class="p">(</span><span class="n">sc</span><span class="p">)</span>
 
 
-<span class="c"># creates mapping with tables inside Cassandra for Spark</span>
-<span class="c"># I am going to use "system_auth.roles" table here</span>
-<span class="n">sqlContext</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s">"""CREATE TEMPORARY TABLE roles </span><span class="se">\
+<span class="c1"># creates mapping with tables inside Cassandra for Spark
+# I am going to use "system_auth.roles" table here
+</span><span class="n">sqlContext</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s">"""CREATE TEMPORARY TABLE roles </span><span class="se">\
 </span><span class="s">                  USING org.apache.spark.sql.cassandra </span><span class="se">\
 </span><span class="s">                  OPTIONS ( table "roles", </span><span class="se">\
 </span><span class="s">                            keyspace "system_auth", </span><span class="se">\
@@ -149,9 +147,9 @@ Let’s get started.</p>
 </span><span class="s">                            pushdown "true") </span><span class="se">\
 </span><span class="s">              """</span><span class="p">)</span>
 
-<span class="c"># you can create multiple mappings/temporary tables and write queries on it.</span>
-<span class="c"># this in another table: "system.compaction_history"</span>
-<span class="n">sqlContext</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s">"""CREATE TEMPORARY TABLE compaction_history </span><span class="se">\
+<span class="c1"># you can create multiple mappings/temporary tables and write queries on it.
+# this in another table: "system.compaction_history"
+</span><span class="n">sqlContext</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s">"""CREATE TEMPORARY TABLE compaction_history </span><span class="se">\
 </span><span class="s">                  USING org.apache.spark.sql.cassandra </span><span class="se">\
 </span><span class="s">                  OPTIONS ( table "compaction_history", </span><span class="se">\
 </span><span class="s">                            keyspace "system", </span><span class="se">\
@@ -160,16 +158,16 @@ Let’s get started.</p>
 </span><span class="s">              """</span><span class="p">)</span>
 
 
-<span class="c"># here's the query we are going to run</span>
-<span class="n">query</span> <span class="o">=</span> <span class="s">"SELECT * FROM roles"</span>
+<span class="c1"># here's the query we are going to run
+</span><span class="n">query</span> <span class="o">=</span> <span class="s">"SELECT * FROM roles"</span>
 
 <span class="k">print</span> <span class="s">"[Spark] Executing query: </span><span class="si">%</span><span class="s">s"</span> <span class="o">%</span> <span class="p">(</span><span class="n">query</span><span class="p">)</span>
 
-<span class="c"># The result of the query returns a dataframe</span>
-<span class="n">df_payload</span> <span class="o">=</span> <span class="n">sqlContext</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+<span class="c1"># The result of the query returns a dataframe
+</span><span class="n">df_payload</span> <span class="o">=</span> <span class="n">sqlContext</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
 
-<span class="c"># priting the content of dataframe</span>
-<span class="n">df_payload</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></code></pre></figure>
+<span class="c1"># priting the content of dataframe
+</span><span class="n">df_payload</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></code></pre></figure>
 
 <p><br /></p>
 
@@ -255,38 +253,38 @@ Steps for this is part of separate <a href="processing-cassandra-data-with-apach
 						<div class="row">
 							 <div class="col-sm-4 col-md-4 col-lg-4">
 								 <h6 style="text-align: right">
+								 	December 22, 2019
+								 </h6>
+							 </div>
+							 <div class="col-sm-8 col-md-8 col-lg-8">
+								 <h6 style="text-align: left">
+								 	<strong><a href="/blog/2019/12/22/running-the-bangalore-airport-solo-half-marathon-26-km.html">Running - The Bangalore airport solo Half Marathaon 2019 - 26 km</a></strong>
+								 </h6>
+							 </div>
+						</div>
+					
+						<div class="row">
+							 <div class="col-sm-4 col-md-4 col-lg-4">
+								 <h6 style="text-align: right">
+								 	September 25, 2019
+								 </h6>
+							 </div>
+							 <div class="col-sm-8 col-md-8 col-lg-8">
+								 <h6 style="text-align: left">
+								 	<strong><a href="/blog/2019/09/25/cycling-trip-mangalore-to-panjim-goa-430-km.html">Cycling Trip - Mangalore to Goa across the diverse Indian west coast - 430+ km</a></strong>
+								 </h6>
+							 </div>
+						</div>
+					
+						<div class="row">
+							 <div class="col-sm-4 col-md-4 col-lg-4">
+								 <h6 style="text-align: right">
 								 	August 15, 2019
 								 </h6>
 							 </div>
 							 <div class="col-sm-8 col-md-8 col-lg-8">
 								 <h6 style="text-align: left">
 								 	<strong><a href="/blog/2019/08/15/cycling-trip-bangalore-to-kolar-avani-240-km-in-11-hours.html">Cycling Trip - Bangalore to Kolar/Avani village - 240 km in 11 hours</a></strong>
-								 </h6>
-							 </div>
-						</div>
-					
-						<div class="row">
-							 <div class="col-sm-4 col-md-4 col-lg-4">
-								 <h6 style="text-align: right">
-								 	June 11, 2019
-								 </h6>
-							 </div>
-							 <div class="col-sm-8 col-md-8 col-lg-8">
-								 <h6 style="text-align: left">
-								 	<strong><a href="/blog/2019/06/11/long-cycling-ride-checklist-endurace-ride.html">Checklist - Long cycling ride (endurance rides)</a></strong>
-								 </h6>
-							 </div>
-						</div>
-					
-						<div class="row">
-							 <div class="col-sm-4 col-md-4 col-lg-4">
-								 <h6 style="text-align: right">
-								 	March 26, 2019
-								 </h6>
-							 </div>
-							 <div class="col-sm-8 col-md-8 col-lg-8">
-								 <h6 style="text-align: left">
-								 	<strong><a href="/blog/2019/03/26/analyzing-pandas-memory-leak-issue-with-fix.html">Analyzing Python Pandas' memory leak and the fix</a></strong>
 								 </h6>
 							 </div>
 						</div>
