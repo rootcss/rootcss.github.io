@@ -6,7 +6,7 @@
   
   <link href="http://localhost:3000/"/>
   <id>http://localhost:3000/</id>
-  <updated>2020-04-05T00:27:32Z</updated>
+  <updated>2020-04-05T00:50:59Z</updated>
   <author>
     <name>Shekhar Singh</name>
     <email>shekhar [.] singh [@] msn [.] com</email>
@@ -19,7 +19,16 @@
   <id>http://localhost:3000/blog/2019/12/22/running-the-bangalore-airport-solo-half-marathon-26-km</id>
   <published>2019-12-22T00:00:00Z</published>
   <updated>2019-12-22T00:00:00Z</updated>
-  <content type="html"><![CDATA[ <p>WIP.</p>
+  <content type="html"><![CDATA[ <p>
+The Airport Run 2019 (third). This one was tougher than last year, probably because I weigh 5kg+ (planned weight gain) more since then, which I could clearly feel. They've dug a long part of the airport road, so the track is not as good now.
+</p>
+<p>
+The shoes is the picture is now finally retired, which I used for 3 years and all the Airport runs as well. Atleast <b>2100 km</b> of running in these shoes overall.
+So far I've been successful in running a half marathon (+ 5 km) airport run on last Sunday of every year for 3 consecutive years. I plan on continuing this. I ran today because of some plans on next Sunday (actual last)
+</p>
+<p><br /></p>
+<center><img class="img-responsive" src="http://localhost:3000/assets/images/airport_run_2019.png" alt="airport_run_2019" style="width:500px;height:500px;" />
+</center>
  ]]></content>
 </entry>
 
@@ -340,6 +349,25 @@ Similar cases, References and other notes:</p>
 
 
   <entry>
+  <title type="text">Cycling - Completed 3824 km of cycling in an year</title>
+  <link rel="alternate" type="text/html" href="http://localhost:3000//blog/2018/08/18/completed-3824-km-cycling-in-an-year.html" />
+  <id>http://localhost:3000/blog/2018/08/18/completed-3824-km-cycling-in-an-year</id>
+  <published>2018-08-18T00:00:00Z</published>
+  <updated>2018-08-18T00:00:00Z</updated>
+  <content type="html"><![CDATA[ <p>
+Exactly an year back, I started cycling for commute, endurance rides and a bunch of amazing trips. It feels good to have completed 3824 km in last one year. The goal is to be consistent with this, and keep cycling :)
+</p>
+<p><br /></p>
+<center><img class="img-responsive" src="http://localhost:3000/assets/images/cycling_3824km_in_an_year.png" alt="cycling_3824km_in_an_year" style="width:600px;height:450px;" />
+</center>
+
+<p><br />
+This cycle is Montra Madrock MTB.</p>
+ ]]></content>
+</entry>
+
+
+  <entry>
   <title type="text">Pyspark&amp;#58; Why you should write UDFs in Scala/Java</title>
   <link rel="alternate" type="text/html" href="http://localhost:3000//blog/2018/08/17/spark-udf-in-scala-java-for-pyspark.html" />
   <id>http://localhost:3000/blog/2018/08/17/spark-udf-in-scala-java-for-pyspark</id>
@@ -579,17 +607,6 @@ First convert your private key to .pem format:</p>
   <li>http://nginx.org/en/docs/http/configuring_https_servers.html</li>
   <li>https://stackoverflow.com/questions/991758/how-to-get-pem-file-from-key-and-crt-files</li>
 </ul>
- ]]></content>
-</entry>
-
-
-  <entry>
-  <title type="text">Running - The Bangalore airport solo Half Marathon 2017 - 26 km</title>
-  <link rel="alternate" type="text/html" href="http://localhost:3000//blog/2017/12/30/running-the-bangalore-airport-solo-half-marathon-26-km.html" />
-  <id>http://localhost:3000/blog/2017/12/30/running-the-bangalore-airport-solo-half-marathon-26-km</id>
-  <published>2017-12-30T00:00:00Z</published>
-  <updated>2017-12-30T00:00:00Z</updated>
-  <content type="html"><![CDATA[ <p>WIP.</p>
  ]]></content>
 </entry>
 
