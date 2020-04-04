@@ -6,7 +6,7 @@
   
   <link href="http://localhost:3000/"/>
   <id>http://localhost:3000/</id>
-  <updated>2020-04-05T00:25:29Z</updated>
+  <updated>2020-04-05T00:27:32Z</updated>
   <author>
     <name>Shekhar Singh</name>
     <email>shekhar [.] singh [@] msn [.] com</email>
@@ -14,7 +14,7 @@
   <rights type="text">Copyright © 2020 Shekhar Singh. All rights reserved.</rights>
   
   <entry>
-  <title type="text">Running - The Bangalore airport solo Half Marathaon 2019 - 26 km</title>
+  <title type="text">Running - The Bangalore airport solo Half Marathon 2019 - 26 km</title>
   <link rel="alternate" type="text/html" href="http://localhost:3000//blog/2019/12/22/running-the-bangalore-airport-solo-half-marathon-26-km.html" />
   <id>http://localhost:3000/blog/2019/12/22/running-the-bangalore-airport-solo-half-marathon-26-km</id>
   <published>2019-12-22T00:00:00Z</published>
@@ -329,7 +329,7 @@ Similar cases, References and other notes:</p>
 
 
   <entry>
-  <title type="text">Running - The Bangalore airport solo Half Marathaon 2018 - 26 km</title>
+  <title type="text">Running - The Bangalore airport solo Half Marathon 2018 - 26 km</title>
   <link rel="alternate" type="text/html" href="http://localhost:3000//blog/2018/12/30/running-the-bangalore-airport-solo-half-marathon-26-km.html" />
   <id>http://localhost:3000/blog/2018/12/30/running-the-bangalore-airport-solo-half-marathon-26-km</id>
   <published>2018-12-30T00:00:00Z</published>
@@ -584,7 +584,7 @@ First convert your private key to .pem format:</p>
 
 
   <entry>
-  <title type="text">Running - The Bangalore airport solo Half Marathaon 2017 - 26 km</title>
+  <title type="text">Running - The Bangalore airport solo Half Marathon 2017 - 26 km</title>
   <link rel="alternate" type="text/html" href="http://localhost:3000//blog/2017/12/30/running-the-bangalore-airport-solo-half-marathon-26-km.html" />
   <id>http://localhost:3000/blog/2017/12/30/running-the-bangalore-airport-solo-half-marathon-26-km</id>
   <published>2017-12-30T00:00:00Z</published>
