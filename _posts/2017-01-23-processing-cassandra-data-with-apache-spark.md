@@ -8,7 +8,7 @@ tags:
 - Big Data
 ---
 
-This post is one of my <a href="new.html">Notes to Self</a> one. I'm simply going to write, how can you connect to Cassandra from Spark, run "SQL" queries and perform analysis on Cassandra's data.
+This post is one of my <a href="https://shekharsingh.com/blog/2011/12/31/new.html">Notes to Self</a> one. I'm simply going to write, how can you connect to Cassandra from Spark, run "SQL" queries and perform analysis on Cassandra's data.
 
 <br>
 Let's get started.
@@ -123,7 +123,7 @@ Here, `df_payload` is DataFrame object. You can use all Spark's <i>Transformatio
 <br>
 <b>Second Part</b>: <u>Starting a Spark shell with Cassandra connection</u>
 <br>
-Steps for this is part of separate <a href="processing-cassandra-data-with-apache-spark-part-2.html">post</a>.
+Steps for this is part of separate <a href="https://shekharsingh.com/blog/2017/01/24/processing-cassandra-data-with-apache-spark-part-2.html">post</a>.
 
 <hr>
 <b>Useful Links </b>:-

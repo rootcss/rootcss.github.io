@@ -8,7 +8,7 @@ tags:
 - Big Data
 ---
 
-My previous <a href="processing-cassandra-data-with-apache-spark.html">post</a>  explains, how can you write a Spark job and execute it. In this post, I am writing down steps to initiate a Spark shell (pyspark or spark-shell), with a pre-established connection to Cassandra. In addition to this, I'll write down some sample codes and their outputs, in order to show the usage of Spark Transformations/Actions.
+My previous <a href="https://shekharsingh.com/blog/2017/01/23/processing-cassandra-data-with-apache-spark.html">post</a>  explains, how can you write a Spark job and execute it. In this post, I am writing down steps to initiate a Spark shell (pyspark or spark-shell), with a pre-established connection to Cassandra. In addition to this, I'll write down some sample codes and their outputs, in order to show the usage of Spark Transformations/Actions.
 
 
 To start the shell, just run this command on your shell.
