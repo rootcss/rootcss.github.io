@@ -6,13 +6,199 @@
   
   <link href="http://localhost:3000/"/>
   <id>http://localhost:3000/</id>
-  <updated>2020-04-05T00:50:59Z</updated>
+  <updated>2020-04-25T19:00:16Z</updated>
   <author>
     <name>Shekhar Singh</name>
     <email>shekhar [.] singh [@] msn [.] com</email>
   </author>
   <rights type="text">Copyright © 2020 Shekhar Singh. All rights reserved.</rights>
   
+  <entry>
+  <title type="text">Deploying a service on Kubernetes locally using Terraform</title>
+  <link rel="alternate" type="text/html" href="http://localhost:3000//blog/2020/04/19/deploying-a-service-on-kubernetes-locally-using-terraform.html" />
+  <id>http://localhost:3000/blog/2020/04/19/deploying-a-service-on-kubernetes-locally-using-terraform</id>
+  <published>2020-04-19T00:00:00Z</published>
+  <updated>2020-04-19T00:00:00Z</updated>
+  <content type="html"><![CDATA[ <p>A couple of weeks back, I was trying to debug a Helm chart, but wasn’t able to iterate and test the changes as fast as I wanted to. In such situation, I always prefer to test things on my own setup (usually on local machine) - for which I needed Kubernetes locally too. When I started installing minikube using official documentation, it didn’t work in my first attempt because of a couple of errors related to Hypervisor and Virtualbox. Also, my debugging required me to use terarform and a custom application, hence this blog post :)</p>
+
+<p>In this post, we’ll deploy a small Go service on Kubernetes using Terraform, locally.</p>
+
+<p>Versions:</p>
+<div class="language-config highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">MacOS</span>: <span class="m">10</span>.<span class="m">15</span>.<span class="m">4</span>
+<span class="n">docker</span>: <span class="m">19</span>.<span class="m">03</span>.<span class="m">8</span>
+<span class="n">kubectl</span>: <span class="n">client</span> <span class="n">v1</span>.<span class="m">15</span>.<span class="m">5</span>, <span class="n">server</span> <span class="n">v1</span>.<span class="m">14</span>.<span class="m">10</span>-<span class="n">gke</span>.<span class="m">17</span>
+<span class="n">go</span>: <span class="m">1</span>.<span class="m">13</span>.<span class="m">9</span>
+<span class="n">minikube</span>: <span class="n">v1</span>.<span class="m">9</span>.<span class="m">2</span>
+<span class="n">terraform</span>: <span class="n">v0</span>.<span class="m">12</span>.<span class="m">24</span>
+</code></pre></div></div>
+
+<p>You can install <a target="_blank" href="https://www.docker.com/products/docker-desktop">docker</a> and <a target="_blank" href="https://kubernetes.io/docs/tasks/tools/install-kubectl/">kubectl</a> first.</p>
+
+<h2 id="installing-minikube">Installing Minikube</h2>
+<p>Minikube helps us run a single-node Kubernetes cluster locally. You can go through full installation details <a target="_blank" href="https://kubernetes.io/docs/tasks/tools/install-minikube/">here</a>. The prerequisite to run minikube is a hypervisor for your system. Most modern systems have virtualization enabled by default, which you can verify using this command:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># for macOS</span>
+<span class="nv">$ </span>sysctl <span class="nt">-a</span> | <span class="nb">grep</span> <span class="nt">-E</span> <span class="nt">--color</span> <span class="s1">'machdep.cpu.features|VMX'</span>
+</code></pre></div></div>
+<p>If you see VMX highlighted in the output, it’s enabled for you. Hypervisor is the software that lets you run VM on an existing system. We’re going to use <a href="https://github.com/moby/hyperkit" target="_blank">hyperkit</a> - which is lightweight and not from Oracle 😛</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Install hyperkit</span>
+<span class="nv">$ </span>brew <span class="nb">install </span>hyperkit
+<span class="c"># Install minikube</span>
+<span class="nv">$ </span>brew <span class="nb">install </span>minikube
+<span class="c"># Start minikube with hyperkit</span>
+<span class="nv">$ </span>minikube start <span class="nt">--vm-driver</span><span class="o">=</span>hyperkit
+<span class="c"># Start minikube dashboard</span>
+<span class="nv">$ </span>minikube dashboard
+</code></pre></div></div>
+
+<p><img class="img-responsive" src="http://localhost:3000/assets/images/k8s-dashboard.png" alt="k8s dashboard" /></p>
+
+<p>Minikube has an isolated docker environment other than the one installed by docker. To switch to that environment, use following command. All the next commands in this shell will be run on minikube docker environment.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">eval</span> <span class="si">$(</span>minikube <span class="nt">-p</span> minikube docker-env<span class="si">)</span>
+</code></pre></div></div>
+
+<h2 id="building-a-small-service">Building a small service</h2>
+<p>We’ll now quickly build a small Go application and dockerize it.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># your directory structure will look like this</span>
+<span class="nv">$ </span>tree myapp
+myapp
+├── Dockerfile
+├── Makefile
+└── myapp.go
+</code></pre></div></div>
+<p>myapp.go</p>
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="p">(</span>
+	<span class="s">"fmt"</span>
+	<span class="s">"net/http"</span>
+<span class="p">)</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="n">http</span><span class="o">.</span><span class="n">HandleFunc</span><span class="p">(</span><span class="s">"/"</span><span class="p">,</span> <span class="n">HelloServer</span><span class="p">)</span>
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Starting server on localhost:8080"</span><span class="p">)</span>
+	<span class="n">http</span><span class="o">.</span><span class="n">ListenAndServe</span><span class="p">(</span><span class="s">":8080"</span><span class="p">,</span> <span class="no">nil</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="n">HelloServer</span><span class="p">(</span><span class="n">w</span> <span class="n">http</span><span class="o">.</span><span class="n">ResponseWriter</span><span class="p">,</span> <span class="n">r</span> <span class="o">*</span><span class="n">http</span><span class="o">.</span><span class="n">Request</span><span class="p">)</span> <span class="p">{</span>
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Fprintf</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="s">"Hello, %s!"</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">URL</span><span class="o">.</span><span class="n">Path</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="p">])</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Makefile</p>
+<div class="language-makefile highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">NAME</span><span class="o">=</span>myapp
+<span class="nv">VERSION</span><span class="o">=</span>0.1
+<span class="nl">all</span><span class="o">:</span> <span class="nf">build</span>
+<span class="nl">build</span><span class="o">:</span> <span class="nf">go build -ldflags "-X main.Version=${VERSION}" myapp.go</span>
+</code></pre></div></div>
+
+<p>Dockerfile</p>
+<div class="language-dockerfile highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">FROM</span><span class="s"> golang:1.13-stretch as base</span>
+<span class="k">WORKDIR</span><span class="s"> /build/</span>
+<span class="k">COPY</span><span class="s"> . .</span>
+<span class="k">RUN </span><span class="o">[</span><span class="s2">"make"</span><span class="o">]</span>
+
+<span class="k">FROM</span><span class="s"> alpine:latest</span>
+<span class="k">WORKDIR</span><span class="s"> /opt/myapp</span>
+<span class="k">COPY</span><span class="s"> --from=base /build/myapp /opt/myapp/bin/myapp</span>
+<span class="k">RUN </span><span class="o">[</span><span class="s2">"apk"</span>, <span class="s2">"update"</span><span class="o">]</span>
+<span class="k">EXPOSE</span><span class="s"> 8080</span>
+
+<span class="k">RUN </span><span class="o">[</span><span class="s2">"apk"</span>, <span class="s2">"add"</span>, <span class="s2">"libc6-compat"</span><span class="o">]</span>
+<span class="k">ENTRYPOINT</span><span class="s"> ["/opt/myapp/bin/myapp"]</span>
+</code></pre></div></div>
+
+<p>Build and start your container using following commands (you already know these):</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker build <span class="nt">-t</span> myapp:0.1 <span class="nb">.</span>
+<span class="nv">$ </span>docker run <span class="nt">-p</span> 8080:8080 myapp:0.1
+Starting server on localhost:8080
+
+<span class="nv">$ </span>curl localhost:8080
+Hello, <span class="o">!</span>
+<span class="c"># our app is working fine.</span>
+</code></pre></div></div>
+<p>Now, we’ll finally write our terraform scripts to deploy this service on minikube.</p>
+
+<h2 id="writing-the-terraform-script">Writing the Terraform script</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># here are the files that we're going to create</span>
+<span class="nv">$ </span>tree deploy
+deploy
+├── main.tf
+└── outputs.tf
+</code></pre></div></div>
+<p>main.tf</p>
+<div class="language-terraform highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">provider</span> <span class="s2">"kubernetes"</span> <span class="p">{</span>
+  <span class="nx">config_context_cluster</span>   <span class="p">=</span> <span class="s2">"minikube"</span>
+<span class="p">}</span>
+
+<span class="c1"># In kubernetes, you can deploy with different type of objects</span>
+<span class="c1"># like, Pod, ReplicationController, Deployment etc.</span>
+<span class="c1"># While Deployment is highly recommended for production use-cases, </span>
+<span class="c1"># we'll simply use Pod object</span>
+<span class="k">resource</span> <span class="s2">"kubernetes_pod"</span> <span class="s2">"myapp"</span> <span class="p">{</span>
+  <span class="nx">metadata</span> <span class="p">{</span>
+    <span class="nx">name</span> <span class="p">=</span> <span class="s2">"myapp"</span>
+    <span class="nx">labels</span> <span class="p">=</span> <span class="p">{</span>
+      <span class="nx">App</span> <span class="p">=</span> <span class="s2">"myapp"</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="nx">spec</span> <span class="p">{</span>
+    <span class="nx">container</span> <span class="p">{</span>
+      <span class="nx">image</span> <span class="p">=</span> <span class="s2">"myapp:0.1"</span>
+      <span class="nx">name</span>  <span class="p">=</span> <span class="s2">"myapp"</span>
+
+      <span class="nx">port</span> <span class="p">{</span>
+        <span class="nx">container_port</span> <span class="p">=</span> <span class="mi">8080</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1"># Let's create a Service object - in simple words, this object helps</span>
+<span class="c1"># you with loadbalancing and network abstraction on top of pods</span>
+<span class="k">resource</span> <span class="s2">"kubernetes_service"</span> <span class="s2">"myapp"</span> <span class="p">{</span>
+  <span class="nx">metadata</span> <span class="p">{</span>
+    <span class="nx">name</span> <span class="p">=</span> <span class="s2">"myapp"</span>
+  <span class="p">}</span>
+  <span class="nx">spec</span> <span class="p">{</span>
+    <span class="nx">selector</span> <span class="p">=</span> <span class="p">{</span>
+        <span class="nx">App</span> <span class="p">=</span> <span class="nx">kubernetes_pod</span><span class="p">.</span><span class="nx">myapp</span><span class="p">.</span><span class="nx">metadata</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">labels</span><span class="p">.</span><span class="nx">App</span>
+    <span class="p">}</span>
+    <span class="nx">port</span> <span class="p">{</span>
+      <span class="nx">port</span>        <span class="p">=</span> <span class="mi">80</span>
+      <span class="nx">target_port</span> <span class="p">=</span> <span class="mi">8080</span>
+    <span class="p">}</span>
+
+    <span class="nx">type</span> <span class="p">=</span> <span class="s2">"NodePort"</span> <span class="c1">#"LoadBalancer"</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>outputs.tf</p>
+<div class="language-terraform highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">output</span> <span class="s2">"name"</span> <span class="p">{</span>
+  <span class="nx">value</span> <span class="p">=</span> <span class="s2">"</span><span class="k">${</span><span class="nx">kubernetes_pod</span><span class="p">.</span><span class="nx">myapp</span><span class="p">.</span><span class="nx">metadata</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="nx">name</span><span class="k">}</span><span class="s2">"</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="applying-our-infrastructure">Applying our Infrastructure</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">cd </span>deploy
+<span class="nv">$ </span>terraform init
+<span class="nv">$ </span>terraform apply
+</code></pre></div></div>
+
+<p>At this point, the service should be up and running. You can verify the pods and their status. To get the IP of your service, use the following command:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>minikube service myapp 
+<span class="c"># this will open up your service in the brwoser window</span>
+</code></pre></div></div>
+
+<p><br />
+In the next post, I’ll try to post about the minor issue I was facing in helm charts, that I was able to reproduce in local and finally fix it :)</p>
+ ]]></content>
+</entry>
+
+
   <entry>
   <title type="text">Running - The Bangalore airport solo Half Marathon 2019 - 26 km</title>
   <link rel="alternate" type="text/html" href="http://localhost:3000//blog/2019/12/22/running-the-bangalore-airport-solo-half-marathon-26-km.html" />
@@ -463,149 +649,6 @@ This cycle is Montra Madrock MTB.</p>
 <ul>
   <li>https://support.cloudflare.com/hc/en-us/articles/200170416</li>
   <li>https://www.cloudflare.com/</li>
-</ul>
- ]]></content>
-</entry>
-
-
-  <entry>
-  <title type="text">Configuring SSL step by step (and Amazon Certificate Manager)</title>
-  <link rel="alternate" type="text/html" href="http://localhost:3000//blog/2018/08/15/configuring-ssl-step-by-step-and-amazon-certificate-manager.html" />
-  <id>http://localhost:3000/blog/2018/08/15/configuring-ssl-step-by-step-and-amazon-certificate-manager</id>
-  <published>2018-08-15T00:00:00Z</published>
-  <updated>2018-08-15T00:00:00Z</updated>
-  <content type="html"><![CDATA[ <p>Configuring SSL for your domains is still not as simple as it can be. Everytime I do that, I need to refer to my previous notes. Recently, I was using <a href="https://aws.amazon.com/certificate-manager/" target="_blank"><code class="highlighter-rouge">AWS Certificate Manager</code></a> to setup a PositiveSSL Wildcard certificate, so I thought of putting up my notes on the blog.</p>
-
-<p>Note: This post focuses on configuring SSL, and very less on details about what &amp; why.</p>
-
-<p><b>Step 1: Generate Certificate Signing Request (CSR) and Private key</b></p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>openssl req <span class="nt">-new</span> <span class="nt">-newkey</span> rsa:2048 <span class="nt">-nodes</span> <span class="nt">-keyout</span> mydomain.key <span class="nt">-out</span> mydomain.csr
-</code></pre></div></div>
-
-<p>Enter the details like country, state etc when asked. After this step you will have two files:</p>
-
-<ul>
-  <li>mydomain.csr (the CSR file)</li>
-  <li>mydomain.key (the private key)</li>
-</ul>
-
-<p>Content of these files look like following:</p>
-
-<p>mydomain.csr</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-----BEGIN CERTIFICATE REQUEST-----
-:
------END CERTIFICATE REQUEST-----
-</code></pre></div></div>
-
-<p>mydomain.key</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-----BEGIN PRIVATE KEY-----
-:
------END PRIVATE KEY-----
-</code></pre></div></div>
-
-<p><br />
-<b>Step 2: Buying the certificate from providers</b></p>
-
-<p>When requesting for your SSL certificate on the providers like namecheap, godaddy etc, you’ll be asked to enter your CSR content. Once you complete all the steps, you’ll receive following files from the provider (I’m taking the example of files from Namecheap where I purchased the  certificate)</p>
-
-<ol>
-  <li>AddTrustExternalCARoot.crt [Root CA Certificate]</li>
-  <li>COMODORSAAddTrustCA.crt [Intermediate CA Certificate]</li>
-  <li>COMODORSADomainValidationSecureServerCA.crt [Intermediate CA Certificate]</li>
-  <li>STAR_mydomain.crt [Your PositiveSSL Certificate]</li>
-</ol>
-
-<p><br />
-<b>Step 3: Creating SSL Bundle</b></p>
-
-<p>Using the files mentioned in Step 2, we’ll be creating a SSL bundle, which is very simple. Just concatenate the content of first three files in right order as mentioned in the command:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>COMODORSADomainValidationSecureServerCA.crt COMODORSAAddTrustCA.crt AddTrustExternalCARoot.crt <span class="o">&gt;</span> ssl-bundle.crt
-</code></pre></div></div>
-
-<p>If you want to configure it for NGINX, then you need to concatenate your PositiveSSL certificate as well.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>STAR_mydomain.crt COMODORSADomainValidationSecureServerCA.crt COMODORSAAddTrustCA.crt AddTrustExternalCARoot.crt <span class="o">&gt;</span> ssl-bundle.crt
-</code></pre></div></div>
-
-<p>Content of the bundle file will look something like this: (for ACM, only three entries will be there)</p>
-
-<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-----BEGIN CERTIFICATE-----
-: - STAR_mydomain.crt
------END CERTIFICATE-----
------BEGIN CERTIFICATE-----
-: - COMODORSADomainValidationSecureServerCA.crt
------END CERTIFICATE-----
------BEGIN CERTIFICATE-----
-: - COMODORSAAddTrustCA.crt
------END CERTIFICATE-----
------BEGIN CERTIFICATE-----
-: - AddTrustExternalCARoot.crt
------END CERTIFICATE-----
-</code></pre></div></div>
-
-<p>Note:</p>
-<ul>
-  <li>The order of above files is very important.</li>
-  <li>There shouldn’t be empty lines or line break between the certificates.</li>
-</ul>
-
-<p><br />
-<b>Step 4: Configuring on NGINX</b></p>
-
-<p>If you wanted to configure on NGINX, you just need these two files:</p>
-<ul>
-  <li>ssl-bundle.crt</li>
-  <li>mydomain.key</li>
-</ul>
-
-<p>In you NGINX configuration, point these parameters to right path, restart NGINX and you’re good to go:</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssl_certificate /etc/nginx/ssl/mydomain/ssl-bundle.crt;
-ssl_certificate_key /etc/nginx/ssl/mydomain/mydomain.key;
-</code></pre></div></div>
-
-<p><br />
-<b>Step 5: Configuring on Amazon Certificate Manager (ACM)</b></p>
-
-<p>To configure it with ACM, you need to go through couple of more steps, as they required the certificates to be in certain format.
-First convert your private key to .pem format:</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>openssl rsa <span class="nt">-in</span> mydomain.key <span class="nt">-text</span> <span class="o">&gt;</span> mydomain-private-key.pem
-</code></pre></div></div>
-
-<p>Content:</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-----BEGIN RSA PRIVATE KEY-----
-:
------END RSA PRIVATE KEY-----
-</code></pre></div></div>
-
-<p>At last, to upload these certificates on ACM, use the following command:</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aws acm import-certificate <span class="se">\</span>
-	<span class="nt">--certificate</span> file:///Users/rootcss/Downloads/ssl/STAR_mydomain.crt <span class="se">\</span>
-	<span class="nt">--private-key</span> file:///Users/rootcss/Downloads/ssl/mydomain-private-key.pem <span class="se">\</span>
-	<span class="nt">--certificate-chain</span> file:///Users/rootcss/Downloads/ssl/ssl-bundle.crt
-</code></pre></div></div>
-
-<p><br />
-<b>Other notes:</b></p>
-
-<ol>
-  <li>If your private key is of format .pfx, you can convert it to .pem format directly using the command:
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>openssl pkcs12 <span class="nt">-in</span> mydomain-private-key.pfx <span class="nt">-out</span> mydomain-private-key.pem <span class="nt">-nodes</span>
-</code></pre></div>    </div>
-    <p>(Enter the created password when asked)</p>
-  </li>
-  <li>If you need to convert your CSR file into PEM format, you can use the command:
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>openssl x509 <span class="nt">-inform</span> PEM <span class="nt">-in</span> ssl-bundle.crt <span class="o">&gt;</span> ssl-bundle.crt
-</code></pre></div>    </div>
-  </li>
-</ol>
-
-<p><br />
-<b>References:</b></p>
-<ul>
-  <li>https://aws.amazon.com/certificate-manager/</li>
-  <li>http://nginx.org/en/docs/http/configuring_https_servers.html</li>
-  <li>https://stackoverflow.com/questions/991758/how-to-get-pem-file-from-key-and-crt-files</li>
 </ul>
  ]]></content>
 </entry>
