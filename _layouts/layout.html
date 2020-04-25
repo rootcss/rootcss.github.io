@@ -28,7 +28,7 @@
     <meta property="og:type" content="article">
     {% endif %}
     <meta property="og:site_name" content="{{ site.author }}" >
-    <meta property="og:description" content="{{page.excerpt | strip_html}} | Shekhar Singh">
+    <meta property="og:description" content="{{ site.description }}">
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ site.url }}">
     <meta property="og:locale" content="en_IN">
@@ -39,7 +39,7 @@
     {% if page.layout == 'page' or page.layout == 'post' %}
     <meta name="twitter:description" content="{{page.excerpt | strip_html}}">
     {% else %}
-    <meta name="twitter:description" content="{{ site.title }}">
+    <meta name="twitter:description" content="{{ site.description }}">
     {% endif %}
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ=="
         crossorigin="anonymous">
