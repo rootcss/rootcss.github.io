@@ -28,12 +28,18 @@
     <meta property="og:type" content="article">
     {% endif %}
     <meta property="og:site_name" content="{{ site.author }}" >
-    <meta property="og:description" content="{{ site.description }}">
+
+    {% if page.layout == 'page' or page.layout == 'post' %}
+    <meta property="og:description" content="{{ page.title }} - {{ site.author }}">
+    {% else %}
+    <meta property="og:description" content="{{ site.description }} - {{ site.author }}">
+    {% endif %}
+
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ site.url }}">
     <meta property="og:locale" content="en_IN">
     <meta name="twitter:card" content="summary">
-    <meta property="twitter:title" content="{{ page.title }}" >
+    <meta property="twitter:title" content="{{ page.title }}">
     <meta name="twitter:site" content="@{{ site.twitter }}">
     <meta name="twitter:creator" content="@{{ site.twitter }}">
     {% if page.layout == 'page' or page.layout == 'post' %}

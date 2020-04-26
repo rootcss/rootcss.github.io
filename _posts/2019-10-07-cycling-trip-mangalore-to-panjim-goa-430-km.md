@@ -108,7 +108,7 @@ Getting good sleep in a semi-sleeper bus is tough, we took them because these bu
 <br>Breakfast: generally Idli, Dosa from local shops
 <br>Lunch: Fish curry meals and sometimes Dosa
 <br>Dinner: Fish curry-rice, eggs/chicken and milk + protein shake before sleeping.
-<br>We bought a huge number of water bottles. We always keep packets of Tang, and put that in water bottle.
+<br>We bought a huge number of water bottles throughout the trip. We always keep packets of Tang and mix in the water bottles.
 <br><b>Stay</b>
 <br>We try to find lodges/hotels or home-stays between Rs. 700-1200 per night. It's very easy to find them at highways and remote areas, plus we don't look for anything fancy either.
 <br><b>Beached Visited</b>
