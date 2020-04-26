@@ -97,11 +97,6 @@ Getting good sleep in a semi-sleeper bus is tough, we took them because these bu
 <h3>Afterthoughts</h3>
 <p>When we go for a long one-day trip, it requires a different mindset and preparation. Because you know that at the end you'll reach home and can rest as much as you want. But a long trip over multiple days requires a different kind of mindset. In this, you need to prepare for the next day's ride again - day after day. Both of them are an unique experience in themselves.</p>
 
-<p>
-<b>Notes From Parkar</b>
-<br>
--- to be added --
-</p>
 
 <h3>Additional information</h3>
 <b>Food & Nutrition</b>
