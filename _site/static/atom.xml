@@ -6,13 +6,36 @@
   
   <link href="http://localhost:3000/"/>
   <id>http://localhost:3000/</id>
-  <updated>2020-04-27T00:36:33Z</updated>
+  <updated>2020-05-10T22:59:34Z</updated>
   <author>
     <name>Shekhar Singh</name>
     <email>shekhar [.] singh [@] msn [.] com</email>
   </author>
   <rights type="text">Copyright © 2020 Shekhar Singh. All rights reserved.</rights>
   
+  <entry>
+  <title type="text">List of a few cycling trips</title>
+  <link rel="alternate" type="text/html" href="http://localhost:3000//blog/2020/04/27/list-of-cycling-trips.html" />
+  <id>http://localhost:3000/blog/2020/04/27/list-of-cycling-trips</id>
+  <published>2020-04-27T00:00:00Z</published>
+  <updated>2020-04-27T00:00:00Z</updated>
+  <content type="html"><![CDATA[ <iframe src="https://www.google.com/maps/d/u/0/embed?mid=1D3DYBDKmwsMhfCCjoSAf4PQEV-rXH_GA" width="800" height="480" frameborder="0">
+</iframe>
+<p><br /></p>
+<ul>
+    <li>[430+ km] Mangalore to Panjim, Goa - 05/10/2019 with Parkar</li>
+    <li>[60 km] Hennur Bamboo Forest - 29/09/2019 - with Parkar</li>
+    <li>[240 km] Kolar, Avani - 240 km in 11 hour - 15/08/2019 - solo</li>
+    <li>[130 km] Big Banayan Tree, Machanbele, Savandurga Hills  - 13/01/2019 - with Parkar</li>
+    <li>[80 km] Hesaraghatta Lake - 25/12/2017 with Parkar</li>
+    <li>[335 km] Bangalore-Sakleshpur-Chikmangaluru - 10/2017 with Parkar</li>
+    <li>[128 km] Nandi Hills - 17/09/2017 with Parkar</li>
+    <li>[70 km] Mysore Trip</li>
+</ul>
+ ]]></content>
+</entry>
+
+
   <entry>
   <title type="text">Deploying a service on Kubernetes locally using Terraform</title>
   <link rel="alternate" type="text/html" href="http://localhost:3000//blog/2020/04/19/deploying-a-service-on-kubernetes-locally-using-terraform.html" />
@@ -700,50 +723,6 @@ This cycle is Montra Madrock MTB.</p>
   <li>This post covers this whole topic in more details - https://medium.com/wbaa/using-scala-udfs-in-pyspark-b70033dd69b9</li>
 </ul>
 
- ]]></content>
-</entry>
-
-
-  <entry>
-  <title type="text">Using Cloudflare's SSL for your website (FREE!)</title>
-  <link rel="alternate" type="text/html" href="http://localhost:3000//blog/2018/08/16/using-cloudflare-s-ssl-for-your-website-free.html" />
-  <id>http://localhost:3000/blog/2018/08/16/using-cloudflare-s-ssl-for-your-website-free</id>
-  <published>2018-08-16T00:00:00Z</published>
-  <updated>2018-08-16T00:00:00Z</updated>
-  <content type="html"><![CDATA[ <p>Many people who have static websites/blogs would say, they don’t really need SSL for their website and I’ve said that too in past. SSL certificates are not cheap comparatively and we try to save that additional cost.</p>
-
-<p>Internet Providers have been playing around with the web traffic and tampering it for a while now. Sniffing the traffic and content injection in web pages is common. These are some simple examples for why SSL is important.</p>
-
-<p>Coming to the point, <a target="_blank" href="https://www.cloudflare.com/">Cloudflare</a> provides free SSL for your website, and it’s super-easy to configure:</p>
-<ul>
-  <li>Sign up on Cloudflare and enter your DNS. After that, they will automatically fetch all the DNS Records associated with your domain. You can cross-check from your domain provider to be sure.</li>
-  <li>In the next step, they will provide few (usually 2) new Nameservers (something like blah.ns.cloudflare.com)</li>
-  <li>You just need to replace the existing Nameservers with these new ones in your Domain provider’s dashboard.</li>
-  <li>Wait for DNS resolution to complete. Meanwhile, go to Cloudflare dashboard’s Crypto menu, and Turn ON <b>Always use HTTPS</b> option.</li>
-  <li>Once you see <b>Universal SSL Status: Active Certificate</b> in the dashboard, your website will have working SSL. (happend for me within 5 minutes; but might take upto 24 hours)</li>
-</ul>
-
-<p><br />
-<b>How does it work?</b></p>
-
-<p>Cloudflare has three ways in which you can use SSL.</p>
-<ul>
-  <li><b>Flexible SSL</b>: Traffic between User &amp; Cloudflare is over HTTPS, but only HTTP between Cloudflare and your server.</li>
-  <li><b>Full SSL</b>: If your server is configured with SSL, then the traffic is end to end over HTTPS. In my case, my website is hosted on Github Pages, which is configured with SSL, so I chose this option.</li>
-  <li><b>Full SSL (Strict)</b>: Same as Full SSL, but additionally, the connection between Cloudflare &amp; web server is authenticated for every request as well. This needs a signed certificate from a trusted authority.</li>
-</ul>
-
-<p>You can <a target="_blank" href="https://support.cloudflare.com/hc/en-us/articles/200170416">read more</a> about it in Cloudflare’s official documentation.</p>
-
-<p>Cloudflare also provides a lot of other useful features like Caching, Firewall to name a few.</p>
-
-<p>PS: I got to know about Cloudflare’s free SSL plan today. Thank you Cloudflare.</p>
-
-<p><b>References:</b></p>
-<ul>
-  <li>https://support.cloudflare.com/hc/en-us/articles/200170416</li>
-  <li>https://www.cloudflare.com/</li>
-</ul>
  ]]></content>
 </entry>
 
