@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <title>
+        
+            How We Monitor Apache Airflow in Production at Gojek | Shekhar Singh
+        
+    </title>
+    <meta name="author" content="Shekhar Singh" />
+    <link rel="shortcut icon" type="image/png" href="static/img/favicon.ico"/>
+    <link rel="shortcut icon" type="image/png" href="https://shekharsingh.com/static/img/favicon.ico"/>
+    
+    <meta name="keywords" content="Airflow, Data Engineering, Gojek, DevOps | Shekhar Singh - Tech, Data, Fitness, Books - rootcss">
+    
+    <link rel="canonical" href="http://localhost:3000/blog/2020/05/20/how-we-monitor-apache-airflow-in-production-at-gojek.html">
+    <meta property="og:title" content="How We Monitor Apache Airflow in Production at Gojek" >
+    <meta property="og:url" content="http://localhost:3000/blog/2020/05/20/how-we-monitor-apache-airflow-in-production-at-gojek.html" >
+    
+    <meta property="article:published_time" content='2020-05-20' >
+    <meta property="og:type" content="article">
+    
+    <meta property="og:site_name" content="Shekhar Singh" >
+
+    
+    <meta property="og:description" content="How We Monitor Apache Airflow in Production at Gojek - Shekhar Singh">
+    
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="http://localhost:3000">
+    <meta property="og:locale" content="en_IN">
+    <meta name="twitter:card" content="summary">
+    <meta property="twitter:title" content="How We Monitor Apache Airflow in Production at Gojek">
+    <meta name="twitter:site" content="@rootcss">
+    <meta name="twitter:creator" content="@rootcss">
+    
+    <meta name="twitter:description" content="This post was orignially posted here in Gojek Engineering Blog. (I work at Gojek)
+
+
+">
+    
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ=="
+        crossorigin="anonymous">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" type="text/css" href="http://localhost:3000/static/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400,200bold,400old" />
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="http://localhost:3000/static/css/syntax.css" />
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <!-- Google Analytics -->
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-70603998-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</head>
+<!-- Main Body-->
+
+<body>
+    <!-- Wrap all page content here -->
+    <div id="wrap">
+        <!-- Navbar header -->
+        <nav class="navbar navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <a style="font-size: 30px;" class="navbar-brand" href="http://localhost:3000"><b>Shekhar Singh</b></a>
+        </div>
+        <div id="navbar">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="https://shekharsingh.com/index.html">TECH</a></li>
+                <li><a href="https://shekharsingh.com/nontech.html">NON-TECH</a></li>
+                <li><a href="https://shekharsingh.com/books.html">BOOKS</a></li>
+                <li><a href="https://shekharsingh.com/about.html">ABOUT</a></li>
+            </ul>
+        </div>
+    </div>
+</nav> <div class="container">
+	<div class="blog-post">
+		<h3>
+		  <strong><a href="/blog/2020/05/20/how-we-monitor-apache-airflow-in-production-at-gojek.html">How We Monitor Apache Airflow in Production at Gojek</a></strong>
+		</h3>
+	</div>
+	<div class="blog-title">
+		<h4>
+		May 20, 2020
+		</h4>
+	</div>
+	<br>
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<div class="blogpost">
+			  <p>This post was orignially posted <a target="_blank" href="https://blog.gojekengineering.com/how-we-monitor-apache-airflow-in-production-210f9bff9e71">here</a> in <b>Gojek Engineering Blog</b>. (I work at <a target="_blank" href="https://www.gojek.com/">Gojek</a>)</p>
+<hr />
+
+<p>A quick guide on what (and how) to monitor to keep your workflows running
+smoothly.</p>
+
+<p><img class="img-responsive" src="http://localhost:3000/assets/images/airflow_gojek/cover.jpeg" alt="Pandas memory leak" /></p>
+
+<p>If your organisation deals with a significant amount of data and has huge data
+pipelines, chances are you must have used or heard about Apache Airflow already.
+Airflow is an open-source workflow management platform that enables scheduling
+and monitoring workflows programmatically.</p>
+
+<p>At Gojek, our products generate a tremendous amount of data, but that’s only
+step one. We’re constantly making use of that data and give value back to our
+customers, merchants, and partners — in the form of recommendations and other
+customisations. The ‘Data Engineering’ (DE) Team is responsible for building the
+platform and products to manage the entire lifecycle of data.</p>
+
+<p>Needless to say, Airflow is one of our most heavily used tools. We cater over a
+thousand pipelines and an enormous amount of data using Airflow. Monitoring all
+these pipelines is not easy — especially considering that Airflow is still in
+its early phase.</p>
+
+<p>Like any production application, it becomes crucial to monitor the Airflow jobs
+and of course, Airflow itself. It has a very resilient architecture and the
+design is highly scalable. It has multiple components to enable this, viz.
+Scheduler, Webserver, Workers, Executor, and so on. At Gojek, we have a few
+additional processes as well to enable flexibility for our workflows.</p>
+
+<p>For example, we have a separate process running to sync our DAGs with GCS/git
+and a separate process to sync custom Airflow variables. We know very well that,
+<strong>the more components you have, higher the chances of failure.</strong> Hence, this
+requires a thorough monitoring and alerting system.</p>
+
+<p><img class="img-responsive" src="http://localhost:3000/assets/images/airflow_gojek/dash1.png" />
+<center><span style="font-size:12px; colore:#ccc;">A snapshot of the dashboard in a dummy environment</span></center>
+</p>
+
+<h3 id="high-level-architecture">High-level architecture</h3>
+
+<p>At a high-level, we have multiple Airflow processes running in our different
+Kubernetes Pods, and each of them has a statsd client enabled using
+<em>airflow.cfg</em>. The statsd client will send all the metrics to Telegraf over UDP.
+Our custom processes are also emitting those heartbeats and other data in the
+same way.</p>
+
+<p><img class="img-responsive" src="http://localhost:3000/assets/images/airflow_gojek/architecture.png" />
+<center><span style="font-size:12px; colore:#ccc;">Airflow Monitoring — High-Level Architecture</span></center>
+</p>
+
+<p>We’ve configured InfluxDB as an output for Telegraf configuration
+(<em>telegraf.conf</em>) which will send the data over HTTP. You can add InfluxDB as a
+data source in Grafana as well as in Kapacitor. The alerts can now be configured
+in Kapacitor using TICK scripts which we’ll cover in the next sections.</p>
+
+<h3 id="understanding-airflow-statsd-metrics">Understanding Airflow statsd metrics</h3>
+
+<p>Airflow’s implementation and documentation of metrics are not the best things
+about it and it’s still in the early stages. In the first attempt, the
+measurements created by Airflow in InfluxDB were not how we wanted them to be.
+We solved that by writing some custom statsd telegraf templates based on the
+metrics name. Some of them are:</p>
+
+<p>
+<script src="https://gist.github.com/rootcss/0a3a7ea05da3a90f624380d181e50b5c.js"></script>
+<center><span style="font-size:12px; colore:#ccc;">Sample statsd templates for telegraf.conf</span></center>
+</p>
+
+<p>These templates will create some meaningful measurements named
+<em>prefix_dag_duration</em>, <em>prefix_dagrun_schedule_delay</em>,
+<em>prefix_dag_loading-duration,</em> etc in InfluxDB which can be easily queried using
+Grafana/Kapacitor. Following is a sample of how the fields (or tags) are parsed
+in InfluxDB:</p>
+
+<p>
+<script src="https://gist.github.com/rootcss/5035685ab9b1541214fd0468659e0897.js"></script>
+<center><span style="font-size:12px; colore:#ccc;">Sample influx measurements schema after being processed by our templates</span></center>
+</p>
+
+<p>The tags enable higher flexibility for querying and filtering the data. We built
+a Grafana dashboard on top of it as the first goal to see what’s happening
+under-the-hood. A sample query to generate a time series trend in Grafana for
+the above measurement is:</p>
+<p>
+<script src="https://gist.github.com/rootcss/f57fdcad7a0b553a5b47287f7c0f9274.js"></script>
+<center><span style="font-size:12px; colore:#ccc;">Sample Grafana query to fetch data from Influx</span></center>
+</p>
+
+<h3 id="what-should-you-monitor">What should you monitor?</h3>
+
+<p>The following list contains some of the important areas that you should monitor,
+which could also be helpful for debugging and finding bottlenecks for resources:</p>
+
+<ul>
+  <li>Health checks: Are scheduler, webserver, workers, and other custom processes
+running? What’s their uptime?</li>
+  <li>How many workers are running?</li>
+  <li>Are our custom metrics and configurations being reflected in metrics?</li>
+  <li>Number of active DAGs, and DAG parsing time</li>
+  <li>Trend: Pools usage</li>
+  <li>Trend: Jobs execution status (started/ended)</li>
+  <li>Trend: Executor tasks status (running/queued/open slots)</li>
+  <li>Trend: Operator-wise execution status (failure/success)</li>
+  <li>Trend: Task Instances status (successes/failures)</li>
+  <li>Trend: Time taken by crucial tasks, sensors</li>
+  <li>Trend: Time taken by the DAGs before coming to an end state</li>
+  <li>Trend: Schedule Delay of DAGs</li>
+  <li>Trend: Time spent by DAGs for completing dependency checks</li>
+</ul>
+
+<p>It’s important to track these metrics at an overall level, as well as individual
+tasks and the DAG level. You should also consider tracking your specific
+operators and tasks that you think have higher chances of failure and/or consume
+more resources.</p>
+
+<p><img class="img-responsive" src="http://localhost:3000/assets/images/airflow_gojek/dash2.png" />
+<center><span style="font-size:12px; colore:#ccc;">A snapshot of the dashboard in a dummy environment</span></center>
+</p>
+
+<h3 id="alerting">Alerting</h3>
+
+<p>Now that we have data in InfluxDB, and the monitoring is in place, we can use
+Kapacitor to write the TICK script to trigger alerts based on the checks and
+thresholds. The following snippets show some sample alerts that can be set.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// alert if scheduler is down.</span>
+<span class="nx">stream</span>
+    <span class="o">|</span><span class="k">from</span><span class="p">()</span>
+        <span class="p">.</span><span class="nx">measurement</span><span class="p">(</span><span class="dl">'</span><span class="s1">prefix_scheduler_heartbeat</span><span class="dl">'</span><span class="p">)</span>
+    <span class="o">|</span><span class="nx">deadman</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mi">5</span><span class="nx">m</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">id</span><span class="p">(</span><span class="dl">'</span><span class="s1">AirflowSchedulerDown</span><span class="dl">'</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">message</span><span class="p">(</span><span class="dl">'</span><span class="s1">Airflow Scheduler is down</span><span class="dl">'</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">/tmp/alert_logs.txt</span><span class="dl">'</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">trigger_alert_method</span><span class="p">()</span>
+
+<span class="c1">// alert if worker count does not match the required value</span>
+<span class="nx">stream</span>
+    <span class="o">|</span><span class="k">from</span><span class="p">()</span>
+        <span class="p">.</span><span class="nx">measurement</span><span class="p">(</span><span class="dl">'</span><span class="s1">prefix_celery_workers</span><span class="dl">'</span><span class="p">)</span>
+    <span class="o">|</span><span class="nb">window</span><span class="p">()</span>
+        <span class="p">.</span><span class="nx">period</span><span class="p">(</span><span class="mi">5</span><span class="nx">m</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">every</span><span class="p">(</span><span class="mi">5</span><span class="nx">m</span><span class="p">)</span>
+    <span class="o">|</span><span class="nx">alert</span><span class="p">()</span>
+        <span class="p">.</span><span class="nx">id</span><span class="p">(</span><span class="dl">'</span><span class="s1">Celery Workers Count</span><span class="dl">'</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">crit</span><span class="p">(</span><span class="nx">lambda</span><span class="p">:</span> <span class="dl">"</span><span class="s2">value</span><span class="dl">"</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">warn</span><span class="p">(</span><span class="nx">lambda</span><span class="p">:</span> <span class="dl">"</span><span class="s2">value</span><span class="dl">"</span> <span class="o">&lt;=</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">/tmp/alert_2.txt</span><span class="dl">'</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">trigger_alert_method</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>Apart from this, it is also important to monitor the health of InfluxDB,
+Kapacitor, and Grafana as well.</p>
+
+<h3 id="references">References</h3>
+
+<ul>
+  <li><a href="https://airflow.apache.org/docs/stable/metrics.html">https://airflow.apache.org/docs/stable/metrics.html</a></li>
+  <li><a href="https://docs.influxdata.com/kapacitor/v1.5/tick/introduction/">https://docs.influxdata.com/kapacitor/v1.5/tick/introduction/</a></li>
+</ul>
+
+<p>Thank you, everyone, at the DE team — we build and manage the components
+described above, and special thanks to
+<a href="https://twitter.com/sravankorumilli">Sravan</a> for the discussions and pairing.
+If you’ve questions, let us know in the comments or <a href="https://twitter.com/rootcss">tweet
+me</a>.</p>
+
+<hr />
+
+<p>Liked what you read? Get our stories delivered straight to your inbox by
+<a href="https://mailchi.mp/go-jek/gojek-tech-newsletter">signing up for Gojek newsletter</a>. 🖖</p>
+
+				<br>
+				Tags:
+				
+				 <span class="label label-success">Airflow</span>
+				
+				 <span class="label label-success">Data Engineering</span>
+				
+				 <span class="label label-success">Gojek</span>
+				
+				 <span class="label label-success">DevOps</span>
+				
+
+				<br><br>
+
+				<a href="https://twitter.com/share" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+				<div class="g-plus" data-action="share"></div>
+
+			   <hr>
+			   <div class="related-posts">
+				   <h5>Related Posts</h5>
+				   
+						<div class="row">
+							 <div class="col-sm-4 col-md-4 col-lg-4">
+								 <h6 style="text-align: right">
+								 	April 27, 2020
+								 </h6>
+							 </div>
+							 <div class="col-sm-8 col-md-8 col-lg-8">
+								 <h6 style="text-align: left">
+								 	<strong><a href="/blog/2020/04/27/list-of-cycling-trips.html">List of a few cycling trips</a></strong>
+								 </h6>
+							 </div>
+						</div>
+					
+						<div class="row">
+							 <div class="col-sm-4 col-md-4 col-lg-4">
+								 <h6 style="text-align: right">
+								 	April 19, 2020
+								 </h6>
+							 </div>
+							 <div class="col-sm-8 col-md-8 col-lg-8">
+								 <h6 style="text-align: left">
+								 	<strong><a href="/blog/2020/04/19/deploying-a-service-on-kubernetes-locally-using-terraform.html">Deploying a service on Kubernetes locally using Terraform</a></strong>
+								 </h6>
+							 </div>
+						</div>
+					
+						<div class="row">
+							 <div class="col-sm-4 col-md-4 col-lg-4">
+								 <h6 style="text-align: right">
+								 	December 22, 2019
+								 </h6>
+							 </div>
+							 <div class="col-sm-8 col-md-8 col-lg-8">
+								 <h6 style="text-align: left">
+								 	<strong><a href="/blog/2019/12/22/running-the-bangalore-airport-solo-half-marathon-26-km.html">Running - The Bangalore airport solo Half Marathon 2019 - 26 km</a></strong>
+								 </h6>
+							 </div>
+						</div>
+					
+			   </div>
+			</div>
+		</div>
+	</div>
+	
+<div class="disqus">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'rootcss'; // required: replace example with your forum shortname
+        var disqus_identifier = '/blog/2020/05/20/how-we-monitor-apache-airflow-in-production-at-gojek.html';
+        var disqus_url = 'http://localhost:3000//blog/2020/05/20/how-we-monitor-apache-airflow-in-production-at-gojek.html';
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="https://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+</div>
+
+
+    </div>
+    <!-- Footer -->
+    <footer>
+    <div id="footer">
+        <div class="container">
+            <div class="social">
+	<h4>
+    
+    <a href="https://github.com/rootcss"><i class="fa fa-github"></i></a>
+
+
+    <a href="mailto:shekhar [.] singh [@] msn [.] com"><i class="fa fa-envelope"></i></a>
+
+
+    <a href="https://twitter.com/rootcss"><i class="fa fa-twitter"></i></a>
+
+
+    <a href="https://linkedin.com/in/cshekharsingh"><i class="fa fa-linkedin"></i></a>
+
+
+    <a href="https://stackoverflow.com/users/4908717/rootcss"><i class="fa fa-stack-overflow"></i></a>
+
+
+    <a href="https://facebook.com/rootcss"><i class="fa fa-facebook"></i></a>
+
+
+    <a href="https://google.com/+ShekharSingh3"><i class="fa fa-google-plus"></i></a>
+
+<a href="atom.xml" class="social-links__entry" target="_blank">
+    <i class="fa fa-rss"></i>
+</a>
+	</h4>
+</div>
+
+            <p class="text-muted">&copy;
+                <script>
+                    document.write(new Date().getFullYear())
+                </script> Copyright. All rights reserved | <a href="/disclaimer.html">Disclaimer</a></p>
+        </div>
+    </div>
+</footer>
+<div class="footer"></div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha256-Sk3nkD6mLTMOF0EOpNtsIry+s1CsaqQC1rVLTAy+0yc= sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="http://localhost:3000/static/js/docs.min.js"></script>
+    <script src="http://localhost:3000/static/js/main.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="http://localhost:3000/static/js/ie10-viewport-bug-workaround.js"></script>
+</body>
+
+</html>

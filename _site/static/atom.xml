@@ -6,13 +6,194 @@
   
   <link href="http://localhost:3000/"/>
   <id>http://localhost:3000/</id>
-  <updated>2020-05-10T22:59:34Z</updated>
+  <updated>2020-05-20T00:27:38Z</updated>
   <author>
     <name>Shekhar Singh</name>
     <email>shekhar [.] singh [@] msn [.] com</email>
   </author>
   <rights type="text">Copyright © 2020 Shekhar Singh. All rights reserved.</rights>
   
+  <entry>
+  <title type="text">How We Monitor Apache Airflow in Production at Gojek</title>
+  <link rel="alternate" type="text/html" href="http://localhost:3000//blog/2020/05/20/how-we-monitor-apache-airflow-in-production-at-gojek.html" />
+  <id>http://localhost:3000/blog/2020/05/20/how-we-monitor-apache-airflow-in-production-at-gojek</id>
+  <published>2020-05-20T00:00:00Z</published>
+  <updated>2020-05-20T00:00:00Z</updated>
+  <content type="html"><![CDATA[ <p>This post was orignially posted <a target="_blank" href="https://blog.gojekengineering.com/how-we-monitor-apache-airflow-in-production-210f9bff9e71">here</a> in <b>Gojek Engineering Blog</b>. (I work at <a target="_blank" href="https://www.gojek.com/">Gojek</a>)</p>
+<hr />
+
+<p>A quick guide on what (and how) to monitor to keep your workflows running
+smoothly.</p>
+
+<p><img class="img-responsive" src="http://localhost:3000/assets/images/airflow_gojek/cover.jpeg" alt="Pandas memory leak" /></p>
+
+<p>If your organisation deals with a significant amount of data and has huge data
+pipelines, chances are you must have used or heard about Apache Airflow already.
+Airflow is an open-source workflow management platform that enables scheduling
+and monitoring workflows programmatically.</p>
+
+<p>At Gojek, our products generate a tremendous amount of data, but that’s only
+step one. We’re constantly making use of that data and give value back to our
+customers, merchants, and partners — in the form of recommendations and other
+customisations. The ‘Data Engineering’ (DE) Team is responsible for building the
+platform and products to manage the entire lifecycle of data.</p>
+
+<p>Needless to say, Airflow is one of our most heavily used tools. We cater over a
+thousand pipelines and an enormous amount of data using Airflow. Monitoring all
+these pipelines is not easy — especially considering that Airflow is still in
+its early phase.</p>
+
+<p>Like any production application, it becomes crucial to monitor the Airflow jobs
+and of course, Airflow itself. It has a very resilient architecture and the
+design is highly scalable. It has multiple components to enable this, viz.
+Scheduler, Webserver, Workers, Executor, and so on. At Gojek, we have a few
+additional processes as well to enable flexibility for our workflows.</p>
+
+<p>For example, we have a separate process running to sync our DAGs with GCS/git
+and a separate process to sync custom Airflow variables. We know very well that,
+<strong>the more components you have, higher the chances of failure.</strong> Hence, this
+requires a thorough monitoring and alerting system.</p>
+
+<p><img class="img-responsive" src="http://localhost:3000/assets/images/airflow_gojek/dash1.png" />
+<center><span style="font-size:12px; colore:#ccc;">A snapshot of the dashboard in a dummy environment</span></center>
+</p>
+
+<h3 id="high-level-architecture">High-level architecture</h3>
+
+<p>At a high-level, we have multiple Airflow processes running in our different
+Kubernetes Pods, and each of them has a statsd client enabled using
+<em>airflow.cfg</em>. The statsd client will send all the metrics to Telegraf over UDP.
+Our custom processes are also emitting those heartbeats and other data in the
+same way.</p>
+
+<p><img class="img-responsive" src="http://localhost:3000/assets/images/airflow_gojek/architecture.png" />
+<center><span style="font-size:12px; colore:#ccc;">Airflow Monitoring — High-Level Architecture</span></center>
+</p>
+
+<p>We’ve configured InfluxDB as an output for Telegraf configuration
+(<em>telegraf.conf</em>) which will send the data over HTTP. You can add InfluxDB as a
+data source in Grafana as well as in Kapacitor. The alerts can now be configured
+in Kapacitor using TICK scripts which we’ll cover in the next sections.</p>
+
+<h3 id="understanding-airflow-statsd-metrics">Understanding Airflow statsd metrics</h3>
+
+<p>Airflow’s implementation and documentation of metrics are not the best things
+about it and it’s still in the early stages. In the first attempt, the
+measurements created by Airflow in InfluxDB were not how we wanted them to be.
+We solved that by writing some custom statsd telegraf templates based on the
+metrics name. Some of them are:</p>
+
+<p>
+<script src="https://gist.github.com/rootcss/0a3a7ea05da3a90f624380d181e50b5c.js"></script>
+<center><span style="font-size:12px; colore:#ccc;">Sample statsd templates for telegraf.conf</span></center>
+</p>
+
+<p>These templates will create some meaningful measurements named
+<em>prefix_dag_duration</em>, <em>prefix_dagrun_schedule_delay</em>,
+<em>prefix_dag_loading-duration,</em> etc in InfluxDB which can be easily queried using
+Grafana/Kapacitor. Following is a sample of how the fields (or tags) are parsed
+in InfluxDB:</p>
+
+<p>
+<script src="https://gist.github.com/rootcss/5035685ab9b1541214fd0468659e0897.js"></script>
+<center><span style="font-size:12px; colore:#ccc;">Sample influx measurements schema after being processed by our templates</span></center>
+</p>
+
+<p>The tags enable higher flexibility for querying and filtering the data. We built
+a Grafana dashboard on top of it as the first goal to see what’s happening
+under-the-hood. A sample query to generate a time series trend in Grafana for
+the above measurement is:</p>
+<p>
+<script src="https://gist.github.com/rootcss/f57fdcad7a0b553a5b47287f7c0f9274.js"></script>
+<center><span style="font-size:12px; colore:#ccc;">Sample Grafana query to fetch data from Influx</span></center>
+</p>
+
+<h3 id="what-should-you-monitor">What should you monitor?</h3>
+
+<p>The following list contains some of the important areas that you should monitor,
+which could also be helpful for debugging and finding bottlenecks for resources:</p>
+
+<ul>
+  <li>Health checks: Are scheduler, webserver, workers, and other custom processes
+running? What’s their uptime?</li>
+  <li>How many workers are running?</li>
+  <li>Are our custom metrics and configurations being reflected in metrics?</li>
+  <li>Number of active DAGs, and DAG parsing time</li>
+  <li>Trend: Pools usage</li>
+  <li>Trend: Jobs execution status (started/ended)</li>
+  <li>Trend: Executor tasks status (running/queued/open slots)</li>
+  <li>Trend: Operator-wise execution status (failure/success)</li>
+  <li>Trend: Task Instances status (successes/failures)</li>
+  <li>Trend: Time taken by crucial tasks, sensors</li>
+  <li>Trend: Time taken by the DAGs before coming to an end state</li>
+  <li>Trend: Schedule Delay of DAGs</li>
+  <li>Trend: Time spent by DAGs for completing dependency checks</li>
+</ul>
+
+<p>It’s important to track these metrics at an overall level, as well as individual
+tasks and the DAG level. You should also consider tracking your specific
+operators and tasks that you think have higher chances of failure and/or consume
+more resources.</p>
+
+<p><img class="img-responsive" src="http://localhost:3000/assets/images/airflow_gojek/dash2.png" />
+<center><span style="font-size:12px; colore:#ccc;">A snapshot of the dashboard in a dummy environment</span></center>
+</p>
+
+<h3 id="alerting">Alerting</h3>
+
+<p>Now that we have data in InfluxDB, and the monitoring is in place, we can use
+Kapacitor to write the TICK script to trigger alerts based on the checks and
+thresholds. The following snippets show some sample alerts that can be set.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// alert if scheduler is down.</span>
+<span class="nx">stream</span>
+    <span class="o">|</span><span class="k">from</span><span class="p">()</span>
+        <span class="p">.</span><span class="nx">measurement</span><span class="p">(</span><span class="dl">'</span><span class="s1">prefix_scheduler_heartbeat</span><span class="dl">'</span><span class="p">)</span>
+    <span class="o">|</span><span class="nx">deadman</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mi">5</span><span class="nx">m</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">id</span><span class="p">(</span><span class="dl">'</span><span class="s1">AirflowSchedulerDown</span><span class="dl">'</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">message</span><span class="p">(</span><span class="dl">'</span><span class="s1">Airflow Scheduler is down</span><span class="dl">'</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">/tmp/alert_logs.txt</span><span class="dl">'</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">trigger_alert_method</span><span class="p">()</span>
+
+<span class="c1">// alert if worker count does not match the required value</span>
+<span class="nx">stream</span>
+    <span class="o">|</span><span class="k">from</span><span class="p">()</span>
+        <span class="p">.</span><span class="nx">measurement</span><span class="p">(</span><span class="dl">'</span><span class="s1">prefix_celery_workers</span><span class="dl">'</span><span class="p">)</span>
+    <span class="o">|</span><span class="nb">window</span><span class="p">()</span>
+        <span class="p">.</span><span class="nx">period</span><span class="p">(</span><span class="mi">5</span><span class="nx">m</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">every</span><span class="p">(</span><span class="mi">5</span><span class="nx">m</span><span class="p">)</span>
+    <span class="o">|</span><span class="nx">alert</span><span class="p">()</span>
+        <span class="p">.</span><span class="nx">id</span><span class="p">(</span><span class="dl">'</span><span class="s1">Celery Workers Count</span><span class="dl">'</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">crit</span><span class="p">(</span><span class="nx">lambda</span><span class="p">:</span> <span class="dl">"</span><span class="s2">value</span><span class="dl">"</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">warn</span><span class="p">(</span><span class="nx">lambda</span><span class="p">:</span> <span class="dl">"</span><span class="s2">value</span><span class="dl">"</span> <span class="o">&lt;=</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">/tmp/alert_2.txt</span><span class="dl">'</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">trigger_alert_method</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>Apart from this, it is also important to monitor the health of InfluxDB,
+Kapacitor, and Grafana as well.</p>
+
+<h3 id="references">References</h3>
+
+<ul>
+  <li><a href="https://airflow.apache.org/docs/stable/metrics.html">https://airflow.apache.org/docs/stable/metrics.html</a></li>
+  <li><a href="https://docs.influxdata.com/kapacitor/v1.5/tick/introduction/">https://docs.influxdata.com/kapacitor/v1.5/tick/introduction/</a></li>
+</ul>
+
+<p>Thank you, everyone, at the DE team — we build and manage the components
+described above, and special thanks to
+<a href="https://twitter.com/sravankorumilli">Sravan</a> for the discussions and pairing.
+If you’ve questions, let us know in the comments or <a href="https://twitter.com/rootcss">tweet
+me</a>.</p>
+
+<hr />
+
+<p>Liked what you read? Get our stories delivered straight to your inbox by
+<a href="https://mailchi.mp/go-jek/gojek-tech-newsletter">signing up for Gojek newsletter</a>. 🖖</p>
+ ]]></content>
+</entry>
+
+
   <entry>
   <title type="text">List of a few cycling trips</title>
   <link rel="alternate" type="text/html" href="http://localhost:3000//blog/2020/04/27/list-of-cycling-trips.html" />
@@ -666,63 +847,6 @@ Exactly an year back, I started cycling for commute, endurance rides and a bunch
 
 <p><br />
 This cycle is Montra Madrock MTB.</p>
- ]]></content>
-</entry>
-
-
-  <entry>
-  <title type="text">Pyspark&amp;#58; Why you should write UDFs in Scala/Java</title>
-  <link rel="alternate" type="text/html" href="http://localhost:3000//blog/2018/08/17/spark-udf-in-scala-java-for-pyspark.html" />
-  <id>http://localhost:3000/blog/2018/08/17/spark-udf-in-scala-java-for-pyspark</id>
-  <published>2018-08-17T00:00:00Z</published>
-  <updated>2018-08-17T00:00:00Z</updated>
-  <content type="html"><![CDATA[ <p>While writing Pyspark programs, we would generally write UDFs in Python, which is a very obvious thing to do. However, the performance of Python UDFs are not as good as those written in Scala/Java.</p>
-
-<p>Spark is written in Scala and Data/objects of a Spark program are stored in JVM. Pyspark API is just a wrapper over SparkSession, RDDs/DataFrame and other JVM objects (a few parts are in native python as well). This means that a Pyspark program goes through serialization and deserialization of JVM objects and data. This back and forth conversion affects the performance of Pyspark program drastically. Pyspark UDFs are a good example where this conversion happens a lot.</p>
-
-<p><br />
-<b>Example Implementation</b>:</p>
-
-<p>Here is a very simple Java UDF to count length of a string:</p>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">com.rootcss</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">org.apache.spark.sql.api.java.UDF1</span><span class="o">;</span>
-
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SparkJavaUdfExample</span> <span class="kd">implements</span> <span class="no">UDF1</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">Integer</span><span class="o">&gt;</span> <span class="o">{</span>
-    <span class="kd">public</span> <span class="nc">Integer</span> <span class="nf">call</span><span class="o">(</span><span class="nc">String</span> <span class="n">input</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="n">input</span><span class="o">.</span><span class="na">length</span><span class="o">();</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div></div>
-<p>(full Java code is available here: https://github.com/rootcss/PysparkJavaUdfExample)
-<br /><br /></p>
-
-<p>Once compiled, you can start pyspark by including the jar in the path.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bin/pyspark <span class="nt">--jars</span> /path/to/target/SparkJavaUdfExample-1.0-SNAPSHOT.jar
-</code></pre></div></div>
-<p><br /></p>
-
-<p>Here’s the usage in Pyspark:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> from pyspark.sql.types import IntegerType
-<span class="o">&gt;&gt;&gt;</span> <span class="c"># Now, register the UDF in Pyspark</span>
-<span class="o">&gt;&gt;&gt;</span> sqlContext.registerJavaFunction<span class="o">(</span><span class="s2">"myCustomUdf"</span>, <span class="s2">"com.rootcss.SparkJavaUdfExample"</span>, IntegerType<span class="o">())</span>
-<span class="o">&gt;&gt;&gt;</span> spark.sql<span class="o">(</span><span class="s2">"SELECT myCustomUdf('shekhar')"</span><span class="o">)</span>.collect<span class="o">()</span>
-+------------+
-|UDF<span class="o">(</span>shekhar<span class="o">)</span>|
-+------------+
-|           7|
-+------------+
-</code></pre></div></div>
-
-<p><br />
-<b>References</b>:</p>
-<ul>
-  <li>Slide #59 in https://0x0fff.com/wp-content/uploads/2015/11/Spark-Architecture-JD-Kiev-v04.pdf</li>
-  <li>This post covers this whole topic in more details - https://medium.com/wbaa/using-scala-udfs-in-pyspark-b70033dd69b9</li>
-</ul>
-
  ]]></content>
 </entry>
 
