@@ -2,24 +2,83 @@
 layout: layout
 ---
 
+<style>
+  .menu-section {
+    text-align: center;
+    font-size: 60px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between
+  }
+
+  .menu-section p {
+    font-size: 16px
+  }
+
+  @media only screen and (min-width:768px) {
+    .menu-section {
+      flex-wrap: nowrap;
+      font-size: 75px
+    }
+  }
+
+  .menu-subsection {
+    width: 50%;
+  }
+
+  .menu-subsection:hover {
+    cursor: pointer;
+  }
+
+  .menu-subsection:hover > h3 {
+    text-decoration: underline;
+  }
+</style>
+
+
 <div class="container">
   <div class="panel panel-default">
     <div class="panel-body">
-      <br>
-      {% for post in site.posts %}
-      {% if post.post_type != 'nontech' %}
-        <div class="row">
-          <div class="col-sm-12 col-md-12 col-lg-12">
-            <h5 style="text-align:left;">
-                <a href="{{ post.url }}">{{ post.title }}</a>
-                <span style="font-size:14px;opacity: 0.5;">
-                  {{ post.date | date: "%b %e %Y" }}
-                </span>
-            </h5>
-          </div>
+
+      <div class="menu-section">
+        <div class="menu-subsection" onclick="location.href='tech.html';">
+          <h3 class="section-name">Tech</h3>
+          👨🏻‍💻
+          📊
+          🔐
+          <p>Notes related to Tech, Data, DevOps. These could small findings, just plain notes for reference or steps to do a certain thing.</p>
         </div>
-      {% endif %}
-      {% endfor %}
-  </div>
+        <div class="menu-subsection" onclick="location.href='outdoor.html';">
+          <h3 class="section-name">Outdoor</h3>
+          🏃
+          🚴
+          🏕️
+          <p>Notes on Trips, Running, Cycling, Fitness, Nutrition, Diet etc</p>
+        </div>
+      </div>
+      <div class="menu-section">
+        <div class="menu-subsection" onclick="location.href='nontech.html';">
+          <h3 class="section-name">Non-Tech</h3>
+          📒
+          🤯
+          💰
+          <p>Notes on everything else. Book notes, self-help checklists, psychology, finance, investments etc.</p>
+        </div>
+        <div class="menu-subsection" onclick="location.href='books.html';">
+          <h3 class="section-name">Books</h3>
+          📚
+          <p>Books I've read and currently reading. Please do suggest your favourite books.</p>
+        </div>
+      </div>
+      <div class="menu-section">
+        <div class="menu-subsection" onclick="location.href='about.html';">
+          <h3 class="section-name">About</h3>
+          🙋‍♂️
+          <p>A little about me and how you can say Hi! to me.</p>
+        </div>
+      </div>
+
+    </div>
   </div>
 </div>

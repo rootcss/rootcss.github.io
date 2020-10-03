@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Cycling Trip - Bangalore to Kolar/Avani village - 240 km in 11 hours
-post_type: nontech
+post_type: outdoor
 tags:
 - cycling
 - endurance

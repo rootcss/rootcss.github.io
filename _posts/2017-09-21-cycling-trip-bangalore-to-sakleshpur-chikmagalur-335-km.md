@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Cycling Trip - Bangalore to Chikmagalur via Sakleshpur - 335+ km
-post_type: nontech
+post_type: outdoor
 tags:
 - cycling
 - endurance

@@ -78,244 +78,91 @@
         <div id="navbar">
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="https://shekharsingh.com/index.html">TECH</a></li>
+                <li><a href="https://shekharsingh.com/outdoor.html">OUTDOOR</a></li>
                 <li><a href="https://shekharsingh.com/nontech.html">NON-TECH</a></li>
                 <li><a href="https://shekharsingh.com/books.html">BOOKS</a></li>
                 <li><a href="https://shekharsingh.com/about.html">ABOUT</a></li>
             </ul>
         </div>
     </div>
-</nav> <div class="container">
+</nav> <style>
+  .menu-section {
+    text-align: center;
+    font-size: 60px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between
+  }
+
+  .menu-section p {
+    font-size: 16px
+  }
+
+  @media only screen and (min-width:768px) {
+    .menu-section {
+      flex-wrap: nowrap;
+      font-size: 75px
+    }
+  }
+
+  .menu-subsection {
+    width: 50%;
+  }
+
+  .menu-subsection:hover {
+    cursor: pointer;
+  }
+
+  .menu-subsection:hover > h3 {
+    text-decoration: underline;
+  }
+</style>
+
+
+<div class="container">
   <div class="panel panel-default">
     <div class="panel-body">
-      <br>
-      
-      
-        <div class="row">
-          <div class="col-sm-12 col-md-12 col-lg-12">
-            <h5 style="text-align:left;">
-                <a href="/blog/2020/05/20/how-we-monitor-apache-airflow-in-production-at-gojek.html">How We Monitor Apache Airflow in Production at Gojek</a>
-                <span style="font-size:14px;opacity: 0.5;">
-                  May 20 2020
-                </span>
-            </h5>
-          </div>
+
+      <div class="menu-section">
+        <div class="menu-subsection" onclick="location.href='tech.html';">
+          <h3 class="section-name">Tech</h3>
+          👨🏻‍💻
+          📊
+          🔐
+          <p>Notes related to Tech, Data, DevOps. These could small findings, just plain notes for reference or steps to do a certain thing.</p>
         </div>
-      
-      
-      
-      
-      
-        <div class="row">
-          <div class="col-sm-12 col-md-12 col-lg-12">
-            <h5 style="text-align:left;">
-                <a href="/blog/2020/04/19/deploying-a-service-on-kubernetes-locally-using-terraform.html">Deploying a service on Kubernetes locally using Terraform</a>
-                <span style="font-size:14px;opacity: 0.5;">
-                  Apr 19 2020
-                </span>
-            </h5>
-          </div>
+        <div class="menu-subsection" onclick="location.href='outdoor.html';">
+          <h3 class="section-name">Outdoor</h3>
+          🏃
+          🚴
+          🏕️
+          <p>Notes on Trips, Running, Cycling, Fitness, Nutrition, Diet etc</p>
         </div>
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-        <div class="row">
-          <div class="col-sm-12 col-md-12 col-lg-12">
-            <h5 style="text-align:left;">
-                <a href="/blog/2019/03/26/analyzing-pandas-memory-leak-issue-with-fix.html">Analyzing Python Pandas' memory leak and the fix</a>
-                <span style="font-size:14px;opacity: 0.5;">
-                  Mar 26 2019
-                </span>
-            </h5>
-          </div>
+      </div>
+      <div class="menu-section">
+        <div class="menu-subsection" onclick="location.href='nontech.html';">
+          <h3 class="section-name">Non-Tech</h3>
+          📒
+          🤯
+          💰
+          <p>Notes on everything else. Book notes, self-help checklists, psychology, finance, investments etc.</p>
         </div>
-      
-      
-      
-      
-      
-      
-      
-        <div class="row">
-          <div class="col-sm-12 col-md-12 col-lg-12">
-            <h5 style="text-align:left;">
-                <a href="/blog/2018/08/17/spark-udf-in-scala-java-for-pyspark.html">Pyspark&#58; Why you should write UDFs in Scala/Java</a>
-                <span style="font-size:14px;opacity: 0.5;">
-                  Aug 17 2018
-                </span>
-            </h5>
-          </div>
+        <div class="menu-subsection" onclick="location.href='books.html';">
+          <h3 class="section-name">Books</h3>
+          📚
+          <p>Books I've read and currently reading. Please do suggest your favourite books.</p>
         </div>
-      
-      
-      
-        <div class="row">
-          <div class="col-sm-12 col-md-12 col-lg-12">
-            <h5 style="text-align:left;">
-                <a href="/blog/2018/08/16/using-cloudflare-s-ssl-for-your-website-free.html">Using Cloudflare's SSL for your website (FREE!)</a>
-                <span style="font-size:14px;opacity: 0.5;">
-                  Aug 16 2018
-                </span>
-            </h5>
-          </div>
+      </div>
+      <div class="menu-section">
+        <div class="menu-subsection" onclick="location.href='about.html';">
+          <h3 class="section-name">About</h3>
+          🙋‍♂️
+          <p>A little about me and how you can say Hi! to me.</p>
         </div>
-      
-      
-      
-        <div class="row">
-          <div class="col-sm-12 col-md-12 col-lg-12">
-            <h5 style="text-align:left;">
-                <a href="/blog/2018/08/15/configuring-ssl-step-by-step-and-amazon-certificate-manager.html">Configuring SSL step by step (and Amazon Certificate Manager)</a>
-                <span style="font-size:14px;opacity: 0.5;">
-                  Aug 15 2018
-                </span>
-            </h5>
-          </div>
-        </div>
-      
-      
-      
-      
-      
-      
-      
-        <div class="row">
-          <div class="col-sm-12 col-md-12 col-lg-12">
-            <h5 style="text-align:left;">
-                <a href="/blog/2017/04/01/querying-cassandra-from-spark-on-multiple-paritions.html">Observations on querying Cassandra on 'multiple' partitions (with/without Spark)</a>
-                <span style="font-size:14px;opacity: 0.5;">
-                  Apr  1 2017
-                </span>
-            </h5>
-          </div>
-        </div>
-      
-      
-      
-        <div class="row">
-          <div class="col-sm-12 col-md-12 col-lg-12">
-            <h5 style="text-align:left;">
-                <a href="/blog/2017/01/24/processing-cassandra-data-with-apache-spark-part-2.html">Spark Shell for Processing &amp; Querying data in Cassandra</a>
-                <span style="font-size:14px;opacity: 0.5;">
-                  Jan 24 2017
-                </span>
-            </h5>
-          </div>
-        </div>
-      
-      
-      
-        <div class="row">
-          <div class="col-sm-12 col-md-12 col-lg-12">
-            <h5 style="text-align:left;">
-                <a href="/blog/2017/01/23/processing-cassandra-data-with-apache-spark.html">Processing &amp; Querying data in Cassandra with Apache Spark</a>
-                <span style="font-size:14px;opacity: 0.5;">
-                  Jan 23 2017
-                </span>
-            </h5>
-          </div>
-        </div>
-      
-      
-      
-        <div class="row">
-          <div class="col-sm-12 col-md-12 col-lg-12">
-            <h5 style="text-align:left;">
-                <a href="/blog/2016/11/12/apache-flink-rabbimq-streams-processor.html">Processing Rabbitmq's Stream with "Apache Flink"</a>
-                <span style="font-size:14px;opacity: 0.5;">
-                  Nov 12 2016
-                </span>
-            </h5>
-          </div>
-        </div>
-      
-      
-      
-        <div class="row">
-          <div class="col-sm-12 col-md-12 col-lg-12">
-            <h5 style="text-align:left;">
-                <a href="/blog/2016/11/11/apache-spark-worker-with-simple-spark-lib.html">Writing Apache Spark workers with "Simple Spark Lib"</a>
-                <span style="font-size:14px;opacity: 0.5;">
-                  Nov 11 2016
-                </span>
-            </h5>
-          </div>
-        </div>
-      
-      
-      
-        <div class="row">
-          <div class="col-sm-12 col-md-12 col-lg-12">
-            <h5 style="text-align:left;">
-                <a href="/blog/2016/03/24/rabbitmq-queues-overflow-automated-deletion.html">RabbitMQ - Automated deletion of 1000s of queues</a>
-                <span style="font-size:14px;opacity: 0.5;">
-                  Mar 24 2016
-                </span>
-            </h5>
-          </div>
-        </div>
-      
-      
-      
-        <div class="row">
-          <div class="col-sm-12 col-md-12 col-lg-12">
-            <h5 style="text-align:left;">
-                <a href="/blog/2016/02/15/linux-io-redirections.html">Linux I/O redirection examples</a>
-                <span style="font-size:14px;opacity: 0.5;">
-                  Feb 15 2016
-                </span>
-            </h5>
-          </div>
-        </div>
-      
-      
-      
-        <div class="row">
-          <div class="col-sm-12 col-md-12 col-lg-12">
-            <h5 style="text-align:left;">
-                <a href="/blog/2015/11/24/postgres-update-timestamp-when-row-is-updated.html">PostgreSQL - update timestamp when row(s) is updated</a>
-                <span style="font-size:14px;opacity: 0.5;">
-                  Nov 24 2015
-                </span>
-            </h5>
-          </div>
-        </div>
-      
-      
-      
-        <div class="row">
-          <div class="col-sm-12 col-md-12 col-lg-12">
-            <h5 style="text-align:left;">
-                <a href="/blog/2015/11/20/accessing-postgreSQL-through-ssh-tunnel.html">Accessing PostgreSQL server through a SSH Tunnel</a>
-                <span style="font-size:14px;opacity: 0.5;">
-                  Nov 20 2015
-                </span>
-            </h5>
-          </div>
-        </div>
-      
-      
-      
-        <div class="row">
-          <div class="col-sm-12 col-md-12 col-lg-12">
-            <h5 style="text-align:left;">
-                <a href="/blog/2011/12/31/new.html">Welcome!</a>
-                <span style="font-size:14px;opacity: 0.5;">
-                  Dec 31 2011
-                </span>
-            </h5>
-          </div>
-        </div>
-      
-      
-  </div>
+      </div>
+
+    </div>
   </div>
 </div>
 

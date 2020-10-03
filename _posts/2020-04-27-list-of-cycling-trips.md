@@ -1,7 +1,7 @@
 ---
 layout: post
 title: List of a few cycling trips
-post_type: nontech
+post_type: outdoor
 tags:
 - cycling
 - endurance

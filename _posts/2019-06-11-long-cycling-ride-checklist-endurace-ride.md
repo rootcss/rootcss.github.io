@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Checklist - Long cycling ride (endurance rides)
-post_type: nontech
+post_type: outdoor
 tags:
 - cycling
 - endurance

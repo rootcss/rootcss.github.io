@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Running - The Bangalore airport solo Half Marathon 2019 - 26 km
-post_type: nontech
+post_type: outdoor
 tags:
 - running
 - endurance

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Cycling Trip - Mangalore to Goa across the diverse Indian west coast - 430+ km
-post_type: nontech
+post_type: outdoor
 tags:
 - cycling
 - endurance

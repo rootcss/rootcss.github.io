@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Cycling - Completed 3824 km of cycling in an year
-post_type: nontech
+post_type: outdoor
 tags:
 - cycling
 - endurance
