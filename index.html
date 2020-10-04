@@ -5,7 +5,7 @@ layout: layout
 <style>
   .menu-section {
     text-align: center;
-    font-size: 60px;
+    font-size: 40px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -13,13 +13,17 @@ layout: layout
   }
 
   .menu-section p {
-    font-size: 16px
+    font-size: 14px
   }
 
   @media only screen and (min-width:768px) {
     .menu-section {
       flex-wrap: nowrap;
       font-size: 75px
+    }
+
+    .menu-section p {
+      font-size: 16px
     }
   }
 
@@ -31,7 +35,7 @@ layout: layout
     cursor: pointer;
   }
 
-  .menu-subsection:hover > h3 {
+  .menu-subsection:hover>h3 {
     text-decoration: underline;
   }
 </style>
@@ -44,37 +48,38 @@ layout: layout
       <div class="menu-section">
         <div class="menu-subsection" onclick="location.href='tech.html';">
           <h3 class="section-name">Tech</h3>
-          👨🏻‍💻
-          📊
-          🔐
-          <p>Notes related to Tech, Data, DevOps. These could small findings, just plain notes for reference or steps to do a certain thing.</p>
+          <span class="section-emoji">👨🏻‍💻</span>
+          <span class="section-emoji">📊</span>
+          <span class="section-emoji">🔐</span>
+          <p>Notes related to Tech, Data, DevOps. These could small findings, just plain notes for reference or steps to
+            do a certain thing.</p>
         </div>
         <div class="menu-subsection" onclick="location.href='outdoor.html';">
           <h3 class="section-name">Outdoor</h3>
-          🏃
-          🚴
-          🏕️
+          <span class="section-emoji">🏃</span>
+          <span class="section-emoji">🚴</span>
+          <span class="section-emoji">🏕️</span>
           <p>Notes on Trips, Running, Cycling, Fitness, Nutrition, Diet etc</p>
         </div>
       </div>
       <div class="menu-section">
         <div class="menu-subsection" onclick="location.href='nontech.html';">
           <h3 class="section-name">Non-Tech</h3>
-          📒
-          🤯
-          💰
+          <span class="section-emoji">📒</span>
+          <span class="section-emoji">🤯</span>
+          <span class="section-emoji">💰</span>
           <p>Notes on everything else. Book notes, self-help checklists, psychology, finance, investments etc.</p>
         </div>
         <div class="menu-subsection" onclick="location.href='books.html';">
           <h3 class="section-name">Books</h3>
-          📚
+          <span class="section-emoji">📚</span>
           <p>Books I've read and currently reading. Please do suggest your favourite books.</p>
         </div>
       </div>
       <div class="menu-section">
         <div class="menu-subsection" onclick="location.href='about.html';">
           <h3 class="section-name">About</h3>
-          🙋‍♂️
+          <span class="section-emoji">🙋‍♂️</span>
           <p>A little about me and how you can say Hi! to me.</p>
         </div>
       </div>

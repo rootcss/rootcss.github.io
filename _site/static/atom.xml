@@ -6,13 +6,140 @@
   
   <link href="http://localhost:3000/"/>
   <id>http://localhost:3000/</id>
-  <updated>2020-10-03T19:46:03Z</updated>
+  <updated>2020-10-04T17:30:43Z</updated>
   <author>
     <name>Shekhar Singh</name>
     <email>shekhar [.] singh [@] msn [.] com</email>
   </author>
   <rights type="text">Copyright © 2020 Shekhar Singh. All rights reserved.</rights>
   
+  <entry>
+  <title type="text">Notes - How to gracefully say No</title>
+  <link rel="alternate" type="text/html" href="http://localhost:3000//blog/2020/10/03/how-to-gracefully-say-no.html" />
+  <id>http://localhost:3000/blog/2020/10/03/how-to-gracefully-say-no</id>
+  <published>2020-10-03T00:00:00Z</published>
+  <updated>2020-10-03T00:00:00Z</updated>
+  <content type="html"><![CDATA[ <p>When we have strong internal clarity it is almost as if we have a force field protecting us from the nonessentials coming at us from all directions.</p>
+
+<p>Non-Essentialist:</p>
+<ul>
+  <li>Avoids saying no to avoid feeling social awkwardness and pressure</li>
+  <li>Says yes to everything</li>
+</ul>
+
+<p>Essentialist:</p>
+<ul>
+  <li>Dares to say no firmly, resolutely, and gracefully</li>
+  <li>Says yes only to the things that really matter</li>
+</ul>
+
+<p><br />
+<strong>Guidelines for delivering the graceful no</strong></p>
+
+<ul>
+  <li>Separate the decision from the relationship</li>
+  <li>Saying no gracefully doesn’t have to mean using the word “no”</li>
+  <li>Focus on the trade-off</li>
+  <li>Remind yourself that everyone is selling something</li>
+  <li>Make your peace with the fact that saying no often requires <i>trading popularity for respect</i></li>
+  <li>Remember that a clear no can be more graceful than a vague or non-committal yes</li>
+</ul>
+
+<p><br />
+<strong>The No Repertoire</strong></p>
+
+<p>Essentialists don’t say no just occasionally. It is a part of their regular repertoire. To consistently say no with grace, it helps to have a variety of responses to call upon. Below are eight responses you can put in your no repertoire:</p>
+
+<ul>
+  <li>The awkward pause</li>
+  <li>The soft no (or the no but)</li>
+  <li>Let me check my calendar and get back to you.</li>
+  <li>Use e-mail bouncebacks.</li>
+  <li>Say, Yes. What should I deprioritize?</li>
+  <li>Say it with humor.</li>
+  <li>Use the words You are welcome to X. I am willing to Y.</li>
+  <li>I can’t do it, but X might be interested.</li>
+</ul>
+
+<p><br />
+<strong>Credits</strong>:</p>
+
+<p>These notes are from the book <strong>Essentialism: The Disciplined Pursuit of Less</strong> by Greg McKeown (Chapter #11)</p>
+
+<p><br />
+<strong>Disclaimer</strong>:</p>
+
+<p>These notes might be very contextual if you haven’t read the book.</p>
+ ]]></content>
+</entry>
+
+
+  <entry>
+  <title type="text">Notes - How to avoid commitment traps</title>
+  <link rel="alternate" type="text/html" href="http://localhost:3000//blog/2020/10/03/how-to-avoid-the-commitment-traps.html" />
+  <id>http://localhost:3000/blog/2020/10/03/how-to-avoid-the-commitment-traps</id>
+  <published>2020-10-03T00:00:00Z</published>
+  <updated>2020-10-03T00:00:00Z</updated>
+  <content type="html"><![CDATA[ <ol>
+  <li>Beware of the endowment effect
+    <ul>
+      <li><strong>the endowment effect</strong>: our tendency to undervalue things that aren’t ours and to overvalue things because we already own them.</li>
+    </ul>
+  </li>
+  <li>
+    <p>Pretend you don’t own it yet</p>
+  </li>
+  <li>
+    <p>Get over the fear of waste</p>
+  </li>
+  <li>
+    <p>Admit failure to begin success</p>
+  </li>
+  <li>
+    <p>Stop trying to force a fit</p>
+  </li>
+  <li>
+    <p>Get a neutral second opinion</p>
+  </li>
+  <li>Be aware of the status quo bias
+    <ul>
+      <li>The tendency to continue doing something simply because we have always done it is sometimes called the <strong>status quo bias</strong>.</li>
+    </ul>
+  </li>
+  <li>Apply zero-based budgeting
+    <ul>
+      <li><strong>zero-based budgeting</strong>: instead of trying to budget your time on the basis of existing commitments, assume that all bets are off. All previous commitments are gone. Then begin from scratch, asking which you would add today.</li>
+    </ul>
+  </li>
+  <li>
+    <p>Stop making casual commitments</p>
+  </li>
+  <li>
+    <p>From now on, pause before you speak</p>
+  </li>
+  <li>
+    <p>Get over the fear of missing out</p>
+  </li>
+  <li>To fight this fear, run a reverse pilot
+    <ul>
+      <li>In a <strong>reverse pilot</strong>, you test whether removing an initiative or activity will have any negative consequences.</li>
+    </ul>
+  </li>
+</ol>
+
+<p><br />
+<strong>Credits</strong>:</p>
+
+<p>These notes are from the book <strong>Essentialism: The Disciplined Pursuit of Less</strong> by Greg McKeown (Chapter #12)</p>
+
+<p><br />
+<strong>Disclaimer</strong>:</p>
+
+<p>These notes might be very contextual if you haven’t read the book.</p>
+ ]]></content>
+</entry>
+
+
   <entry>
   <title type="text">How We Monitor Apache Airflow in Production at Gojek</title>
   <link rel="alternate" type="text/html" href="http://localhost:3000//blog/2020/05/20/how-we-monitor-apache-airflow-in-production-at-gojek.html" />
@@ -817,36 +944,6 @@ Similar cases, References and other notes:</p>
      - https://github.com/pandas-dev/pandas/issues/21353<br /></li>
 </ol>
 
- ]]></content>
-</entry>
-
-
-  <entry>
-  <title type="text">Running - The Bangalore airport solo Half Marathon 2018 - 26 km</title>
-  <link rel="alternate" type="text/html" href="http://localhost:3000//blog/2018/12/30/running-the-bangalore-airport-solo-half-marathon-26-km.html" />
-  <id>http://localhost:3000/blog/2018/12/30/running-the-bangalore-airport-solo-half-marathon-26-km</id>
-  <published>2018-12-30T00:00:00Z</published>
-  <updated>2018-12-30T00:00:00Z</updated>
-  <content type="html"><![CDATA[ <p>WIP.</p>
- ]]></content>
-</entry>
-
-
-  <entry>
-  <title type="text">Cycling - Completed 3824 km of cycling in an year</title>
-  <link rel="alternate" type="text/html" href="http://localhost:3000//blog/2018/08/18/completed-3824-km-cycling-in-an-year.html" />
-  <id>http://localhost:3000/blog/2018/08/18/completed-3824-km-cycling-in-an-year</id>
-  <published>2018-08-18T00:00:00Z</published>
-  <updated>2018-08-18T00:00:00Z</updated>
-  <content type="html"><![CDATA[ <p>
-Exactly an year back, I started cycling for commute, endurance rides and a bunch of amazing trips. It feels good to have completed 3824 km in last one year. The goal is to be consistent with this, and keep cycling :)
-</p>
-<p><br /></p>
-<center><img class="img-responsive" src="http://localhost:3000/assets/images/cycling_3824km_in_an_year.png" alt="cycling_3824km_in_an_year" style="width:600px;height:450px;" />
-</center>
-
-<p><br />
-This cycle is Montra Madrock MTB.</p>
  ]]></content>
 </entry>
 
