@@ -80,6 +80,7 @@
             <a style="font-size: 30px;" class="navbar-brand" href="http://localhost:3000"><b>Shekhar Singh</b></a>
         </div>
         <div id="navbar">
+            
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="https://shekharsingh.com/tech.html">TECH</a></li>
                 <li><a href="https://shekharsingh.com/outdoor.html">OUTDOOR</a></li>
@@ -87,6 +88,7 @@
                 <li><a href="https://shekharsingh.com/books.html">BOOKS</a></li>
                 <li><a href="https://shekharsingh.com/about.html">ABOUT</a></li>
             </ul>
+            
         </div>
     </div>
 </nav> <div class="container">
@@ -112,7 +114,7 @@ Let’s get started.</p>
 <p><br />
 (Platform: Spark v1.6.0, Cassandra v2.7, macOS 10.12.1, Scala 2.11.7)</p>
 
-<p>I’m going to use the package <code class="highlighter-rouge">spark-cassandra-connector</code> written by awesome <a href="http://www.datastax.com/">Datastax</a> guys.</p>
+<p>I’m going to use the package <code class="language-plaintext highlighter-rouge">spark-cassandra-connector</code> written by awesome <a href="http://www.datastax.com/">Datastax</a> guys.</p>
 
 <p>Assuming you have already configured Cassandra &amp; Spark, it’s time to start writing a small Spark job.</p>
 
@@ -126,10 +128,10 @@ Let’s get started.</p>
 <span class="c1"># setup spark configuration object
 # this contains your cassandra connection parameters
 </span><span class="n">conf</span> <span class="o">=</span> <span class="n">SparkConf</span><span class="p">()</span>\
-    <span class="o">.</span><span class="n">setAppName</span><span class="p">(</span><span class="s">"PySpark Cassandra"</span><span class="p">)</span> \
-    <span class="o">.</span><span class="nb">set</span><span class="p">(</span><span class="s">"spark.cassandra.connection.host"</span><span class="p">,</span> <span class="s">"192.168.56.101"</span><span class="p">)</span>\
-    <span class="o">.</span><span class="nb">set</span><span class="p">(</span><span class="s">"spark.cassandra.auth.username"</span><span class="p">,</span> <span class="s">"cassandra"</span><span class="p">)</span>\
-    <span class="o">.</span><span class="nb">set</span><span class="p">(</span><span class="s">"spark.cassandra.auth.password"</span><span class="p">,</span> <span class="s">"cassandra"</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">setAppName</span><span class="p">(</span><span class="s">"PySpark Cassandra"</span><span class="p">)</span> \
+    <span class="p">.</span><span class="nb">set</span><span class="p">(</span><span class="s">"spark.cassandra.connection.host"</span><span class="p">,</span> <span class="s">"192.168.56.101"</span><span class="p">)</span>\
+    <span class="p">.</span><span class="nb">set</span><span class="p">(</span><span class="s">"spark.cassandra.auth.username"</span><span class="p">,</span> <span class="s">"cassandra"</span><span class="p">)</span>\
+    <span class="p">.</span><span class="nb">set</span><span class="p">(</span><span class="s">"spark.cassandra.auth.password"</span><span class="p">,</span> <span class="s">"cassandra"</span><span class="p">)</span>
 
 
 <span class="c1"># creates Spark Context with your cassandra configurations
@@ -143,7 +145,7 @@ Let’s get started.</p>
 
 <span class="c1"># creates mapping with tables inside Cassandra for Spark
 # I am going to use "system_auth.roles" table here
-</span><span class="n">sqlContext</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s">"""CREATE TEMPORARY TABLE roles </span><span class="se">\
+</span><span class="n">sqlContext</span><span class="p">.</span><span class="n">sql</span><span class="p">(</span><span class="s">"""CREATE TEMPORARY TABLE roles </span><span class="se">\
 </span><span class="s">                  USING org.apache.spark.sql.cassandra </span><span class="se">\
 </span><span class="s">                  OPTIONS ( table "roles", </span><span class="se">\
 </span><span class="s">                            keyspace "system_auth", </span><span class="se">\
@@ -153,7 +155,7 @@ Let’s get started.</p>
 
 <span class="c1"># you can create multiple mappings/temporary tables and write queries on it.
 # this in another table: "system.compaction_history"
-</span><span class="n">sqlContext</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s">"""CREATE TEMPORARY TABLE compaction_history </span><span class="se">\
+</span><span class="n">sqlContext</span><span class="p">.</span><span class="n">sql</span><span class="p">(</span><span class="s">"""CREATE TEMPORARY TABLE compaction_history </span><span class="se">\
 </span><span class="s">                  USING org.apache.spark.sql.cassandra </span><span class="se">\
 </span><span class="s">                  OPTIONS ( table "compaction_history", </span><span class="se">\
 </span><span class="s">                            keyspace "system", </span><span class="se">\
@@ -165,13 +167,13 @@ Let’s get started.</p>
 <span class="c1"># here's the query we are going to run
 </span><span class="n">query</span> <span class="o">=</span> <span class="s">"SELECT * FROM roles"</span>
 
-<span class="k">print</span> <span class="s">"[Spark] Executing query: </span><span class="si">%</span><span class="s">s"</span> <span class="o">%</span> <span class="p">(</span><span class="n">query</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">"[Spark] Executing query: %s"</span> <span class="o">%</span> <span class="p">(</span><span class="n">query</span><span class="p">)</span>
 
 <span class="c1"># The result of the query returns a dataframe
-</span><span class="n">df_payload</span> <span class="o">=</span> <span class="n">sqlContext</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+</span><span class="n">df_payload</span> <span class="o">=</span> <span class="n">sqlContext</span><span class="p">.</span><span class="n">sql</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
 
 <span class="c1"># priting the content of dataframe
-</span><span class="n">df_payload</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></code></pre></figure>
+</span><span class="n">df_payload</span><span class="p">.</span><span class="n">show</span><span class="p">()</span></code></pre></figure>
 
 <p><br /></p>
 
@@ -182,11 +184,11 @@ Let’s get started.</p>
 spark-submit --packages com.datastax.spark:spark-cassandra-connector_2.10:1.5.0-M2 myfile.py
 </pre>
 
-<p>(Note: Check <code class="highlighter-rouge">localhost:4040</code> in your browser for Spark UI)</p>
+<p>(Note: Check <code class="language-plaintext highlighter-rouge">localhost:4040</code> in your browser for Spark UI)</p>
 
 <p>--packages : This parameter tells Spark to download the external dependencies for the job.</p>
 
-<p>In our case, we are using <code class="highlighter-rouge">spark-cassandra-connector</code>:</p>
+<p>In our case, we are using <code class="language-plaintext highlighter-rouge">spark-cassandra-connector</code>:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>groupId: com.datastax.spark
 artifactId: spark-cassandra-connector_2.10
@@ -209,7 +211,7 @@ version: 1.5.0-M2
 </code></pre></div></div>
 
 <p><br />
-Here, <code class="highlighter-rouge">df_payload</code> is DataFrame object. You can use all Spark’s <i>Transformations</i> &amp; <i>Actions</i> on this. (Check <a href="http://spark.apache.org/docs/latest/sql-programming-guide.html">here</a> for more details)</p>
+Here, <code class="language-plaintext highlighter-rouge">df_payload</code> is DataFrame object. You can use all Spark’s <i>Transformations</i> &amp; <i>Actions</i> on this. (Check <a href="http://spark.apache.org/docs/latest/sql-programming-guide.html">here</a> for more details)</p>
 
 <p><br />
 <b>Second Part</b>: <u>Starting a Spark shell with Cassandra connection</u>
@@ -225,10 +227,10 @@ Steps for this is part of separate <a href="https://shekharsingh.com/blog/2017/0
     <p>I really want to thank guys at <a href="http://www.datastax.com/">Datastax</a>. They have written and open sourced, so many packages and drivers for Cassandra.</p>
   </li>
   <li>
-    <p>You can contribute to <code class="highlighter-rouge">spark-cassandra-connector</code> <a href="https://github.com/datastax/spark-cassandra-connector">here</a>.</p>
+    <p>You can contribute to <code class="language-plaintext highlighter-rouge">spark-cassandra-connector</code> <a href="https://github.com/datastax/spark-cassandra-connector">here</a>.</p>
   </li>
   <li>
-    <p><a href="https://mvnrepository.com/artifact/com.datastax.spark/spark-cassandra-connector_2.10/1.5.0-M2">Link</a> to <code class="highlighter-rouge">spark-cassandra-connector</code> maven repository.</p>
+    <p><a href="https://mvnrepository.com/artifact/com.datastax.spark/spark-cassandra-connector_2.10/1.5.0-M2">Link</a> to <code class="language-plaintext highlighter-rouge">spark-cassandra-connector</code> maven repository.</p>
   </li>
 </ol>
 
