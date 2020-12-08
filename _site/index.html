@@ -82,7 +82,7 @@
 </nav> <style>
   .menu-section {
     text-align: center;
-    font-size: 40px;
+    font-size: 20px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -96,11 +96,11 @@
   @media only screen and (min-width:768px) {
     .menu-section {
       flex-wrap: nowrap;
-      font-size: 75px
+      font-size: 45px
     }
 
     .menu-section p {
-      font-size: 16px
+      font-size: 14px
     }
   }
 
@@ -112,8 +112,14 @@
     cursor: pointer;
   }
 
-  .menu-subsection:hover>h3 {
+  .menu-subsection:hover>h3, .menu-subsection:hover>h4 {
     text-decoration: underline;
+  }
+  
+  .panel-default h4 {
+    text-align: center;
+    line-height: 22px;
+    font-size: 20px;
   }
 </style>
 
@@ -124,44 +130,166 @@
 
       <div class="menu-section">
         <div class="menu-subsection" onclick="location.href='tech.html';">
-          <h3 class="section-name">Tech</h3>
+          <h4 class="section-name">Tech</h4>
           <span class="section-emoji">👨🏻‍💻</span>
           <span class="section-emoji">📊</span>
           <span class="section-emoji">🔐</span>
-          <p>Notes related to Tech, Data, DevOps. These could small findings, just plain notes for reference or steps to
-            do a certain thing.</p>
+          <p>Notes related to Tech, Data and DevOps.</p>
+        </div>
+        <div class="menu-subsection" onclick="location.href='services.html';">
+          <h4 class="section-name">Services</h4>
+          <span class="section-emoji">🗺</span>
+          <span class="section-emoji">🚀</span>
+          <span class="section-emoji">📈</span>
+          <p>Portfolio, clientele and services.</p>
         </div>
         <div class="menu-subsection" onclick="location.href='outdoor.html';">
-          <h3 class="section-name">Outdoor</h3>
+          <h4 class="section-name">Outdoor</h4>
           <span class="section-emoji">🏃</span>
           <span class="section-emoji">🚴</span>
           <span class="section-emoji">🏕️</span>
-          <p>Notes on Trips, Running, Cycling, Fitness, Nutrition, Diet etc</p>
+          <p>Notes from time away from screen.</p>
         </div>
       </div>
       <div class="menu-section">
         <div class="menu-subsection" onclick="location.href='nontech.html';">
-          <h3 class="section-name">Non-Tech</h3>
+          <h4 class="section-name">Non-Tech</h4>
           <span class="section-emoji">📒</span>
           <span class="section-emoji">🤯</span>
           <span class="section-emoji">💰</span>
-          <p>Notes on everything else. Book notes, self-help checklists, psychology, finance, investments etc.</p>
+          <p>Notes on books, self-help, psychology, finance, investments</p>
         </div>
         <div class="menu-subsection" onclick="location.href='books.html';">
-          <h3 class="section-name">Books</h3>
-          <span class="section-emoji">📚</span>
-          <p>Books I've read and currently reading. Please do suggest your favourite books.</p>
+          <h4 class="section-name">Books</h4>
+          <span class="section-emoji">📕</span>
+          <span class="section-emoji">📘</span>
+          <span class="section-emoji">📗</span>
+          <p>Books I've read and currently reading</p>
         </div>
-      </div>
-      <div class="menu-section">
         <div class="menu-subsection" onclick="location.href='about.html';">
-          <h3 class="section-name">About</h3>
+          <h4 class="section-name">About</h4>
           <span class="section-emoji">🙋‍♂️</span>
-          <p>A little about me and how you can say Hi! to me.</p>
+          <p>Say Hi!</p>
         </div>
       </div>
-
     </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <h6>Most Recent Posts</h6>
+      
+            <div class="row">
+              <div class="col-sm-12 col-md-12 col-lg-12">
+                <h5 style="text-align:left;">
+                    <a href="/blog/2020/10/03/how-to-gracefully-say-no.html">Notes - How to gracefully say No</a>
+                    <span style="font-size:14px;opacity: 0.5;">
+                      Oct  3 2020
+                    </span>
+                </h5>
+              </div>
+            </div>
+      
+            <div class="row">
+              <div class="col-sm-12 col-md-12 col-lg-12">
+                <h5 style="text-align:left;">
+                    <a href="/blog/2020/10/03/how-to-avoid-the-commitment-traps.html">Notes - How to avoid commitment traps</a>
+                    <span style="font-size:14px;opacity: 0.5;">
+                      Oct  3 2020
+                    </span>
+                </h5>
+              </div>
+            </div>
+      
+            <div class="row">
+              <div class="col-sm-12 col-md-12 col-lg-12">
+                <h5 style="text-align:left;">
+                    <a href="/blog/2020/05/20/how-we-monitor-apache-airflow-in-production-at-gojek.html">How We Monitor Apache Airflow in Production at Gojek</a>
+                    <span style="font-size:14px;opacity: 0.5;">
+                      May 20 2020
+                    </span>
+                </h5>
+              </div>
+            </div>
+      
+            <div class="row">
+              <div class="col-sm-12 col-md-12 col-lg-12">
+                <h5 style="text-align:left;">
+                    <a href="/blog/2020/04/27/list-of-cycling-trips.html">List of a few cycling trips</a>
+                    <span style="font-size:14px;opacity: 0.5;">
+                      Apr 27 2020
+                    </span>
+                </h5>
+              </div>
+            </div>
+      
+            <div class="row">
+              <div class="col-sm-12 col-md-12 col-lg-12">
+                <h5 style="text-align:left;">
+                    <a href="/blog/2020/04/19/deploying-a-service-on-kubernetes-locally-using-terraform.html">Deploying a service on Kubernetes locally using Terraform</a>
+                    <span style="font-size:14px;opacity: 0.5;">
+                      Apr 19 2020
+                    </span>
+                </h5>
+              </div>
+            </div>
+      
+            <div class="row">
+              <div class="col-sm-12 col-md-12 col-lg-12">
+                <h5 style="text-align:left;">
+                    <a href="/blog/2019/12/22/running-the-bangalore-airport-solo-half-marathon-26-km.html">Running - The Bangalore airport solo Half Marathon 2019 - 26 km</a>
+                    <span style="font-size:14px;opacity: 0.5;">
+                      Dec 22 2019
+                    </span>
+                </h5>
+              </div>
+            </div>
+      
+            <div class="row">
+              <div class="col-sm-12 col-md-12 col-lg-12">
+                <h5 style="text-align:left;">
+                    <a href="/blog/2019/10/07/cycling-trip-mangalore-to-panjim-goa-430-km.html">Cycling Trip - Mangalore to Goa across the diverse Indian west coast - 430+ km</a>
+                    <span style="font-size:14px;opacity: 0.5;">
+                      Oct  7 2019
+                    </span>
+                </h5>
+              </div>
+            </div>
+      
+            <div class="row">
+              <div class="col-sm-12 col-md-12 col-lg-12">
+                <h5 style="text-align:left;">
+                    <a href="/blog/2019/08/15/cycling-trip-bangalore-to-kolar-avani-240-km-in-11-hours.html">Cycling Trip - Bangalore to Kolar/Avani village - 240 km in 11 hours</a>
+                    <span style="font-size:14px;opacity: 0.5;">
+                      Aug 15 2019
+                    </span>
+                </h5>
+              </div>
+            </div>
+      
+            <div class="row">
+              <div class="col-sm-12 col-md-12 col-lg-12">
+                <h5 style="text-align:left;">
+                    <a href="/blog/2019/06/11/long-cycling-ride-checklist-endurace-ride.html">Checklist - Long cycling ride (endurance rides)</a>
+                    <span style="font-size:14px;opacity: 0.5;">
+                      Jun 11 2019
+                    </span>
+                </h5>
+              </div>
+            </div>
+      
+            <div class="row">
+              <div class="col-sm-12 col-md-12 col-lg-12">
+                <h5 style="text-align:left;">
+                    <a href="/blog/2019/03/26/analyzing-pandas-memory-leak-issue-with-fix.html">Analyzing Python Pandas' memory leak and the fix</a>
+                    <span style="font-size:14px;opacity: 0.5;">
+                      Mar 26 2019
+                    </span>
+                </h5>
+              </div>
+            </div>
+      
+  </div>
   </div>
 </div>
 
