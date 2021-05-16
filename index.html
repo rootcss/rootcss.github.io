@@ -3,11 +3,6 @@ layout: layout
 <!-- nav_bar: off -->
 ---
 
-<style>
-  
-</style>
-
-
 <div class="container">
   <div class="panel panel-default">
     <div class="panel-body">
@@ -25,4 +20,18 @@ layout: layout
       {% endfor %}
     </div>
   </div>
+
+  <div class="tags-cloud">
+    {% assign tags = site.tags | sort %}
+    {% for tag in tags %}
+      <span class="site-tag">
+        <a href="/tag/{{ tag | first | slugify }}/"
+          style="font-size: {{ tag | last | size | times: 8 | plus: 80  }}%">
+            {{ tag[0] | replace:'-', ' ' }} ({{ tag | last | size }})
+        </a>
+      </span>
+    {% endfor %}
+  </div>
+  <br><br>
+
 </div>
