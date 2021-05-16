@@ -1,119 +1,28 @@
 ---
 layout: layout
-nav_bar: off
+<!-- nav_bar: off -->
 ---
 
 <style>
-  .menu-section {
-    text-align: center;
-    font-size: 20px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between
-  }
-
-  .menu-section p {
-    font-size: 14px
-  }
-
-  @media only screen and (min-width:768px) {
-    .menu-section {
-      flex-wrap: nowrap;
-      font-size: 45px
-    }
-
-    .menu-section p {
-      font-size: 14px
-    }
-  }
-
-  .menu-subsection {
-    width: 50%;
-  }
-
-  .menu-subsection:hover {
-    cursor: pointer;
-  }
-
-  .menu-subsection:hover>h3, .menu-subsection:hover>h4 {
-    text-decoration: underline;
-  }
   
-  .panel-default h4 {
-    text-align: center;
-    line-height: 22px;
-    font-size: 20px;
-  }
 </style>
 
 
 <div class="container">
   <div class="panel panel-default">
     <div class="panel-body">
-
-      <div class="menu-section">
-        <div class="menu-subsection" onclick="location.href='tech.html';">
-          <h4 class="section-name">Tech</h4>
-          <span class="section-emoji">👨🏻‍💻</span>
-          <span class="section-emoji">📊</span>
-          <span class="section-emoji">🔐</span>
-          <p>Notes related to Tech, Data and DevOps.</p>
-        </div>
-        <div class="menu-subsection" onclick="location.href='services.html';">
-          <h4 class="section-name">Services</h4>
-          <span class="section-emoji">🗺</span>
-          <span class="section-emoji">🚀</span>
-          <span class="section-emoji">📈</span>
-          <p>Portfolio, clientele and services.</p>
-        </div>
-        <div class="menu-subsection" onclick="location.href='outdoor.html';">
-          <h4 class="section-name">Outdoor</h4>
-          <span class="section-emoji">🏃</span>
-          <span class="section-emoji">🚴</span>
-          <span class="section-emoji">🏕️</span>
-          <p>Notes from time away from screen.</p>
-        </div>
-      </div>
-      <div class="menu-section">
-        <div class="menu-subsection" onclick="location.href='nontech.html';">
-          <h4 class="section-name">Non-Tech</h4>
-          <span class="section-emoji">📒</span>
-          <span class="section-emoji">🤯</span>
-          <span class="section-emoji">💰</span>
-          <p>Notes on books, self-help, psychology, finance, investments</p>
-        </div>
-        <div class="menu-subsection" onclick="location.href='books.html';">
-          <h4 class="section-name">Books</h4>
-          <span class="section-emoji">📕</span>
-          <span class="section-emoji">📘</span>
-          <span class="section-emoji">📗</span>
-          <p>Books I've read and currently reading</p>
-        </div>
-        <div class="menu-subsection" onclick="location.href='about.html';">
-          <h4 class="section-name">About</h4>
-          <span class="section-emoji">🙋‍♂️</span>
-          <p>Say Hi!</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="panel panel-default">
-    <div class="panel-body">
-      <h6>Most Recent Posts</h6>
-      {% for post in site.posts limit:10 %}
+      {% for post in site.posts limit:50 %}
+        {% if post.post_type != 'outdoor' %}
             <div class="row">
               <div class="col-sm-12 col-md-12 col-lg-12">
-                <h5 style="text-align:left;">
-                    <a href="{{ post.url }}">{{ post.title }}</a>
-                    <span style="font-size:14px;opacity: 0.5;">
-                      {{ post.date | date: "%b %e %Y" }}
-                    </span>
-                </h5>
+                <span class="post-line">
+                  <span class="post-line-date">{{ post.date | date: "%d/%m/%Y" }}</span>
+                  <span class="post-line-post"><a href="{{ post.url }}">{{ post.title }}</a></span>
+                </span>
               </div>
             </div>
+        {% endif %}
       {% endfor %}
-  </div>
+    </div>
   </div>
 </div>

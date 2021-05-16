@@ -213,3 +213,69 @@ div.footer{
 pre code{
   white-space: pre;
 }
+
+/* overrides */
+.menu-section {
+  text-align: center;
+  font-size: 20px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between
+}
+
+.menu-section p {
+  font-size: 14px
+}
+
+@media only screen and (min-width:768px) {
+  .menu-section {
+    flex-wrap: nowrap;
+    font-size: 45px
+  }
+
+  .menu-section p {
+    font-size: 14px
+  }
+}
+
+.menu-subsection {
+  width: 50%;
+}
+
+.menu-subsection:hover {
+  cursor: pointer;
+}
+
+.menu-subsection:hover>h3, .menu-subsection:hover>h4 {
+  text-decoration: underline;
+}
+
+
+.panel-default {
+  text-align: center;
+  line-height: 40px;
+  font-size: 20px;
+}
+
+.panel-default h4 {
+  text-align: center;
+  line-height: 22px;
+  font-size: 20px;
+}
+
+.panel-default h5 {
+  text-align: left;
+  line-height: 10px;
+  font-size: 18px;
+}
+
+.panel-default .post-line {
+  text-align: left;
+  font-size: 17px;
+}
+
+.post-line .post-line-date {
+  color: #555;
+  margin-right: 10px;
+}
