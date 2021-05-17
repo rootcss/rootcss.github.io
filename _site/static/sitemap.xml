@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>http://localhost:3000/</loc>
-    <lastmod>2021-05-16T19:22:17+05:30</lastmod>
+    <lastmod>2021-05-17T16:41:37+05:30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -362,7 +362,7 @@
   <url>
     <loc>http://localhost:3000/help/2013-02-10-post5</loc>
     
-      <lastmod>2021-05-16T19:22:17+05:30</lastmod>
+      <lastmod>2021-05-17T16:41:37+05:30</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -375,7 +375,7 @@
   <url>
     <loc>http://localhost:3000/help/2013-03-15-post4</loc>
     
-      <lastmod>2021-05-16T19:22:17+05:30</lastmod>
+      <lastmod>2021-05-17T16:41:37+05:30</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -388,7 +388,7 @@
   <url>
     <loc>http://localhost:3000/help/2013-04-02-post3</loc>
     
-      <lastmod>2021-05-16T19:22:17+05:30</lastmod>
+      <lastmod>2021-05-17T16:41:37+05:30</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -401,7 +401,7 @@
   <url>
     <loc>http://localhost:3000/help/2013-05-27-post2</loc>
     
-      <lastmod>2021-05-16T19:22:17+05:30</lastmod>
+      <lastmod>2021-05-17T16:41:37+05:30</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -414,7 +414,7 @@
   <url>
     <loc>http://localhost:3000/help/2013-06-05-post1</loc>
     
-      <lastmod>2021-05-16T19:22:17+05:30</lastmod>
+      <lastmod>2021-05-17T16:41:37+05:30</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -427,7 +427,7 @@
   <url>
     <loc>http://localhost:3000/static/404</loc>
     
-      <lastmod>2021-05-16T19:22:17+05:30</lastmod>
+      <lastmod>2021-05-17T16:41:37+05:30</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -440,7 +440,7 @@
   <url>
     <loc>http://localhost:3000/404</loc>
     
-      <lastmod>2021-05-16T19:22:17+05:30</lastmod>
+      <lastmod>2021-05-17T16:41:37+05:30</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -453,7 +453,7 @@
   <url>
     <loc>http://localhost:3000/about</loc>
     
-      <lastmod>2021-05-16T19:22:17+05:30</lastmod>
+      <lastmod>2021-05-17T16:41:37+05:30</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -464,9 +464,9 @@
   </url>
   
   <url>
-    <loc>http://localhost:3000/static/atom.xml</loc>
+    <loc>http://localhost:3000/tag/airflow</loc>
     
-      <lastmod>2021-05-16T19:22:17+05:30</lastmod>
+      <lastmod>2021-05-17T16:41:37+05:30</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -479,7 +479,46 @@
   <url>
     <loc>http://localhost:3000/atom.xml</loc>
     
-      <lastmod>2021-05-16T19:22:17+05:30</lastmod>
+      <lastmod>2021-05-17T16:41:37+05:30</lastmod>
+    
+    
+      <changefreq>monthly</changefreq>
+    
+    
+      <priority>0.3</priority>
+    
+  </url>
+  
+  <url>
+    <loc>http://localhost:3000/static/atom.xml</loc>
+    
+      <lastmod>2021-05-17T16:41:37+05:30</lastmod>
+    
+    
+      <changefreq>monthly</changefreq>
+    
+    
+      <priority>0.3</priority>
+    
+  </url>
+  
+  <url>
+    <loc>http://localhost:3000/tag/aws</loc>
+    
+      <lastmod>2021-05-17T16:41:37+05:30</lastmod>
+    
+    
+      <changefreq>monthly</changefreq>
+    
+    
+      <priority>0.3</priority>
+    
+  </url>
+  
+  <url>
+    <loc>http://localhost:3000/tag/big-data</loc>
+    
+      <lastmod>2021-05-17T16:41:37+05:30</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -492,7 +531,85 @@
   <url>
     <loc>http://localhost:3000/books</loc>
     
-      <lastmod>2021-05-16T19:22:17+05:30</lastmod>
+      <lastmod>2021-05-17T16:41:37+05:30</lastmod>
+    
+    
+      <changefreq>monthly</changefreq>
+    
+    
+      <priority>0.3</priority>
+    
+  </url>
+  
+  <url>
+    <loc>http://localhost:3000/tag/cassandra</loc>
+    
+      <lastmod>2021-05-17T16:41:37+05:30</lastmod>
+    
+    
+      <changefreq>monthly</changefreq>
+    
+    
+      <priority>0.3</priority>
+    
+  </url>
+  
+  <url>
+    <loc>http://localhost:3000/tag/checklist</loc>
+    
+      <lastmod>2021-05-17T16:41:37+05:30</lastmod>
+    
+    
+      <changefreq>monthly</changefreq>
+    
+    
+      <priority>0.3</priority>
+    
+  </url>
+  
+  <url>
+    <loc>http://localhost:3000/tag/cycling</loc>
+    
+      <lastmod>2021-05-17T16:41:37+05:30</lastmod>
+    
+    
+      <changefreq>monthly</changefreq>
+    
+    
+      <priority>0.3</priority>
+    
+  </url>
+  
+  <url>
+    <loc>http://localhost:3000/tag/data-engineering</loc>
+    
+      <lastmod>2021-05-17T16:41:37+05:30</lastmod>
+    
+    
+      <changefreq>monthly</changefreq>
+    
+    
+      <priority>0.3</priority>
+    
+  </url>
+  
+  <url>
+    <loc>http://localhost:3000/tag/data</loc>
+    
+      <lastmod>2021-05-17T16:41:37+05:30</lastmod>
+    
+    
+      <changefreq>monthly</changefreq>
+    
+    
+      <priority>0.3</priority>
+    
+  </url>
+  
+  <url>
+    <loc>http://localhost:3000/tag/devops</loc>
+    
+      <lastmod>2021-05-17T16:41:37+05:30</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -505,7 +622,85 @@
   <url>
     <loc>http://localhost:3000/disclaimer</loc>
     
-      <lastmod>2021-05-16T19:22:17+05:30</lastmod>
+      <lastmod>2021-05-17T16:41:37+05:30</lastmod>
+    
+    
+      <changefreq>monthly</changefreq>
+    
+    
+      <priority>0.3</priority>
+    
+  </url>
+  
+  <url>
+    <loc>http://localhost:3000/tag/endurance</loc>
+    
+      <lastmod>2021-05-17T16:41:37+05:30</lastmod>
+    
+    
+      <changefreq>monthly</changefreq>
+    
+    
+      <priority>0.3</priority>
+    
+  </url>
+  
+  <url>
+    <loc>http://localhost:3000/tag/essentialist</loc>
+    
+      <lastmod>2021-05-17T16:41:37+05:30</lastmod>
+    
+    
+      <changefreq>monthly</changefreq>
+    
+    
+      <priority>0.3</priority>
+    
+  </url>
+  
+  <url>
+    <loc>http://localhost:3000/tag/fitness</loc>
+    
+      <lastmod>2021-05-17T16:41:37+05:30</lastmod>
+    
+    
+      <changefreq>monthly</changefreq>
+    
+    
+      <priority>0.3</priority>
+    
+  </url>
+  
+  <url>
+    <loc>http://localhost:3000/tag/flink</loc>
+    
+      <lastmod>2021-05-17T16:41:37+05:30</lastmod>
+    
+    
+      <changefreq>monthly</changefreq>
+    
+    
+      <priority>0.3</priority>
+    
+  </url>
+  
+  <url>
+    <loc>http://localhost:3000/tag/gojek</loc>
+    
+      <lastmod>2021-05-17T16:41:37+05:30</lastmod>
+    
+    
+      <changefreq>monthly</changefreq>
+    
+    
+      <priority>0.3</priority>
+    
+  </url>
+  
+  <url>
+    <loc>http://localhost:3000/tag/hacker</loc>
+    
+      <lastmod>2021-05-17T16:41:37+05:30</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -518,7 +713,46 @@
   <url>
     <loc>http://localhost:3000/</loc>
     
-      <lastmod>2021-05-16T19:22:17+05:30</lastmod>
+      <lastmod>2021-05-17T16:41:37+05:30</lastmod>
+    
+    
+      <changefreq>monthly</changefreq>
+    
+    
+      <priority>0.3</priority>
+    
+  </url>
+  
+  <url>
+    <loc>http://localhost:3000/tag/kubernetes</loc>
+    
+      <lastmod>2021-05-17T16:41:37+05:30</lastmod>
+    
+    
+      <changefreq>monthly</changefreq>
+    
+    
+      <priority>0.3</priority>
+    
+  </url>
+  
+  <url>
+    <loc>http://localhost:3000/tag/linux</loc>
+    
+      <lastmod>2021-05-17T16:41:37+05:30</lastmod>
+    
+    
+      <changefreq>monthly</changefreq>
+    
+    
+      <priority>0.3</priority>
+    
+  </url>
+  
+  <url>
+    <loc>http://localhost:3000/tag/nike</loc>
+    
+      <lastmod>2021-05-17T16:41:37+05:30</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -531,7 +765,7 @@
   <url>
     <loc>http://localhost:3000/nontech</loc>
     
-      <lastmod>2021-05-16T19:22:17+05:30</lastmod>
+      <lastmod>2021-05-17T16:41:37+05:30</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -544,7 +778,46 @@
   <url>
     <loc>http://localhost:3000/outdoor</loc>
     
-      <lastmod>2021-05-16T19:22:17+05:30</lastmod>
+      <lastmod>2021-05-17T16:41:37+05:30</lastmod>
+    
+    
+      <changefreq>monthly</changefreq>
+    
+    
+      <priority>0.3</priority>
+    
+  </url>
+  
+  <url>
+    <loc>http://localhost:3000/tag/pandas</loc>
+    
+      <lastmod>2021-05-17T16:41:37+05:30</lastmod>
+    
+    
+      <changefreq>monthly</changefreq>
+    
+    
+      <priority>0.3</priority>
+    
+  </url>
+  
+  <url>
+    <loc>http://localhost:3000/tag/postgresql</loc>
+    
+      <lastmod>2021-05-17T16:41:37+05:30</lastmod>
+    
+    
+      <changefreq>monthly</changefreq>
+    
+    
+      <priority>0.3</priority>
+    
+  </url>
+  
+  <url>
+    <loc>http://localhost:3000/tag/programming</loc>
+    
+      <lastmod>2021-05-17T16:41:37+05:30</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -557,7 +830,7 @@
   <url>
     <loc>http://localhost:3000/static/projects</loc>
     
-      <lastmod>2021-05-16T19:22:17+05:30</lastmod>
+      <lastmod>2021-05-17T16:41:37+05:30</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -570,7 +843,85 @@
   <url>
     <loc>http://localhost:3000/projects</loc>
     
-      <lastmod>2021-05-16T19:22:17+05:30</lastmod>
+      <lastmod>2021-05-17T16:41:37+05:30</lastmod>
+    
+    
+      <changefreq>monthly</changefreq>
+    
+    
+      <priority>0.3</priority>
+    
+  </url>
+  
+  <url>
+    <loc>http://localhost:3000/tag/python</loc>
+    
+      <lastmod>2021-05-17T16:41:37+05:30</lastmod>
+    
+    
+      <changefreq>monthly</changefreq>
+    
+    
+      <priority>0.3</priority>
+    
+  </url>
+  
+  <url>
+    <loc>http://localhost:3000/tag/rabbitmq</loc>
+    
+      <lastmod>2021-05-17T16:41:37+05:30</lastmod>
+    
+    
+      <changefreq>monthly</changefreq>
+    
+    
+      <priority>0.3</priority>
+    
+  </url>
+  
+  <url>
+    <loc>http://localhost:3000/tag/running</loc>
+    
+      <lastmod>2021-05-17T16:41:37+05:30</lastmod>
+    
+    
+      <changefreq>monthly</changefreq>
+    
+    
+      <priority>0.3</priority>
+    
+  </url>
+  
+  <url>
+    <loc>http://localhost:3000/tag/scala</loc>
+    
+      <lastmod>2021-05-17T16:41:37+05:30</lastmod>
+    
+    
+      <changefreq>monthly</changefreq>
+    
+    
+      <priority>0.3</priority>
+    
+  </url>
+  
+  <url>
+    <loc>http://localhost:3000/tag/security</loc>
+    
+      <lastmod>2021-05-17T16:41:37+05:30</lastmod>
+    
+    
+      <changefreq>monthly</changefreq>
+    
+    
+      <priority>0.3</priority>
+    
+  </url>
+  
+  <url>
+    <loc>http://localhost:3000/tag/self-help</loc>
+    
+      <lastmod>2021-05-17T16:41:37+05:30</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -583,20 +934,7 @@
   <url>
     <loc>http://localhost:3000/services</loc>
     
-      <lastmod>2021-05-16T19:22:17+05:30</lastmod>
-    
-    
-      <changefreq>monthly</changefreq>
-    
-    
-      <priority>0.3</priority>
-    
-  </url>
-  
-  <url>
-    <loc>http://localhost:3000/static/sitemap.xml</loc>
-    
-      <lastmod>2021-05-16T19:22:17+05:30</lastmod>
+      <lastmod>2021-05-17T16:41:37+05:30</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -609,7 +947,59 @@
   <url>
     <loc>http://localhost:3000/sitemap.xml</loc>
     
-      <lastmod>2021-05-16T19:22:17+05:30</lastmod>
+      <lastmod>2021-05-17T16:41:37+05:30</lastmod>
+    
+    
+      <changefreq>monthly</changefreq>
+    
+    
+      <priority>0.3</priority>
+    
+  </url>
+  
+  <url>
+    <loc>http://localhost:3000/static/sitemap.xml</loc>
+    
+      <lastmod>2021-05-17T16:41:37+05:30</lastmod>
+    
+    
+      <changefreq>monthly</changefreq>
+    
+    
+      <priority>0.3</priority>
+    
+  </url>
+  
+  <url>
+    <loc>http://localhost:3000/tag/spark</loc>
+    
+      <lastmod>2021-05-17T16:41:37+05:30</lastmod>
+    
+    
+      <changefreq>monthly</changefreq>
+    
+    
+      <priority>0.3</priority>
+    
+  </url>
+  
+  <url>
+    <loc>http://localhost:3000/tag/ssh-tunnel</loc>
+    
+      <lastmod>2021-05-17T16:41:37+05:30</lastmod>
+    
+    
+      <changefreq>monthly</changefreq>
+    
+    
+      <priority>0.3</priority>
+    
+  </url>
+  
+  <url>
+    <loc>http://localhost:3000/tag/ssl</loc>
+    
+      <lastmod>2021-05-17T16:41:37+05:30</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -622,7 +1012,20 @@
   <url>
     <loc>http://localhost:3000/tech</loc>
     
-      <lastmod>2021-05-16T19:22:17+05:30</lastmod>
+      <lastmod>2021-05-17T16:41:37+05:30</lastmod>
+    
+    
+      <changefreq>monthly</changefreq>
+    
+    
+      <priority>0.3</priority>
+    
+  </url>
+  
+  <url>
+    <loc>http://localhost:3000/tag/terraform</loc>
+    
+      <lastmod>2021-05-17T16:41:37+05:30</lastmod>
     
     
       <changefreq>monthly</changefreq>

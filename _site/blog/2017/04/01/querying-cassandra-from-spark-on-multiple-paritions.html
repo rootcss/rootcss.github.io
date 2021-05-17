@@ -111,10 +111,10 @@
 
 <p>It’s going to be super expensive.</p>
 
-<p>For example, Let’s say, I have a <code class="language-plaintext highlighter-rouge">users</code> table like this:</p>
+<p>For example, Let’s say, I have a <code class="highlighter-rouge">users</code> table like this:</p>
 
 <p>(partition key - id, clustering key - event_timestamp)</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>id | event_timestamp | city
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>id | event_timestamp | city
 1  | abc............ | A
 1  | def............ | B
 2  | abc............ | B
@@ -144,7 +144,7 @@ Now, coming to <b>Spark</b>.</p>
 <p>On a small scale, you wouldn’t even notice the problem. Not just with Spark, but even with CQLSH you wouldn’t notice the delay and issues significantly.
 However, If your cluster is significantly large, it will be very slow and highly unoptimized, and we don’t really like that, right.</p>
 
-<p><a href="https://github.com/datastax/spark-cassandra-connector" target="_blank"><code class="language-plaintext highlighter-rouge">cassandra-spark-connector</code></a> has a method called <code class="language-plaintext highlighter-rouge">joinWithCassandraTable()</code> to which you can pass a list of partition keys to be looked up.</p>
+<p><a href="https://github.com/datastax/spark-cassandra-connector" target="_blank"><code class="highlighter-rouge">cassandra-spark-connector</code></a> has a method called <code class="highlighter-rouge">joinWithCassandraTable()</code> to which you can pass a list of partition keys to be looked up.</p>
 
 <p>Internally, this method extracts all the partition keys from the list, and runs a separate parallel query (spark tasks) for each partition key on our “distributed” Spark cluster (it uses Cassandra Java driver to perform this operation). Finally returns an RDD object consisting of results from all tasks.</p>
 
@@ -170,13 +170,21 @@ However, If your cluster is significantly large, it will be very slow and highly
 				<br>
 				Tags:
 				
-				 <span class="label label-success">Spark</span>
+					<a href="/tag/spark/" style="text-decoration: none;">
+						<span class="label label-success">Spark</span>
+					</a>
 				
-				 <span class="label label-success">Cassandra</span>
+					<a href="/tag/cassandra/" style="text-decoration: none;">
+						<span class="label label-success">Cassandra</span>
+					</a>
 				
-				 <span class="label label-success">Spark</span>
+					<a href="/tag/spark/" style="text-decoration: none;">
+						<span class="label label-success">Spark</span>
+					</a>
 				
-				 <span class="label label-success">Big Data</span>
+					<a href="/tag/big-data/" style="text-decoration: none;">
+						<span class="label label-success">Big Data</span>
+					</a>
 				
 
 				<br><br>

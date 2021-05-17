@@ -1,0 +1,22 @@
+---
+layout: layout
+---
+
+<div class="container">
+    <h4>Tag: {{ page.tag }}</h4>
+
+    <div class="panel panel-default">
+      <div class="panel-body">
+        {% for post in site.tags[page.tag] %}
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <span class="post-line">
+                        <span class="post-line-date">{{ post.date | date: "%d/%m/%Y" }}</span>
+                        <span class="post-line-post"><a href="{{ post.url }}">{{ post.title }}</a></span>
+                    </span>
+                </div>
+            </div>
+        {% endfor %}
+      </div>
+    </div>
+</div>

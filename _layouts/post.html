@@ -21,7 +21,9 @@ layout: layout
 				<br>
 				Tags:
 				{% for tag in page.tags %}
-				 <span class="label label-success">{{ tag }}</span>
+					<a href="/tag/{{ tag | slugify }}/" style="text-decoration: none;">
+						<span class="label label-success">{{ tag }}</span>
+					</a>
 				{% endfor %}
 
 				<br><br>
