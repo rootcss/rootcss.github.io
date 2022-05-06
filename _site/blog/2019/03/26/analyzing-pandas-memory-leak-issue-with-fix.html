@@ -77,14 +77,16 @@
         <nav class="navbar navbar-default">
     <div class="container">
         <div class="navbar-header">
-            <a style="font-size: 30px;" class="navbar-brand" href="http://localhost:3000"><b>Shekhar Singh</b></a>
+            
+                <a style="font-size: 30px;" class="navbar-brand" href="http://localhost:3000"><b>Shekhar Singh</b></a>
+            
         </div>
         <div id="navbar">
             
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="https://shekharsingh.com/">BLOG</a></li>
-                <li><a href="https://shekharsingh.com/outdoor.html">OUTDOORS</a></li>
+                <li><a href="https://shekharsingh.com/blog.html">BLOG</a></li>
                 <li><a href="https://shekharsingh.com/books.html">BOOKS</a></li>
+                <li><a href="https://shekharsingh.com/outdoor.html">OUTDOORS</a></li>
                 <li><a href="https://shekharsingh.com/about.html">ABOUT</a></li>
             </ul>
             
@@ -105,19 +107,19 @@
 	<div class="panel panel-default">
 		<div class="panel-body">
 			<div class="blogpost">
-			  <p>At <a target="_blank" href="https://getsimpl.com">Simpl</a>, we use <a target="_blank" href="https://pandas.pydata.org/">pandas</a> heavily to run a bunch of our machine learning models many of them implemented with scikit-learn. We’ve been growing rapidly and sometime back, one of the models crashed with python’s <code class="highlighter-rouge">MemoryError</code> exception. We were pretty sure that the hardware resources are enough to run the task.</p>
+			  <p>At <a target="_blank" href="https://getsimpl.com">Simpl</a>, we use <a target="_blank" href="https://pandas.pydata.org/">pandas</a> heavily to run a bunch of our machine learning models many of them implemented with scikit-learn. We’ve been growing rapidly and sometime back, one of the models crashed with python’s <code class="language-plaintext highlighter-rouge">MemoryError</code> exception. We were pretty sure that the hardware resources are enough to run the task.</p>
 
 <p>What is the <b>MemoryError</b>? It’s an exception thrown by interpreter when not enough memory is available for creation of new python objects or for a running operation.</p>
 
 <p>The catch here is that, it doesn’t necessarily mean “not enough memory available”. It could also mean that, there are some objects that are still not cleaned up by Garbage Cleaner (GC).</p>
 
 <p>To test this, I wrote a very small script:</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">arr</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">10000000</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">arr</span> <span class="o">=</span> <span class="n">numpy</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">10000000</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
 
 <span class="k">def</span> <span class="nf">blast</span><span class="p">():</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10000</span><span class="p">):</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">arr</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">xs</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">pandas</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">arr</span><span class="p">.</span><span class="n">copy</span><span class="p">())</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="n">xs</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
 
 <span class="n">blast</span><span class="p">()</span>
 </code></pre></div></div>
@@ -130,13 +132,13 @@
 <br /><br /></p>
 
 <p><b>What’s the issue?</b><br />
-Python’s default implementation is <code class="highlighter-rouge">CPython</code> (<a target="_blank" href="https://github.com/python/cpython">github</a>) which is implemented in C. The problem was <a target="_blank" href="https://sourceware.org/bugzilla/show_bug.cgi?id=14827">this</a> bug; in the implementation of <code class="highlighter-rouge">malloc</code> in <code class="highlighter-rouge">glibc</code> (which is GNU’s implementation of C standard library).
+Python’s default implementation is <code class="language-plaintext highlighter-rouge">CPython</code> (<a target="_blank" href="https://github.com/python/cpython">github</a>) which is implemented in C. The problem was <a target="_blank" href="https://sourceware.org/bugzilla/show_bug.cgi?id=14827">this</a> bug; in the implementation of <code class="language-plaintext highlighter-rouge">malloc</code> in <code class="language-plaintext highlighter-rouge">glibc</code> (which is GNU’s implementation of C standard library).
 <br /><br /></p>
 
 <p><b>Issue Details</b>:<br />
-<code class="highlighter-rouge">M_MXFAST</code> is the maximum size of a requested block that is served by using optimized memory containers called <code class="highlighter-rouge">fastbins</code>. <code class="highlighter-rouge">free()</code> is called when a memory cleanup of allocated space is required; which triggers the trimming of fastbins. Apparently, when <code class="highlighter-rouge">malloc()</code> is less than <code class="highlighter-rouge">M_MXFAST</code>, <code class="highlighter-rouge">free()</code> is not trimming fastbins. But, if we manually call <code class="highlighter-rouge">malloc_trim(0)</code> at that point, it should free() up those fastbins as well.</p>
+<code class="language-plaintext highlighter-rouge">M_MXFAST</code> is the maximum size of a requested block that is served by using optimized memory containers called <code class="language-plaintext highlighter-rouge">fastbins</code>. <code class="language-plaintext highlighter-rouge">free()</code> is called when a memory cleanup of allocated space is required; which triggers the trimming of fastbins. Apparently, when <code class="language-plaintext highlighter-rouge">malloc()</code> is less than <code class="language-plaintext highlighter-rouge">M_MXFAST</code>, <code class="language-plaintext highlighter-rouge">free()</code> is not trimming fastbins. But, if we manually call <code class="language-plaintext highlighter-rouge">malloc_trim(0)</code> at that point, it should free() up those fastbins as well.</p>
 
-<p>Here is a snippet from <code class="highlighter-rouge">malloc.c</code>’s <code class="highlighter-rouge">free()</code> implementation (alias <code class="highlighter-rouge">__libc_free</code>). (<a target="_blank" href="https://code.woboq.org/userspace/glibc/malloc/malloc.c.html#3115">link</a>)</p>
+<p>Here is a snippet from <code class="language-plaintext highlighter-rouge">malloc.c</code>’s <code class="language-plaintext highlighter-rouge">free()</code> implementation (alias <code class="language-plaintext highlighter-rouge">__libc_free</code>). (<a target="_blank" href="https://code.woboq.org/userspace/glibc/malloc/malloc.c.html#3115">link</a>)</p>
 
 <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="n">p</span> <span class="o">=</span> <span class="n">mem2chunk</span> <span class="p">(</span><span class="n">mem</span><span class="p">);</span>
   <span class="k">if</span> <span class="p">(</span><span class="n">chunk_is_mmapped</span> <span class="p">(</span><span class="n">p</span><span class="p">))</span>                       <span class="cm">/* release mmapped memory. */</span>
@@ -158,37 +160,37 @@ Python’s default implementation is <code class="highlighter-rouge">CPython</co
     <span class="p">}</span>
 </code></pre></div></div>
 
-<p>Therefore, we need to trigger <code class="highlighter-rouge">malloc_trim(0)</code> from our python code written above; which we can easily do using <code class="highlighter-rouge">ctypes</code> module.
+<p>Therefore, we need to trigger <code class="language-plaintext highlighter-rouge">malloc_trim(0)</code> from our python code written above; which we can easily do using <code class="language-plaintext highlighter-rouge">ctypes</code> module.
 <br /><br />
 The fixed implementation looks like this:</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">ctypes</span> <span class="kn">import</span> <span class="n">cdll</span><span class="p">,</span> <span class="n">CDLL</span>
-<span class="n">cdll</span><span class="o">.</span><span class="n">LoadLibrary</span><span class="p">(</span><span class="s">"libc.so.6"</span><span class="p">)</span>
+<span class="n">cdll</span><span class="p">.</span><span class="n">LoadLibrary</span><span class="p">(</span><span class="s">"libc.so.6"</span><span class="p">)</span>
 <span class="n">libc</span> <span class="o">=</span> <span class="n">CDLL</span><span class="p">(</span><span class="s">"libc.so.6"</span><span class="p">)</span>
-<span class="n">libc</span><span class="o">.</span><span class="n">malloc_trim</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">libc</span><span class="p">.</span><span class="n">malloc_trim</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
-<span class="n">arr</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">10000000</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">arr</span> <span class="o">=</span> <span class="n">numpy</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">10000000</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
 
 <span class="k">def</span> <span class="nf">blast</span><span class="p">():</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10000</span><span class="p">):</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">arr</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">xs</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
-        <span class="n">libc</span><span class="o">.</span><span class="n">malloc_trim</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">pandas</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">arr</span><span class="p">.</span><span class="n">copy</span><span class="p">())</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="n">xs</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+        <span class="n">libc</span><span class="p">.</span><span class="n">malloc_trim</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
 <span class="n">blast</span><span class="p">()</span>
 </code></pre></div></div>
 <p><br />
-In another solution, I tried forcing the GC using python’s <code class="highlighter-rouge">gc</code> module; which gave the results similar to above method.</p>
+In another solution, I tried forcing the GC using python’s <code class="language-plaintext highlighter-rouge">gc</code> module; which gave the results similar to above method.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">gc</span>
 
-<span class="n">arr</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">10000000</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">arr</span> <span class="o">=</span> <span class="n">numpy</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">10000000</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
 
 <span class="k">def</span> <span class="nf">blast</span><span class="p">():</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10000</span><span class="p">):</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">arr</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">xs</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
-        <span class="n">gc</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span> <span class="c1"># Forced GC
+        <span class="n">x</span> <span class="o">=</span> <span class="n">pandas</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">arr</span><span class="p">.</span><span class="n">copy</span><span class="p">())</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="n">xs</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+        <span class="n">gc</span><span class="p">.</span><span class="n">collect</span><span class="p">()</span> <span class="c1"># Forced GC
 </span>
 <span class="n">blast</span><span class="p">()</span>
 </code></pre></div></div>
@@ -199,7 +201,7 @@ The distrubution of Memory usage w.r.t Time looked much better now, and there wa
 <p><br /><br />
 Similar cases, References and other notes:</p>
 <ol>
-  <li>Even after doing <code class="highlighter-rouge">low_memory=False</code> while reading a CSV using <code class="highlighter-rouge">pandas.read_csv</code>, it crashes with <code class="highlighter-rouge">MemoryError</code> exception, even though the CSV is not bigger than the RAM.</li>
+  <li>Even after doing <code class="language-plaintext highlighter-rouge">low_memory=False</code> while reading a CSV using <code class="language-plaintext highlighter-rouge">pandas.read_csv</code>, it crashes with <code class="language-plaintext highlighter-rouge">MemoryError</code> exception, even though the CSV is not bigger than the RAM.</li>
   <li>Explanation of malloc(), calloc(), free(), realloc() deserves a separate post altogether. I’ll post that soon.</li>
   <li>Similar reported issues:<br />
      - https://github.com/pandas-dev/pandas/issues/2659<br />
@@ -319,15 +321,10 @@ Similar cases, References and other notes:</p>
 
     <a href="https://stackoverflow.com/users/4908717/rootcss"><i class="fa fa-stack-overflow"></i></a>
 
-
-    <a href="https://facebook.com/rootcss"><i class="fa fa-facebook"></i></a>
-
-
-    <a href="https://google.com/+ShekharSingh3"><i class="fa fa-google-plus"></i></a>
-
 <a href="atom.xml" class="social-links__entry" target="_blank">
     <i class="fa fa-rss"></i>
 </a>
+
 	</h4>
 </div>
 

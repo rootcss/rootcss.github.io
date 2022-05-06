@@ -7,3 +7,9 @@ hosted in [Github pages](https://pages.github.com/).
 (Based on [sustain](https://biomadeira.github.io/sustain))
 
 
+```bash
+
+gem install jekyll
+jekyll serve
+
+```

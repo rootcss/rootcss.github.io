@@ -80,14 +80,16 @@ command_output &gt;&gt; file
         <nav class="navbar navbar-default">
     <div class="container">
         <div class="navbar-header">
-            <a style="font-size: 30px;" class="navbar-brand" href="http://localhost:3000"><b>Shekhar Singh</b></a>
+            
+                <a style="font-size: 30px;" class="navbar-brand" href="http://localhost:3000"><b>Shekhar Singh</b></a>
+            
         </div>
         <div id="navbar">
             
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="https://shekharsingh.com/">BLOG</a></li>
-                <li><a href="https://shekharsingh.com/outdoor.html">OUTDOORS</a></li>
+                <li><a href="https://shekharsingh.com/blog.html">BLOG</a></li>
                 <li><a href="https://shekharsingh.com/books.html">BOOKS</a></li>
+                <li><a href="https://shekharsingh.com/outdoor.html">OUTDOORS</a></li>
                 <li><a href="https://shekharsingh.com/about.html">ABOUT</a></li>
             </ul>
             
@@ -110,38 +112,38 @@ command_output &gt;&gt; file
 			<div class="blogpost">
 			  <p>I/O redirections are one of the prettiest things we have in linux (IMO!) Following are commands and their usage.
 <br /><br />
-<code class="highlighter-rouge">command_output &gt;&gt; file </code>
+<code class="language-plaintext highlighter-rouge">command_output &gt;&gt; file </code>
   Redirects stdout to a file. Creates the file if not present, otherwise appends.</p>
 
-<p><code class="highlighter-rouge"> &gt; filename </code>
-  Truncates the file to zero length. If file is not present, creates zero-length file (same effect as <code class="highlighter-rouge">touch</code>).</p>
+<p>` &gt; filename `
+  Truncates the file to zero length. If file is not present, creates zero-length file (same effect as <code class="language-plaintext highlighter-rouge">touch</code>).</p>
 
-<p><code class="highlighter-rouge"> 1&gt;filename </code>
+<p>` 1&gt;filename `
   Redirects stdout to the file “filename”.</p>
 
-<p><code class="highlighter-rouge"> 1&gt;&gt;filename </code>
+<p>` 1»filename `
   Redirects and appends stdout to file “filename”.</p>
 
-<p><code class="highlighter-rouge"> 2&gt;filename </code>
+<p>` 2&gt;filename `
   Redirects stderr to file “filename”.</p>
 
-<p><code class="highlighter-rouge"> 2&gt;&gt;filename </code>
+<p>` 2»filename `
   Redirects and appends stderr to file “filename”.</p>
 
-<p><code class="highlighter-rouge"> &amp;&gt;filename </code>
+<p>` &amp;&gt;filename `
   Redirects both stdout and stderr to file “filename”.</p>
 
-<p><code class="highlighter-rouge"> 2&gt;&amp;1 </code>
+<p>` 2&gt;&amp;1 `
   Redirects stderr to stdout. Error messages get sent to same place as standard output.</p>
 <hr />
 
 <p>Some quality explanation now ;) Take the example of this command:
-<br /><code class="highlighter-rouge"> cmd &gt;&gt; file.log 2&gt;&amp;1 </code>
+<br /><code class="language-plaintext highlighter-rouge"> cmd &gt;&gt; file.log 2&gt;&amp;1 </code>
 <br />
-This command will redirect all the output of command(cmd) into <code class="highlighter-rouge">file.log</code>.<br />
-<code class="highlighter-rouge">2</code> refers to Second file descriptor of the process i.e., stderr<br />
-<code class="highlighter-rouge">&gt;</code> refers to redirection<br />
-<code class="highlighter-rouge">&amp;1</code> means that the target of redirection would be same as <code class="highlighter-rouge">1</code> i.e, first descriptor i.e, stdout.<br /></p>
+This command will redirect all the output of command(cmd) into <code class="language-plaintext highlighter-rouge">file.log</code>.<br />
+<code class="language-plaintext highlighter-rouge">2</code> refers to Second file descriptor of the process i.e., stderr<br />
+<code class="language-plaintext highlighter-rouge">&gt;</code> refers to redirection<br />
+<code class="language-plaintext highlighter-rouge">&amp;1</code> means that the target of redirection would be same as <code class="language-plaintext highlighter-rouge">1</code> i.e, first descriptor i.e, stdout.<br /></p>
 
 <p>Thanks!</p>
 
@@ -271,15 +273,10 @@ code {
 
     <a href="https://stackoverflow.com/users/4908717/rootcss"><i class="fa fa-stack-overflow"></i></a>
 
-
-    <a href="https://facebook.com/rootcss"><i class="fa fa-facebook"></i></a>
-
-
-    <a href="https://google.com/+ShekharSingh3"><i class="fa fa-google-plus"></i></a>
-
 <a href="atom.xml" class="social-links__entry" target="_blank">
     <i class="fa fa-rss"></i>
 </a>
+
 	</h4>
 </div>
 

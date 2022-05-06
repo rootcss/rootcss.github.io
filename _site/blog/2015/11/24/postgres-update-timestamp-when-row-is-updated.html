@@ -77,14 +77,16 @@
         <nav class="navbar navbar-default">
     <div class="container">
         <div class="navbar-header">
-            <a style="font-size: 30px;" class="navbar-brand" href="http://localhost:3000"><b>Shekhar Singh</b></a>
+            
+                <a style="font-size: 30px;" class="navbar-brand" href="http://localhost:3000"><b>Shekhar Singh</b></a>
+            
         </div>
         <div id="navbar">
             
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="https://shekharsingh.com/">BLOG</a></li>
-                <li><a href="https://shekharsingh.com/outdoor.html">OUTDOORS</a></li>
+                <li><a href="https://shekharsingh.com/blog.html">BLOG</a></li>
                 <li><a href="https://shekharsingh.com/books.html">BOOKS</a></li>
+                <li><a href="https://shekharsingh.com/outdoor.html">OUTDOORS</a></li>
                 <li><a href="https://shekharsingh.com/about.html">ABOUT</a></li>
             </ul>
             
@@ -105,11 +107,11 @@
 	<div class="panel panel-default">
 		<div class="panel-body">
 			<div class="blogpost">
-			  <p>In PostgreSQL, if you want to set current timestamp as default value, you can simply keep a column’s default expression as <code class="highlighter-rouge">now()</code>. However, by default there is no function defined to update the timestamp when a particular row (or multiple rows) need to be updated.</p>
+			  <p>In PostgreSQL, if you want to set current timestamp as default value, you can simply keep a column’s default expression as <code class="language-plaintext highlighter-rouge">now()</code>. However, by default there is no function defined to update the timestamp when a particular row (or multiple rows) need to be updated.</p>
 
 <p>In such scenario, you may create your custom method and trigger it using <b>PostgreSQL’s Triggers</b>. Following snippet will make it more clear:</p>
 
-<p>Here, we are creating a new method, <code class="highlighter-rouge">method_get_updated_at()</code></p>
+<p>Here, we are creating a new method, <code class="language-plaintext highlighter-rouge">method_get_updated_at()</code></p>
 
 <figure class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">OR</span> <span class="k">REPLACE</span> <span class="k">FUNCTION</span> <span class="n">method_get_updated_at</span><span class="p">()</span> <span class="k">RETURNS</span> <span class="k">TRIGGER</span>
 <span class="k">LANGUAGE</span> <span class="n">plpgsql</span>
@@ -263,15 +265,10 @@
 
     <a href="https://stackoverflow.com/users/4908717/rootcss"><i class="fa fa-stack-overflow"></i></a>
 
-
-    <a href="https://facebook.com/rootcss"><i class="fa fa-facebook"></i></a>
-
-
-    <a href="https://google.com/+ShekharSingh3"><i class="fa fa-google-plus"></i></a>
-
 <a href="atom.xml" class="social-links__entry" target="_blank">
     <i class="fa fa-rss"></i>
 </a>
+
 	</h4>
 </div>
 

@@ -1,37 +1,27 @@
 ---
 layout: layout
 <!-- nav_bar: off -->
+website_header_title: off
 ---
 
 <div class="container">
   <div class="panel panel-default">
     <div class="panel-body">
-      {% for post in site.posts limit:50 %}
-        {% if post.post_type != 'outdoor' %}
-            <div class="row">
-              <div class="col-sm-12 col-md-12 col-lg-12">
-                <span class="post-line">
-                  <span class="post-line-date">{{ post.date | date: "%d/%m/%Y" }}</span>
-                  <span class="post-line-post"><a href="{{ post.url }}">{{ post.title }}</a></span>
-                </span>
-              </div>
-            </div>
-        {% endif %}
-      {% endfor %}
+      <h1><strong>Hello, I am Shekhar Singh.</strong></h1>
+      <br>
+      <div style="color:#444">
+        <h3>I am a Software Engineer.</h1>
+        <br>
+        <h3>I can help you <b>build</b> your Tech from 0 to 1.</h1>
+        <h3>I can help you <b>scale</b> your Tech from 1 to 100.</h1>
+        <h3>I can help you build your <b>team</b>.</h1>
+        <br>
+        <h3>Let's connect through <a href="mailto:shekhar.singh+website@msn.com">email</a> or <a href="https://www.linkedin.com/in/rootcss/">linkedin</a>.</h1>
+        <br>
+        <p style="color:#888;font-size: 13px;">
+            Core areas: Software architecture, Data architecture, Platforms and DevOps.
+        </p>
+      </div>
     </div>
   </div>
-
-  <div class="tags-cloud">
-    {% assign tags = site.tags | sort %}
-    {% for tag in tags %}
-      <span class="site-tag">
-        <a href="/tag/{{ tag | first | slugify }}.html"
-          style="font-size: {{ tag | last | size | times: 8 | plus: 80  }}%">
-            {{ tag[0] | replace:'-', ' ' }} ({{ tag | last | size }})
-        </a>
-      </span>
-    {% endfor %}
-  </div>
-  <br><br>
-
 </div>
